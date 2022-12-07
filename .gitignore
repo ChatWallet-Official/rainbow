@@ -71,6 +71,9 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
+# Google firebase credentials
+chatwallet-21f22-a94a2aa31737.json
+
 # Bundle artifact
 *.jsbundle
 
