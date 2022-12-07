@@ -78,8 +78,8 @@ platform :ios do
 
   end
 
-  desc "Register new devices"
-  lane :register_devices do
+  desc "Add new devices"
+  lane :add_devices do
     register_devices(
       devices: {        
         "" => ""
