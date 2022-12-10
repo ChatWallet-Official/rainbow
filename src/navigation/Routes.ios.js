@@ -31,7 +31,7 @@ import TransactionConfirmationScreen from '../screens/TransactionConfirmationScr
 import WalletConnectApprovalSheet from '../screens/WalletConnectApprovalSheet';
 import WalletConnectRedirectSheet from '../screens/WalletConnectRedirectSheet';
 import WalletDiagnosticsSheet from '../screens/WalletDiagnosticsSheet';
-import WelcomeScreen from '../screens/WelcomeScreen';
+import WelcomeScreenCW from '../screens/WelcomeScreenCW';
 import WithdrawModal from '../screens/WithdrawModal';
 import { useTheme } from '../theme/ThemeContext';
 import RegisterENSNavigator from './RegisterENSNavigator';
@@ -156,7 +156,7 @@ function MainNavigator() {
     >
       <Stack.Screen component={SwipeNavigator} name={Routes.SWIPE_LAYOUT} />
       <Stack.Screen
-        component={WelcomeScreen}
+        component={WelcomeScreenCW}
         name={Routes.WELCOME_SCREEN}
         options={{ animationEnabled: false, gestureEnabled: false }}
       />

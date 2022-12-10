@@ -35,7 +35,7 @@ import TransactionConfirmationScreen from '../screens/TransactionConfirmationScr
 import WalletConnectApprovalSheet from '../screens/WalletConnectApprovalSheet';
 import WalletConnectRedirectSheet from '../screens/WalletConnectRedirectSheet';
 import WalletDiagnosticsSheet from '../screens/WalletDiagnosticsSheet';
-import WelcomeScreen from '../screens/WelcomeScreen';
+import WelcomeScreenCW from '../screens/WelcomeScreenCW';
 import WithdrawModal from '../screens/WithdrawModal';
 import WyreWebview from '../screens/WyreWebview';
 import RegisterENSNavigator from './RegisterENSNavigator';
@@ -218,7 +218,7 @@ function MainNavigator() {
         options={sheetPresetWithSmallGestureResponseDistance}
       />
       <Stack.Screen
-        component={WelcomeScreen}
+        component={WelcomeScreenCW}
         name={Routes.WELCOME_SCREEN}
         options={{ animationEnabled: false, gestureEnabled: false }}
       />

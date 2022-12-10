@@ -111,6 +111,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     exchangeFallback: '#F4F4F5', // '244, 244, 245'
     flamingo: '#E540F1', // '229, 64, 241'
     green: '#2CCC00', // '58, 166, 134'
+    greenCW: '#219653',
     grey: '#A9ADB9', // '169, 173, 185'
     grey20: '#333333', // '51, 51, 51'
     lighterGrey: '#F7F7F8', // '247, 247, 248'
