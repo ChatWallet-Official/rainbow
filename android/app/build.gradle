@@ -169,7 +169,7 @@ android {
         }
     }
 
-    def props = project.file('src/main/java/me/rainbow/MainApplication.java')
+    def props = project.file('src/main/java/io/chatwallet/MainApplication.java')
     def contents2 = props.getText( 'UTF-8' ).replaceAll( "//_REA ", '' ).replaceAll('/\\* REA', '//_REA /* REA')
     props.delete()
     props << contents2
@@ -191,7 +191,7 @@ android {
         // https://github.com/microsoft/react-native-code-push/issues/1961#issuecomment-710698621
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
         resValue 'string', "CodePushDeploymentKey", env.get('CODE_PUSH_DEPLOYMENT_KEY_ANDROID')
-        applicationId "me.rainbow"
+        applicationId "io.chatwallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 154
