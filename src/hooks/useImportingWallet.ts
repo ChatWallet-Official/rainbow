@@ -379,13 +379,13 @@ export default function useImportingWallet({ showImportModal = true } = {}) {
 
   useEffect(() => {
     setIsWalletLoading(
-      isImporting
+      isImporting || busy
         ? showImportModal
           ? WalletLoadingStates.IMPORTING_WALLET
           : WalletLoadingStates.IMPORTING_WALLET_SILENTLY
         : null
     );
-  }, [isImporting, setIsWalletLoading, showImportModal]);
+  }, [busy, isImporting, setIsWalletLoading, showImportModal]);
 
   return {
     busy,

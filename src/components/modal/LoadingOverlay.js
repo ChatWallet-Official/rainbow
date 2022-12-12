@@ -7,8 +7,9 @@ import TouchableBackdrop from '../TouchableBackdrop';
 import { Centered, Column } from '../layout';
 import { Text } from '../text';
 import styled from '@/styled-thing';
-import { padding, position } from '@/styles';
+import { padding, position, fonts } from '@/styles';
 import { neverRerender } from '@/utils';
+import { View, StyleSheet } from 'react-native';
 
 const Container = styled(Centered).attrs({
   flex: android ? 1 : undefined,
@@ -20,11 +21,13 @@ const Container = styled(Centered).attrs({
 });
 
 const Overlay = styled(Centered)({
-  ...padding.object(19, 19, 22),
+  ...padding.object(10),
   backgroundColor: ({ theme: { colors } }) =>
-    colors.alpha(colors.blueGreyDark, 0.15),
-  borderRadius: 20,
+    colors.alpha(colors.darkGreyCW, 0.92),
+  borderRadius: 8,
   overflow: 'hidden',
+  width: 120,
+  height: 110,
 });
 
 const OverlayBlur = styled(BlurView).attrs(({ isDarkMode }) => ({
@@ -36,12 +39,12 @@ const OverlayBlur = styled(BlurView).attrs(({ isDarkMode }) => ({
 });
 
 const Title = styled(Text).attrs(({ theme: { colors } }) => ({
-  color: colors.blueGreyDark,
+  color: colors.white,
   lineHeight: ios ? 'none' : 24,
-  size: 'large',
+  size: fonts.size.medium,
   weight: 'semibold',
 }))({
-  marginLeft: 8,
+  marginTop: 10,
 });
 
 const LoadingOverlay = ({ title, ...props }) => {
@@ -51,17 +54,27 @@ const LoadingOverlay = ({ title, ...props }) => {
     <Container {...props} as={android ? Column : TouchableBackdrop} disabled>
       <Overlay>
         <Centered zIndex={2}>
-          {android ? (
-            <Spinner color={colors.blueGreyDark} />
-          ) : (
-            <ActivityIndicator />
-          )}
-          {title ? <Title>{title}</Title> : null}
+          <View style={styles.content}>
+            {android ? (
+              <Spinner color={colors.white} />
+            ) : (
+              <ActivityIndicator color={colors.white} />
+            )}
+            {title ? <Title>{title}</Title> : null}
+          </View>
         </Centered>
         <OverlayBlur isDarkMode={isDarkMode} />
       </Overlay>
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default neverRerender(LoadingOverlay);

@@ -87,6 +87,8 @@ const getColorsByTheme = (darkMode?: boolean) => {
     appleBlue: '#0E76FD', // '14, 118, 253'
     appleBlue06: 'rgba(14, 118, 253, 0.06)',
     black: '#000000', // '0, 0, 0'
+    black10: 'rgba(0, 0, 0, 0.1)',
+    black30: 'rgba(0, 0, 0, 0.3)',
     blueGreyDark: '#3C4252', // '60, 66, 82'
     blueGreyDark04: '#222326', // this color is blueGreyDark at 4% over white
     blueGreyDark20: '#3A3D45', // this color is blueGreyDark at 20% over white
@@ -102,6 +104,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     chartGreen: '#66D28F', // '102, 210, 143'
     dark: '#25292E', // '37, 41, 46'
     darkGrey: '#71778A', // '113, 119, 138'
+    darkGreyCW: '#545454',
     darkModeDark: '#404656',
     dogeGold: '#FCAC34', // '252, 172, 52'
     dogeGold06: 'rgba(252, 172, 52, 0.06)',

@@ -14,7 +14,7 @@ import ENSConfirmRegisterSheet from '../screens/ENSConfirmRegisterSheet';
 import ExpandedAssetSheet from '../screens/ExpandedAssetSheet';
 import ExplainSheet from '../screens/ExplainSheet';
 import ExternalLinkWarningSheet from '../screens/ExternalLinkWarningSheet';
-import ImportSeedPhraseSheet from '../screens/ImportSeedPhraseSheet';
+import ImportSeedPhraseSheetCW from '../screens/ImportSeedPhraseSheetCW';
 import ModalScreen from '../screens/ModalScreen';
 import PinAuthenticationScreen from '../screens/PinAuthenticationScreen';
 import ProfileSheet from '../screens/ProfileSheet';
@@ -95,7 +95,7 @@ function ImportSeedPhraseFlowNavigator() {
         options={overlayExpandedPreset}
       />
       <Stack.Screen
-        component={ImportSeedPhraseSheet}
+        component={ImportSeedPhraseSheetCW}
         name={Routes.IMPORT_SEED_PHRASE_SHEET}
         options={sheetPreset}
       />
@@ -182,7 +182,7 @@ function MainNavigator() {
         options={addTokenSheetConfig}
       />
       <Stack.Screen
-        component={ImportSeedPhraseSheet}
+        component={ImportSeedPhraseSheetCW}
         name={Routes.IMPORT_SEED_PHRASE_SHEET}
         options={sheetPreset}
       />

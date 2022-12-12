@@ -1646,7 +1646,7 @@
         "already_have_wallet": "I already have one",
         "create_wallet": "Create Wallet",
         "add_existing_wallet": "Add an existing wallet",
-        "enter_seeds_placeholder": "Secret phrase, private key, Ethereum address, or ENS name",
+        "enter_seeds_placeholder": "Add wallet with private key, seed phrase, Ethereum address, or ENS name",
         "get_new_wallet": "Get a new wallet",
         "import_wallet": "Import Wallet",
         "creating_wallet": "Creating Wallet",
