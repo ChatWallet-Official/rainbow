@@ -3,12 +3,15 @@ import { LoadingOverlay } from './modal';
 import { useWallets } from '@/hooks';
 import { sheetVerticalOffset } from '@/navigation/effects';
 import { usePortal } from '@/react-native-cool-modals/Portal';
+import { WalletLoadingStates } from '@/helpers/walletLoadingStates';
 
 export default function PortalConsumer() {
   const { isWalletLoading } = useWallets();
   const { setComponent, hide } = usePortal();
   useEffect(() => {
-    if (isWalletLoading) {
+    const blackList = [WalletLoadingStates.CREATING_WALLET];
+
+    if (isWalletLoading && !blackList.includes(isWalletLoading)) {
       setComponent(
         <LoadingOverlay
           paddingTop={sheetVerticalOffset}
