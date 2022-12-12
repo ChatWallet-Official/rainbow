@@ -126,6 +126,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     optimismRed: '#FF0420', // '255, 4, 32',
     optimismRed06: 'rgba(255, 4, 32, 0.06)', // '255, 4, 32, 0.06'
     orange: '#F46E38', // '244, 110, 56'
+    orangeCW: '#F2994A',
     orangeLight: '#FEBE44', // '254, 190, 68'
     paleBlue: '#579DFF', // 87, 157, 255
     pink: '#FF54BB', // 255, 84, 187

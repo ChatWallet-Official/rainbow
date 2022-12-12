@@ -23,7 +23,7 @@ const AssetList = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  return isLoading ? (
+  return isLoading || isWalletEthZero ? (
     <EmptyAssetList
       {...props}
       hideHeader={hideHeader}

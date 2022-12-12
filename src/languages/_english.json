@@ -61,8 +61,8 @@
         "request_test_eth": "Request test ETH through the %{testnetName} faucet",
         "send_test_eth_from_another_source": "Send test ETH from another %{testnetName} wallet—or ask a friend!"
       },
-      "to_get_started_android": "To get started, buy some ETH",
-      "to_get_started_ios": "To get started, buy some ETH with Apple Pay",
+      "to_get_started_android": "To get first crypto asset,buy some BTC",
+      "to_get_started_ios": "To get first crypto asset,buy some BTC",
       "weekly_limit_reached": "Weekly limit reached",
       "yearly_limit_reached": "Yearly limit reached"
     },
@@ -1524,7 +1524,8 @@
       "add_cash": {
         "card_notice": "Works with most debit cards",
         "interstitial": {
-          "other_amount": "Other amount"
+          "other_amount": "Other amount",
+          "asset_amount": "You will get %{amount} ETH"
         },
         "need_help_button_email_subject": "support",
         "need_help_button_label": "Get Support",

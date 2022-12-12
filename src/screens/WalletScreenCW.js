@@ -294,7 +294,7 @@ export default function WalletScreenCW() {
         <AssetList
           disableRefreshControl={isLoadingAssets}
           isEmpty={isAccountEmpty || !!params?.emptyWallet}
-          isLoading={android && isLoadingAssets}
+          isLoading={isLoadingAssets}
           isWalletEthZero={isWalletEthZero}
           network={currentNetwork}
           walletBriefSectionsData={walletBriefSectionsData}

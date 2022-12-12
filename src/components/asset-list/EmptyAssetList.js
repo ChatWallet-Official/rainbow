@@ -2,7 +2,7 @@ import ConditionalWrap from 'conditional-wrap';
 import React, { useMemo } from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import AddFundsInterstitial from '../AddFundsInterstitial';
+import AddFundsInterstitialCW from '../AddFundsInterstitialCW';
 import { FabWrapperBottomPosition } from '../fab';
 import { Centered, Column } from '../layout';
 import AssetListHeader, { AssetListHeaderHeight } from './AssetListHeader';
@@ -39,7 +39,7 @@ const EmptyAssetList = ({
 
   const { refresh, isRefreshing } = useRefreshAccountData();
 
-  const showAddFunds = !isLoading && isWalletEthZero;
+  const showAddFunds = isLoading || isWalletEthZero;
 
   return (
     <ConditionalWrap
@@ -62,7 +62,7 @@ const EmptyAssetList = ({
       <Container {...props}>
         <Centered flex={1}>
           {showAddFunds ? (
-            <AddFundsInterstitial
+            <AddFundsInterstitialCW
               network={network}
               offsetY={interstitialOffset}
             />
