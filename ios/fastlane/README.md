@@ -31,13 +31,13 @@ Refresh dSYMs
 
 Submit a new Beta build to Apple TestFlight
 
-### ios register_devices
+### ios add_devices
 
 ```sh
-[bundle exec] fastlane ios register_devices
+[bundle exec] fastlane ios add_devices
 ```
 
-Register new devices
+Add new devices
 
 ### ios distribute
 

@@ -116,7 +116,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>2</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(CODE_PUSH_DEPLOYMENT_KEY_IOS)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
