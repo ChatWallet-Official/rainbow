@@ -255,10 +255,8 @@ export default function WelcomeScreenCW() {
 
   const showRestoreSheet = useCallback(() => {
     analytics.track('Tapped "I already have one"');
-    navigate(Routes.RESTORE_SHEET, {
-      userData,
-    });
-  }, [navigate, userData]);
+    navigate(Routes.IMPORT_SEED_PHRASE_FLOW);
+  }, [navigate]);
 
   useAndroidBackHandler(() => {
     return true;

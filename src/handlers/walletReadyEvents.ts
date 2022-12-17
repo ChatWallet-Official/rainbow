@@ -63,27 +63,27 @@ export const runWalletBackupStatusChecks = () => {
   );
 
   // if one of them is selected, show the default BackupSheet
-  if (selected && hasSelectedWallet && IS_TESTING !== 'true') {
-    logger.log('showing default BackupSheet');
-    setTimeout(() => {
-      triggerOnSwipeLayout(() =>
-        Navigation.handleAction(Routes.BACKUP_SHEET, { single: true })
-      );
-    }, BACKUP_SHEET_DELAY_MS);
-    return;
-  }
+  // if (selected && hasSelectedWallet && IS_TESTING !== 'true') {
+  //   logger.log('showing default BackupSheet');
+  //   setTimeout(() => {
+  //     triggerOnSwipeLayout(() =>
+  //       Navigation.handleAction(Routes.BACKUP_SHEET, { single: true })
+  //     );
+  //   }, BACKUP_SHEET_DELAY_MS);
+  //   return;
+  // }
 
   // otherwise, show the BackupSheet redirecting to the WalletSelectionList
-  IS_TESTING !== 'true' &&
-    setTimeout(() => {
-      logger.log('showing BackupSheet with existing_user step');
-      triggerOnSwipeLayout(() =>
-        Navigation.handleAction(Routes.BACKUP_SHEET, {
-          single: true,
-          step: WalletBackupStepTypes.existing_user,
-        })
-      );
-    }, BACKUP_SHEET_DELAY_MS);
+  // IS_TESTING !== 'true' &&
+  //   setTimeout(() => {
+  //     logger.log('showing BackupSheet with existing_user step');
+  //     triggerOnSwipeLayout(() =>
+  //       Navigation.handleAction(Routes.BACKUP_SHEET, {
+  //         single: true,
+  //         step: WalletBackupStepTypes.existing_user,
+  //       })
+  //     );
+  //   }, BACKUP_SHEET_DELAY_MS);
   return;
 };
 

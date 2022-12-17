@@ -33,7 +33,7 @@ import Routes from '@/navigation/routesNames';
 import { ethereumUtils, sanitizeSeedPhrase } from '@/utils';
 import logger from '@/utils/logger';
 
-export default function useImportingWallet({ showImportModal = true } = {}) {
+export default function useImportingWallet({ showImportModal = false } = {}) {
   const { accountAddress } = useAccountSettings();
   const { selectedWallet, setIsWalletLoading, wallets } = useWallets();
 
@@ -254,101 +254,85 @@ export default function useImportingWallet({ showImportModal = true } = {}) {
           ? resolvedAddress
           : sanitizeSeedPhrase(seedPhrase);
 
-        if (!showImportModal) {
-          await walletInit(
-            // @ts-expect-error ts-migrate(2345) FIXME: Argument of type 'string | null' is not assignable... Remove this comment to see the full error message
-            input,
-            color,
-            name ? name : '',
-            false,
-            checkedWallet,
-            undefined,
-            image,
-            true
-          );
-          await dispatch(walletsLoadState(profilesEnabled));
-          handleSetImporting(false);
-        } else {
-          const previousWalletCount = keys(wallets).length;
-          initializeWallet(
-            input,
-            color,
-            name ? name : '',
-            false,
-            false,
-            checkedWallet,
-            undefined,
-            image
-          )
-            .then(success => {
-              ios && handleSetImporting(false);
-              if (success) {
-                goBack();
-                InteractionManager.runAfterInteractions(async () => {
-                  if (previousWalletCount === 0) {
-                    // on Android replacing is not working well, so we navigate and then remove the screen below
-                    const action = ios ? replace : navigate;
-                    action(Routes.SWIPE_LAYOUT, {
-                      params: { initialized: true },
-                      screen: Routes.WALLET_SCREEN,
-                    });
-                  } else {
-                    navigate(Routes.WALLET_SCREEN, { initialized: true });
-                  }
-                  if (android) {
-                    handleSetImporting(false);
-                    InteractionManager.runAfterInteractions(() =>
-                      setIsWalletLoading(null)
-                    );
-                  }
-
-                  setTimeout(() => {
-                    // If it's not read only, show the backup sheet
-                    if (
-                      !(
-                        isENSAddressFormat(input) ||
-                        isUnstoppableAddressFormat(input) ||
-                        isValidAddress(input)
-                      )
-                    ) {
-                      IS_TESTING !== 'true' &&
-                        Navigation.handleAction(Routes.BACKUP_SHEET, {
-                          single: true,
-                          step: WalletBackupStepTypes.imported,
-                        });
-                    }
-                  }, 1000);
-
-                  analytics.track('Imported seed phrase', {
-                    isWalletEthZero,
+        const previousWalletCount = keys(wallets).length;
+        initializeWallet(
+          input,
+          color,
+          name ? name : '',
+          false,
+          false,
+          checkedWallet,
+          undefined,
+          image
+        )
+          .then(success => {
+            ios && handleSetImporting(false);
+            if (success) {
+              goBack();
+              InteractionManager.runAfterInteractions(async () => {
+                if (previousWalletCount === 0) {
+                  // on Android replacing is not working well, so we navigate and then remove the screen below
+                  const action = ios ? replace : navigate;
+                  action(Routes.SWIPE_LAYOUT, {
+                    params: { initialized: true },
+                    screen: Routes.WALLET_SCREEN,
                   });
-                });
-              } else {
-                if (android) {
-                  setIsWalletLoading(null);
-                  handleSetImporting(false);
+                } else {
+                  navigate(Routes.WALLET_SCREEN, { initialized: true });
                 }
-                // Wait for error messages then refocus
-                setTimeout(() => {
-                  // @ts-expect-error ts-migrate(2339) FIXME: Property 'focus' does not exist on type 'never'.
-                  inputRef.current?.focus();
-                  // @ts-expect-error ts-migrate(2554) FIXME: Expected 8-9 arguments, but got 0.
-                  initializeWallet();
-                }, 100);
+                if (android) {
+                  handleSetImporting(false);
+                  InteractionManager.runAfterInteractions(() =>
+                    setIsWalletLoading(null)
+                  );
+                }
+
+                // setTimeout(() => {
+                //   // If it's not read only, show the backup sheet
+                //   if (
+                //     !(
+                //       isENSAddressFormat(input) ||
+                //       isUnstoppableAddressFormat(input) ||
+                //       isValidAddress(input)
+                //     )
+                //   ) {
+                //     IS_TESTING !== 'true' &&
+                //       Navigation.handleAction(Routes.BACKUP_SHEET, {
+                //         single: true,
+                //         step: WalletBackupStepTypes.imported,
+                //       });
+                //   }
+                // }, 1000);
+
+                analytics.track('Imported seed phrase', {
+                  isWalletEthZero,
+                });
+              });
+            } else {
+              if (android) {
+                setIsWalletLoading(null);
+                handleSetImporting(false);
               }
-            })
-            .catch(error => {
-              handleSetImporting(false);
-              android && handleSetImporting(false);
-              logger.error('error importing seed phrase: ', error);
+              // Wait for error messages then refocus
               setTimeout(() => {
                 // @ts-expect-error ts-migrate(2339) FIXME: Property 'focus' does not exist on type 'never'.
                 inputRef.current?.focus();
                 // @ts-expect-error ts-migrate(2554) FIXME: Expected 8-9 arguments, but got 0.
                 initializeWallet();
               }, 100);
-            });
-        }
+            }
+          })
+          .catch(error => {
+            handleSetImporting(false);
+            android && handleSetImporting(false);
+            logger.error('error importing seed phrase: ', error);
+            setTimeout(() => {
+              // @ts-expect-error ts-migrate(2339) FIXME: Property 'focus' does not exist on type 'never'.
+              inputRef.current?.focus();
+              // @ts-expect-error ts-migrate(2554) FIXME: Expected 8-9 arguments, but got 0.
+              initializeWallet();
+            }, 100);
+          });
       }, 50);
     }
   }, [
@@ -379,11 +363,7 @@ export default function useImportingWallet({ showImportModal = true } = {}) {
 
   useEffect(() => {
     setIsWalletLoading(
-      isImporting || busy
-        ? showImportModal
-          ? WalletLoadingStates.IMPORTING_WALLET
-          : WalletLoadingStates.IMPORTING_WALLET_SILENTLY
-        : null
+      isImporting || busy ? WalletLoadingStates.IMPORTING_WALLET : null
     );
   }, [busy, isImporting, setIsWalletLoading, showImportModal]);
 

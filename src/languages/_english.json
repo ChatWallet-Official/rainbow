@@ -1524,7 +1524,7 @@
       "add_cash": {
         "card_notice": "Works with most debit cards",
         "interstitial": {
-          "other_amount": "Other amount",
+          "other_amount": "Other Amount",
           "asset_amount": "You will get %{amount} ETH"
         },
         "need_help_button_email_subject": "support",

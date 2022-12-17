@@ -248,6 +248,12 @@ const AddFundsInterstitialCW = ({ network }) => {
           <View style={styles.buttonContainer}>
             <Column marginVertical={20}>
               <AmountButton
+                amount={50}
+                backgroundColor={colors.greenCW}
+                color={colors.white}
+                onPress={handlePressAmount}
+              />
+              <AmountButton
                 amount={100}
                 backgroundColor={colors.greenCW}
                 color={colors.white}
@@ -255,12 +261,6 @@ const AddFundsInterstitialCW = ({ network }) => {
               />
               <AmountButton
                 amount={200}
-                backgroundColor={colors.greenCW}
-                color={colors.white}
-                onPress={handlePressAmount}
-              />
-              <AmountButton
-                amount={300}
                 backgroundColor={colors.orangeCW}
                 color={colors.white}
                 onPress={handlePressAmount}
@@ -271,10 +271,9 @@ const AddFundsInterstitialCW = ({ network }) => {
               color={colors.greenCW}
               size="medium"
               weight="bold"
+              onPress={handlePressAmount}
             >
-              {lang.t('wallet.add_cash.interstitial.asset_amount', {
-                amount: 48,
-              })}
+              {lang.t('wallet.add_cash.interstitial.other_amount')}
             </Text>
           </View>
         </Column>

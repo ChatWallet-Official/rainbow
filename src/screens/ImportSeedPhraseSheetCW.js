@@ -24,7 +24,7 @@ import {
 } from '@/hooks';
 import { sheetVerticalOffset } from '@/navigation/effects';
 import styled from '@/styled-thing';
-import { borders, fonts, padding } from '@/styles';
+import { borders, fonts, padding, colors } from '@/styles';
 import { deviceUtils } from '@/utils';
 import { IS_ANDROID, IS_IOS } from '@/env';
 import { StyleSheet, View } from 'react-native';
@@ -52,7 +52,7 @@ const Footer = styled(Column).attrs({
         marginRight: 18,
         top: ({ isSmallPhone }) => (isSmallPhone ? sheetBottomPadding * 2 : 0),
       }
-    : {}),
+    : { marginTop: 120 }),
 });
 
 const LoadingSpinner = styled(IS_ANDROID ? Spinner : ActivityIndicator).attrs({
@@ -73,7 +73,7 @@ const KeyboardSizeView = styled(KeyboardArea)({
 const placeholder = lang.t('wallet.new.enter_seeds_placeholder');
 
 const SecretTextArea = styled(Input).attrs({
-  align: 'start',
+  align: 'left',
   autoCapitalize: 'none',
   autoComplete: 'off',
   autoCorrect: false,
@@ -101,6 +101,7 @@ const SecretTextAreaContainer = styled(Flex)({
   flex: 1,
   justify: 'flex-start',
   marginTop: 40,
+  maxHeight: 80,
 });
 
 const Sheet = styled(Column).attrs({
@@ -163,7 +164,7 @@ export default function ImportSeedPhraseSheetCW() {
         <Text style={styles.title}>
           {lang.t('wallet.action.import_wallet')}
         </Text>
-        <SecretTextAreaContainer backgroundColor="red">
+        <SecretTextAreaContainer>
           <SecretTextArea
             backgroundColor="white"
             color={colors.black}
@@ -180,57 +181,36 @@ export default function ImportSeedPhraseSheetCW() {
             value={seedPhrase}
           />
         </SecretTextAreaContainer>
+        {isClipboardValidSecret && !seedPhrase && (
+          <Text style={styles.paste} onPress={handlePressPasteButton}>
+            {lang.t('button.paste_seed_phrase')}
+          </Text>
+        )}
         <Footer isSmallPhone={isSmallPhone}>
-          {seedPhrase ? (
-            <View
-              backgroundColor={!isSecretValid ? colors.black10 : colors.greenCW}
-              style={styles.buttonContainer}
+          <View
+            backgroundColor={!isSecretValid ? colors.black10 : colors.greenCW}
+            style={styles.buttonContainer}
+          >
+            <Button
+              backgroundColor="clear"
+              disabled={!isSecretValid}
+              {...(IS_ANDROID && {
+                height: 30,
+                overflowMargin: 15,
+                width: 89,
+              })}
+              onPress={handlePressImportButton}
             >
-              <Button
-                backgroundColor="clear"
-                disabled={!isSecretValid}
-                {...(IS_ANDROID && {
-                  height: 30,
-                  overflowMargin: 15,
-                  width: 89,
-                })}
-                onPress={handlePressImportButton}
+              <Text
+                align="center"
+                testID="import-sheet-button-label"
+                color={!isSecretValid ? colors.black30 : colors.white}
+                style={styles.buttonText}
               >
-                <Text
-                  align="center"
-                  testID="import-sheet-button-label"
-                  color={!isSecretValid ? colors.black30 : colors.white}
-                  style={styles.buttonText}
-                >
-                  {lang.t('button.import')}
-                </Text>
-              </Button>
-            </View>
-          ) : (
-            <View
-              backgroundColor={
-                !isClipboardValidSecret ? colors.black10 : colors.greenCW
-              }
-              style={styles.buttonContainer}
-            >
-              <Button
-                backgroundColor="clear"
-                disabled={!isClipboardValidSecret}
-                onPress={handlePressPasteButton}
-              >
-                <Text
-                  align="center"
-                  testID="import-sheet-button-label"
-                  color={
-                    !isClipboardValidSecret ? colors.black30 : colors.white
-                  }
-                  style={styles.buttonText}
-                >
-                  {lang.t('button.paste_seed_phrase')}
-                </Text>
-              </Button>
-            </View>
-          )}
+                {lang.t('button.import')}
+              </Text>
+            </Button>
+          </View>
         </Footer>
       </Sheet>
       <ToastPositionContainer bottom={keyboardHeight}>
@@ -253,5 +233,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     weight: fonts.weight.medium,
+  },
+  paste: {
+    color: colors.greenCW,
+    alignSelf: 'flex-start',
+    fontSize: fonts.size.medium,
+    fontWeight: fonts.weight.bold,
+    paddingVertical: 10,
   },
 });
