@@ -9,10 +9,13 @@ import ArrowIcon from './svg/ArrowIcon';
 import AvatarIcon from './svg/AvatarIcon';
 import BTCIcon from './svg/BTCIcon';
 import BackspaceIcon from './svg/BackspaceIcon';
+import BuyIconCW from './svg/BuyIconCW';
 import CameraIcon from './svg/CameraIcon';
 import CaretDownIcon from './svg/CaretDownIcon';
+import CaretDownIconCW from './svg/CaretDownIconCW';
 import CaretIcon from './svg/CaretIcon';
 import CaretThinIcon from './svg/CaretThinIcon';
+import ChatIconCW from './svg/ChatIconCW';
 import CheckmarkCircledIcon from './svg/CheckmarkCircledIcon';
 import CheckmarkIcon from './svg/CheckmarkIcon';
 import ClearInputIcon from './svg/ClearInputIcon';
@@ -48,6 +51,7 @@ import InstagramIcon from './svg/InstagramIcon';
 import LTCIcon from './svg/LTCIcon';
 import LockIcon from './svg/LockIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
+import MoreIconCW from './svg/MoreIconCW';
 import OfflineIcon from './svg/OfflineIcon';
 import PasscodeIcon from './svg/PasscodeIcon';
 import PinIcon from './svg/PinIcon';
@@ -60,13 +64,16 @@ import ScanHeaderIcon from './svg/ScanHeaderIcon';
 import ScannerIcon from './svg/ScannerIcon';
 import SearchIcon from './svg/SearchIcon';
 import SendIcon from './svg/SendIcon';
+import SendIconCW from './svg/SendIconCW';
 import SendSmallIcon from './svg/SendSmallIcon';
+import SettingsIconCW from './svg/SettingsIconCW';
 import ShareIcon from './svg/ShareIcon';
 import SignatureIcon from './svg/SignatureIcon';
 import SnapchatIcon from './svg/SnapchatIcon';
 import SpinnerIcon from './svg/SpinnerIcon';
 import StarIcon from './svg/StarIcon';
 import SwapIcon from './svg/SwapIcon';
+import SwapIconCW from './svg/SwapIconCW';
 import TelegramIcon from './svg/TelegramIcon';
 import ThreeDotsIcon from './svg/ThreeDotsIcon';
 import TouchIdIcon from './svg/TouchIdIcon';
@@ -86,10 +93,13 @@ const IconTypes = {
   backspace: BackspaceIcon,
   bridge: BridgeIcon,
   btcCoin: BTCIcon,
+  buyCW: BuyIconCW,
   camera: CameraIcon,
   caret: CaretIcon,
   caretDownIcon: CaretDownIcon,
+  caretDownIconCW: CaretDownIconCW,
   caretThin: CaretThinIcon,
+  chatCW: ChatIconCW,
   checkmark: CheckmarkIcon,
   checkmarkCircled: CheckmarkCircledIcon,
   clearInput: ClearInputIcon,
@@ -127,6 +137,7 @@ const IconTypes = {
   lock: LockIcon,
   ltcCoin: LTCIcon,
   minusCircled: MinusCircledIcon,
+  moreCW: MoreIconCW,
   offline: OfflineIcon,
   passcode: PasscodeIcon,
   pin: PinIcon,
@@ -140,7 +151,9 @@ const IconTypes = {
   scanner: ScannerIcon,
   search: SearchIcon,
   send: SendIcon,
+  sendCW: SendIconCW,
   sendSmall: SendSmallIcon,
+  settingsCW: SettingsIconCW,
   share: ShareIcon,
   signature: SignatureIcon,
   snapchat: SnapchatIcon,
@@ -148,6 +161,7 @@ const IconTypes = {
   star: StarIcon,
   sunflower: Emoji,
   swap: SwapIcon,
+  swapCW: SwapIconCW,
   telegram: TelegramIcon,
   threeDots: ThreeDotsIcon,
   touchid: TouchIdIcon,

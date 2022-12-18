@@ -13,18 +13,13 @@ export function useAccountAccentColor() {
   );
 
   const { colors } = useTheme();
-  let accentColor = colors.appleBlue;
-  if (accountImage) {
-    accentColor = dominantColor || colors.appleBlue;
-  } else if (typeof accountColor === 'number') {
-    accentColor = colors.avatarBackgrounds[accountColor];
-  }
+  let accentColor = colors.greenCW;
 
   const hasImageColorLoaded = state === 2 || state === 3;
   const hasLoaded = accountImage || accountSymbol || hasImageColorLoaded;
 
   return {
     accentColor,
-    loaded: hasLoaded,
+    loaded: true,
   };
 }

@@ -9,12 +9,12 @@ const TouchableBackdrop = ({ zIndex = 0, ...props }) => {
 
   return (
     <BorderlessButton
-      {...props}
       {...position.centeredAsObject}
       {...position.coverAsObject}
       activeOpacity={1}
       backgroundColor={colors.transparent}
       zIndex={zIndex}
+      {...props}
     />
   );
 };

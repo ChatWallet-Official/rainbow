@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import Skeleton, { FakeText } from '@/components/skeleton/Skeleton';
 import { Box, Heading } from '@/design-system';
 import { AppState } from '@/redux/store';
+import { Text } from '@/components/text';
+import { fonts } from '@/styles';
 
 export const ProfileBalanceRowHeight = 24;
 
@@ -26,19 +28,15 @@ export function ProfileBalanceRow({ totalValue }: { totalValue: string }) {
           </Skeleton>
         </Box>
       ) : (
-        <Heading
+        <Text
           color="label"
           numberOfLines={1}
-          size={
-            totalValue?.length > 14
-              ? '26px / 30px (Deprecated)'
-              : '34px / 41px (Deprecated)'
-          }
-          weight="heavy"
+          size={fonts.size.h2}
+          weight={fonts.weight.bold}
           testID="balance-text"
         >
           {totalValue}
-        </Heading>
+        </Text>
       )}
     </>
   );

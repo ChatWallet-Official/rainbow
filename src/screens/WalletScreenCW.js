@@ -41,6 +41,8 @@ import { atom, useRecoilValue } from 'recoil';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { analytics } from '@/analytics';
 import { LoadingScreen } from '@/components/modal/LoadingScreen';
+import ChatIconCW from '@/components/icons/svg/ChatIconCW';
+import SettingsIconCW from '@/components/icons/svg/SettingsIconCW';
 
 export const addressCopiedToastAtom = atom({
   default: false,
@@ -247,7 +249,7 @@ export default function WalletScreenCW() {
   const { navigate } = useNavigation();
 
   const handlePressActivity = useCallback(() => {
-    navigate(Routes.PROFILE_SCREEN);
+    navigate(Routes.SETTINGS_SHEET);
   }, [navigate]);
 
   const handlePressQRScanner = useCallback(() => {
@@ -270,19 +272,16 @@ export default function WalletScreenCW() {
           hasStatusBarInset
           leftComponent={
             <Navbar.Item onPress={handlePressActivity} testID="activity-button">
-              <Navbar.TextIcon icon="􀐫" />
+              <Navbar.SvgIcon icon={SettingsIconCW} />
             </Navbar.Item>
           }
           rightComponent={
             <Inline space={{ custom: 17 }}>
-              <Navbar.Item onPress={handlePressQRScanner}>
-                <Navbar.TextIcon icon="􀎹" />
-              </Navbar.Item>
               <Navbar.Item
                 onPress={handlePressDiscover}
                 testID="discover-button"
               >
-                <Navbar.TextIcon icon="􀎬" />
+                <Navbar.SvgIcon icon={ChatIconCW} />
               </Navbar.Item>
             </Inline>
           }

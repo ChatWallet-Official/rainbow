@@ -115,6 +115,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     flamingo: '#E540F1', // '229, 64, 241'
     green: '#2CCC00', // '58, 166, 134'
     greenCW: '#219653',
+    greenLabelCW: '#27AE60',
     grey: '#A9ADB9', // '169, 173, 185'
     grey20: '#333333', // '51, 51, 51'
     lighterGrey: '#F7F7F8', // '247, 247, 248'
@@ -141,6 +142,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     rainbowBlue: '#001E59', // '0, 30, 89',
     rainbowBlue06: 'rgba(0, 30, 89, 0.06)', // '0, 30, 89, 0.06'
     red: '#FF494A', // '255, 73, 74'
+    redCW: '#EB5757',
     rowDivider: 'rgba(60, 66, 82, 0.03)', // '60, 66, 82, 0.03'
     rowDividerExtraLight: 'rgba(60, 66, 82, 0.015)', // '60, 66, 82, 0.015'
     rowDividerFaint: 'rgba(60, 66, 82, 0.01)', // '60, 66, 82, 0.01'

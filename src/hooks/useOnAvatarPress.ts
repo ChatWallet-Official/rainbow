@@ -281,6 +281,10 @@ export default ({ screenType = 'transaction' }: UseOnAvatarPressProps = {}) => {
     });
   }, [accountENS, navigate]);
 
+  const onAvatarPressActivity = useCallback(() => {
+    navigate(Routes.PROFILE_SCREEN);
+  }, [navigate]);
+
   const onAvatarPress = useCallback(() => {
     if (hasENSAvatar && accountENS) {
       onAvatarPressProfile();
@@ -314,8 +318,7 @@ export default ({ screenType = 'transaction' }: UseOnAvatarPressProps = {}) => {
     onAvatarCreateProfile,
     onAvatarPickEmoji,
     onAvatarPress,
-    onAvatarPressProfile:
-      hasENSAvatar && accountENS ? onAvatarPressProfile : undefined,
+    onAvatarPressProfile: onAvatarPressActivity,
     onAvatarRemovePhoto,
     onAvatarWebProfile,
     onSelectionCallback: callback,

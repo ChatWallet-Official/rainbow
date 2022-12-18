@@ -304,32 +304,6 @@ const SettingsSection = ({
             }
           />
         )}
-        <ContextMenuButton
-          menuConfig={themeMenuConfig}
-          {...(android ? { onPress: onPressThemeAndroidActions } : {})}
-          isMenuPrimaryAction
-          // @ts-ignore
-          menuAlignmentOverride="right"
-          onPressMenuItem={handleSelectTheme}
-          useActionSheetFallback={false}
-        >
-          <MenuItem
-            hasChevron
-            leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? DarkModeIconDark : DarkModeIcon}
-              />
-            }
-            rightComponent={
-              <MenuItem.Selection>
-                {colorScheme ? capitalizeFirstLetter(colorScheme) : ''}
-              </MenuItem.Selection>
-            }
-            size={60}
-            testID={`theme-section-${isDarkMode ? 'dark' : 'light'}`}
-            titleComponent={<MenuItem.Title text={lang.t('settings.theme')} />}
-          />
-        </ContextMenuButton>
 
         {!isReadOnlyWallet && (
           <MenuItem

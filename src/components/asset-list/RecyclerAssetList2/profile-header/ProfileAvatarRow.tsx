@@ -25,6 +25,7 @@ import { useRecyclerAssetListPosition } from '../core/Contexts';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { navbarHeight } from '@/components/navbar/Navbar';
 import { IS_ANDROID } from '@/env';
+import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
 
 export const ProfileAvatarRowHeight = 80;
 export const ProfileAvatarRowTopInset = 24;
@@ -68,13 +69,7 @@ export function ProfileAvatarRow({
   const { colors } = useTheme();
 
   const { colorMode } = useColorMode();
-
-  let accentColor = colors.skeleton;
-  if (accountImage) {
-    accentColor = dominantColor || colors.skeleton;
-  } else if (typeof accountColor === 'number') {
-    accentColor = colors.avatarBackgrounds[accountColor];
-  }
+  const { accentColor } = useAccountAccentColor();
 
   // ////////////////////////////////////////////////////
   // Animations
@@ -151,91 +146,54 @@ export function ProfileAvatarRow({
     <AccentColorProvider color={accentColor}>
       <RNAnimated.View style={animatedStyle}>
         <Animated.View style={[expandStyle]}>
-          <ContextMenuButton
-            // @ts-expect-error - JS component
-            menuConfig={avatarContextMenuConfig}
-            onPressMenuItem={handlePressMenuItem}
+          <ButtonPressAnimation
+            onPress={onAvatarPressProfile}
+            scale={0.8}
+            testID="avatar-button"
+            overflowMargin={20}
           >
-            <ButtonPressAnimation
-              onPress={onAvatarPressProfile}
-              scale={0.8}
-              testID="avatar-button"
-              overflowMargin={20}
+            <Box
+              alignItems="center"
+              background="accent"
+              borderRadius={size / 2}
+              height={{ custom: size }}
+              justifyContent="center"
+              style={{
+                backgroundColor: accentColor,
+              }}
+              width={{ custom: size }}
             >
-              <Box
-                alignItems="center"
-                background="accent"
-                borderRadius={size / 2}
-                height={{ custom: size }}
-                justifyContent="center"
-                shadow={
-                  hasLoaded
-                    ? {
-                        custom: {
-                          ios: [
-                            {
-                              x: 0,
-                              y: 2,
-                              blur: 8,
-                              opacity: 0.08,
-                              color: 'shadowFar',
-                            },
-                            {
-                              x: 0,
-                              y: 8,
-                              blur: 24,
-                              opacity: 0.3,
-                              color:
-                                colorMode === 'dark' ? 'shadowFar' : 'accent',
-                            },
-                          ],
-                          android: {
-                            elevation: 30,
-                            opacity: 0.8,
-                            color:
-                              colorMode === 'dark' ? 'shadowFar' : 'accent',
-                          },
-                        },
-                      }
-                    : undefined
-                }
-                style={{
-                  backgroundColor: accountImage ? colors.skeleton : accentColor,
-                }}
-                width={{ custom: size }}
-              >
-                <>
-                  {!hasLoaded && (
-                    <Cover alignHorizontal="center">
-                      <Box height={{ custom: size }} width="full">
-                        <Skeleton animated>
-                          <Box
-                            background="body (Deprecated)"
-                            borderRadius={size / 2}
-                            height={{ custom: size }}
-                            width={{ custom: size }}
-                          />
-                        </Skeleton>
-                      </Box>
-                    </Cover>
+              <>
+                {!hasLoaded && (
+                  <Cover alignHorizontal="center">
+                    <Box height={{ custom: size }} width="full">
+                      <Skeleton animated>
+                        <Box
+                          background="body (Deprecated)"
+                          borderRadius={size / 2}
+                          height={{ custom: size }}
+                          width={{ custom: size }}
+                        />
+                      </Skeleton>
+                    </Box>
+                  </Cover>
+                )}
+                <Animated.View style={[fadeInStyle]}>
+                  {accountImage ? (
+                    <Box
+                      as={ImgixImage}
+                      borderRadius={size / 2}
+                      height={{ custom: size }}
+                      source={{ uri: accountImage }}
+                      width={{ custom: size }}
+                    />
+                  ) : (
+                    <EmojiAvatar size={size} />
                   )}
-                  <Animated.View style={[fadeInStyle]}>
-                    {accountImage ? (
-                      <Box
-                        as={ImgixImage}
-                        borderRadius={size / 2}
-                        height={{ custom: size }}
-                        source={{ uri: accountImage }}
-                        width={{ custom: size }}
-                      />
-                    ) : (
-                      <EmojiAvatar size={size} />
-                    )}
-                  </Animated.View>
-                </>
-              </Box>
-            </ButtonPressAnimation>
-          </ContextMenuButton>
+                </Animated.View>
+              </>
+            </Box>
+          </ButtonPressAnimation>
         </Animated.View>
       </RNAnimated.View>
     </AccentColorProvider>
@@ -246,10 +204,7 @@ export function EmojiAvatar({ size }: { size: number }) {
   const { colors } = useTheme();
   const { accountColor, accountSymbol } = useAccountProfile();
 
-  const accentColor =
-    accountColor !== undefined
-      ? colors.avatarBackgrounds[accountColor]
-      : colors.skeleton;
+  const accentColor = colors.greenCW;
 
   return (
     <AccentColorProvider color={accentColor}>
