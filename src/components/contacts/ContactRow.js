@@ -7,7 +7,7 @@ import { abbreviations, magicMemo, profileUtils } from '../../utils';
 import { ButtonPressAnimation } from '../animations';
 import { BottomRowText } from '../coin-row';
 import { Column, RowWithMargins } from '../layout';
-import { TruncatedAddress, TruncatedENS, TruncatedText } from '../text';
+import { TruncatedAddress, TruncatedENS, TruncatedText, Text } from '../text';
 import ContactAvatar from './ContactAvatar';
 import ImageAvatar from './ImageAvatar';
 import useExperimentalFlag, { PROFILES } from '@/config/experimentalHooks';
@@ -16,11 +16,13 @@ import { ENS_DOMAIN } from '@/helpers/ens';
 import { isENSAddressFormat, isValidDomainFormat } from '@/helpers/validators';
 import { useContacts, useDimensions, useENSAvatar } from '@/hooks';
 import styled from '@/styled-thing';
-import { margin } from '@/styles';
+import { margin, colors } from '@/styles';
 import {
   addressHashedColorIndex,
   addressHashedEmoji,
 } from '@/utils/profileUtils';
+import Divider from '../Divider';
+import lang from 'i18n-js';
 
 const ContactAddress = styled(TruncatedAddress).attrs(
   ({ theme: { colors }, lite }) => ({
@@ -175,7 +177,7 @@ const ContactRow = (
       onPress={handlePress}
     >
       <RowWithMargins
-        height={40}
+        height={50}
         margin={10}
         style={symmetricalMargins ? css.symmetrical : css.default}
         testID={`${testID}-contact-row-${
@@ -186,10 +188,10 @@ const ContactRow = (
           <ImageAvatar image={imageAvatar} marginRight={10} size="medium" />
         ) : (
           <ContactAvatar
-            color={bgColor}
+            color={colors.orangeCW}
             marginRight={10}
             size="medium"
-            value={emojiAvatar}
+            value={'👦'}
           />
         )}
         <Column justify={ios ? 'space-between' : 'center'}>
@@ -217,7 +219,9 @@ const ContactRow = (
           ) : (
             <Fragment>
               <ContactName deviceWidth={deviceWidth} lite={!!showcaseItem}>
-                {removeFirstEmojiFromString(nickname)}
+                {removeFirstEmojiFromString(
+                  abbreviations.address(address, 4, 6)
+                )}
               </ContactName>
               {isValidDomainFormat(address) ? (
                 <ContactENS ens={address} />
@@ -226,6 +230,7 @@ const ContactRow = (
               )}
             </Fragment>
           )}
+          <Divider color={colors.rowDividerLight} inset={[0, 0, 0, -50]} />
         </Column>
       </RowWithMargins>
     </ButtonPressAnimation>

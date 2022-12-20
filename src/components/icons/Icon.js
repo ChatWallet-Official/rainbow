@@ -60,6 +60,7 @@ import PlusIcon from './svg/PlusIcon';
 import ProgressIcon from './svg/ProgressIcon';
 import QRCodeIcon from './svg/QRCodeIcon';
 import RedditIcon from './svg/RedditIcon';
+import ScanCW from './svg/ScanCW';
 import ScanHeaderIcon from './svg/ScanHeaderIcon';
 import ScannerIcon from './svg/ScannerIcon';
 import SearchIcon from './svg/SearchIcon';
@@ -148,6 +149,7 @@ const IconTypes = {
   reddit: RedditIcon,
   robot: Emoji,
   scan: ScanHeaderIcon,
+  scanCW: ScanCW,
   scanner: ScannerIcon,
   search: SearchIcon,
   send: SendIcon,

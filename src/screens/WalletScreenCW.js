@@ -248,7 +248,7 @@ export default function WalletScreenCW() {
 
   const { navigate } = useNavigation();
 
-  const handlePressActivity = useCallback(() => {
+  const handlePressSettings = useCallback(() => {
     navigate(Routes.SETTINGS_SHEET);
   }, [navigate]);
 
@@ -271,7 +271,7 @@ export default function WalletScreenCW() {
         <Navbar
           hasStatusBarInset
           leftComponent={
-            <Navbar.Item onPress={handlePressActivity} testID="activity-button">
+            <Navbar.Item onPress={handlePressSettings} testID="activity-button">
               <Navbar.SvgIcon icon={SettingsIconCW} />
             </Navbar.Item>
           }
@@ -293,8 +293,8 @@ export default function WalletScreenCW() {
         <AssetList
           disableRefreshControl={isLoadingAssets}
           isEmpty={isAccountEmpty || !!params?.emptyWallet}
-          isLoading={isLoadingAssets}
-          isWalletEthZero={isWalletEthZero}
+          isLoading={false}
+          isWalletEthZero={false}
           network={currentNetwork}
           walletBriefSectionsData={walletBriefSectionsData}
         />

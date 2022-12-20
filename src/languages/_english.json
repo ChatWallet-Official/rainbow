@@ -246,6 +246,7 @@
       "loading": "Loading",
       "more": "More",
       "my_qr_code": "My QR Code",
+      "next": "Next",
       "no_thanks": "No thanks",
       "notify_me": "Get notified",
       "offline": "Offline",
@@ -364,6 +365,8 @@
         "balance_eth": "%{balanceEth} ETH"
       },
       "contacts_title": "Contacts",
+      "recent": "Recent",
+      "more": "See more",
       "input_placeholder": "Name",
       "my_wallets": "My wallets",
       "options": {
@@ -376,6 +379,7 @@
       "send_header": "Send",
       "suggestions": "Suggestions",
       "to_header": "To",
+      "send_to_header": "Send to",
       "watching": "Watching"
     },
     "deeplinks": {

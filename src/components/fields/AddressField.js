@@ -15,26 +15,32 @@ const AddressInput = styled(Input).attrs({
   keyboardType: android ? 'visible-password' : 'default',
   maxLength: addressUtils.maxLength,
   selectTextOnFocus: true,
-  size: 'large',
+  size: 'larger',
   spellCheck: false,
   weight: 'bold',
+  multiline: true,
 })({
   ...(android ? { height: 56 } : {}),
   flexGrow: 1,
-  marginTop: 1,
+  marginTop: 24,
   zIndex: 1,
+  minHeight: 60,
 });
 
 const Placeholder = styled(Row)({
   marginLeft: android ? 4 : 0,
   marginTop: android ? 11 : 0,
+  alignItems: 'center',
   position: 'absolute',
   top: 0,
+  right: 0,
+  bottom: 32,
+  left: 0,
   zIndex: 1,
 });
 
 const PlaceholderText = styled(Label).attrs({
-  size: 'large',
+  size: 'larger',
   weight: 'bold',
 })({
   color: ({ theme: { colors } }) => colors.alpha(colors.blueGreyDark, 0.3),
@@ -92,22 +98,20 @@ const AddressField = (
       <AddressInput
         {...props}
         autoFocus={autoFocus}
-        color={isValid ? colors.appleBlue : colors.dark}
+        color={colors.dark}
         editable={editable}
         onBlur={expandAbbreviatedClipboard}
         onChangeText={handleChangeText}
         onFocus={onFocus}
         ref={ref}
         testID={testID}
-        value={formatValue(inputValue)}
+        value={inputValue}
       />
       {!inputValue && (
         <Placeholder>
           <TouchableWithoutFeedback onPress={ref?.current?.focus}>
             <PlaceholderText>
-              {android || isTinyPhone
-                ? lang.t('fields.address.short_placeholder')
-                : lang.t('fields.address.long_placeholder')}
+              {lang.t('fields.address.short_placeholder')}
             </PlaceholderText>
           </TouchableWithoutFeedback>
         </Placeholder>

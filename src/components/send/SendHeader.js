@@ -11,7 +11,7 @@ import { ButtonPressAnimation } from '../animations';
 import { PasteAddressButton } from '../buttons';
 import showDeleteContactActionSheet from '../contacts/showDeleteContactActionSheet';
 import { AddressField } from '../fields';
-import { Row } from '../layout';
+import { Column, Row } from '../layout';
 import { SheetHandleFixedToTop, SheetTitle } from '../sheet';
 import { Label, Text } from '../text';
 import useExperimentalFlag, { PROFILES } from '@/config/experimentalHooks';
@@ -21,30 +21,35 @@ import { useClipboard, useDimensions } from '@/hooks';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
 import { padding } from '@/styles';
-import { profileUtils, showActionSheetWithOptions } from '@/utils';
+import { profileUtils, showActionSheetWithOptions, deviceUtils } from '@/utils';
+import { Icon } from '../icons';
 
-const AddressInputContainer = styled(Row).attrs({ align: 'center' })(
+const AddressInputContainer = styled(Column).attrs({ align: 'center' })(
   ({ isSmallPhone, theme: { colors }, isTinyPhone }) => ({
-    ...(android
-      ? padding.object(0, 19)
-      : isTinyPhone
-      ? padding.object(23, 15, 10)
-      : isSmallPhone
-      ? padding.object(11, 19, 15)
-      : padding.object(18, 19, 19)),
-    backgroundColor: colors.white,
+    padding: 24,
+    backgroundColor: colors.lighterGrey,
     overflow: 'hidden',
-    width: '100%',
+    width: deviceUtils.dimensions.width - 48,
+    height: 180,
+    marginTop: 24,
+    marginBottom: 12,
+    borderRadius: 32,
   })
 );
 
 const AddressFieldLabel = styled(Label).attrs({
-  size: 'large',
-  weight: 'bold',
+  size: 'medium',
+  weight: 'medium',
 })({
-  color: ({ theme: { colors } }) => colors.alpha(colors.blueGreyDark, 0.6),
+  color: ({ theme: { colors } }) => colors.alpha(colors.black, 0.55),
   marginRight: 4,
   opacity: 1,
+});
+
+const AddressInputHeader = styled(Row).attrs({
+  justify: 'space-between',
+})({
+  width: '100%',
 });
 
 const LoadingSpinner = styled(android ? Spinner : ActivityIndicator).attrs(
@@ -56,10 +61,10 @@ const LoadingSpinner = styled(android ? Spinner : ActivityIndicator).attrs(
 });
 
 const SendSheetTitle = styled(SheetTitle).attrs({
-  weight: 'heavy',
+  weight: 'semibold',
 })({
-  marginBottom: android ? -10 : 0,
-  marginTop: android ? 10 : 17,
+  marginBottom: android ? -10 : 10,
+  marginTop: android ? 10 : 20,
 });
 
 const defaultContactItem = {
@@ -216,8 +221,12 @@ export default function SendHeader({
     [onChangeAddressInput]
   );
 
+  const handlePressQRScanner = useCallback(() => {
+    navigate(Routes.QR_SCANNER_SCREEN);
+  }, [navigate]);
+
   return (
-    <Fragment>
+    <Fragment backgroundColor="red">
       <SheetHandleFixedToTop />
       {isTinyPhone ? null : (
         <SendSheetTitle>{lang.t('contacts.send_header')}</SendSheetTitle>
@@ -226,7 +235,14 @@ export default function SendHeader({
         isSmallPhone={isSmallPhone}
         isTinyPhone={isTinyPhone}
       >
-        <AddressFieldLabel>{lang.t('contacts.to_header')}:</AddressFieldLabel>
+        <AddressInputHeader>
+          <AddressFieldLabel>
+            {lang.t('contacts.send_to_header')}:
+          </AddressFieldLabel>
+          <ButtonPressAnimation onPress={handlePressQRScanner}>
+            <Icon name={'scanCW'} />
+          </ButtonPressAnimation>
+        </AddressInputHeader>
         <AddressField
           address={recipient}
           autoFocus={!showAssetList}
@@ -238,38 +254,10 @@ export default function SendHeader({
           ref={recipientFieldRef}
           testID="send-asset-form-field"
         />
-        {isValidAddress && Boolean(hexAddress) && (
-          <ButtonPressAnimation
-            onPress={
-              isPreExistingContact
-                ? handleOpenContactActionSheet
-                : handleNavigateToContact
-            }
-          >
-            <Text
-              align="right"
-              color="appleBlue"
-              size="large"
-              style={{ paddingLeft: 4 }}
-              testID={
-                isPreExistingContact
-                  ? 'edit-contact-button'
-                  : 'add-contact-button'
-              }
-              weight="heavy"
-            >
-              {isPreExistingContact ? '􀍡' : ` 􀉯 ${lang.t('button.save')}`}
-            </Text>
-          </ButtonPressAnimation>
-        )}
         {isValidAddress && !hexAddress && isEmpty(contact?.address) && (
           <LoadingSpinner />
         )}
-        {!isValidAddress && <PasteAddressButton onPress={onPressPaste} />}
       </AddressInputContainer>
-      {hideDivider && !isTinyPhone ? null : (
-        <Divider color={colors.rowDividerExtraLight} flex={0} inset={[0, 19]} />
-      )}
     </Fragment>
   );
 }

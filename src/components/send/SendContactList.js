@@ -7,7 +7,7 @@ import * as DeviceInfo from 'react-native-device-info';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDeepCompareMemo } from 'use-deep-compare';
 import { FlyInAnimation } from '../animations';
-import { ContactRow, SwipeableContactRow } from '../contacts';
+import { ContactRow, SwipeableContactRow, ShowMoreRow } from '../contacts';
 import { SheetHandleFixedToTopHeight } from '../sheet';
 import { Text } from '../text';
 import { InvalidPasteToast, ToastPositionContainer } from '../toasts';
@@ -33,10 +33,10 @@ const contentContainerStyle = { paddingBottom: 17, paddingTop: 7 };
 const keyExtractor = item => `SendContactList-${item.address}`;
 
 const SectionTitle = styled(Text).attrs({
-  size: 'lmedium',
-  weight: 'heavy',
+  size: 'medium',
+  weight: 'semibold',
 })({
-  color: ({ theme: { colors } }) => colors.alpha(colors.blueGreyDark, 0.6),
+  color: ({ theme: { colors } }) => colors.alpha(colors.black, 0.3),
   marginLeft: 19,
   marginTop: android ? 6 : 12,
 });
@@ -61,6 +61,7 @@ const SendContactFlatList = styled(SectionList).attrs({
   keyboardShouldPersistTaps: 'always',
   keyExtractor,
   marginTop: 0,
+  marginHorizontal: 5,
 })({
   flex: 1,
 });
@@ -82,11 +83,14 @@ export default function SendContactList({
 
   const contactRefs = useRef({});
   const touchedContact = useRef(undefined);
-
-  const filteredContacts = useMemo(
-    () => filterList(contacts, currentInput, ['nickname']),
-    [contacts, currentInput]
+  const [isContactsCollapsed, setIsContactsCollapsed] = useState(
+    contacts.length > 3
   );
+
+  const filteredContacts = useMemo(() => {
+    const result = filterList(contacts, currentInput, ['nickname']);
+    return isContactsCollapsed ? result.slice(0, 4) : result;
+  }, [contacts, currentInput, isContactsCollapsed]);
 
   const handleCloseAllDifferentContacts = useCallback(address => {
     if (touchedContact.current && contactRefs.current[touchedContact.current]) {
@@ -109,15 +113,25 @@ export default function SendContactList({
     [navigate]
   );
 
+  const onPressShowMore = () => {
+    setIsContactsCollapsed(false);
+  };
+
   const renderItemCallback = useCallback(
-    ({ item, section }) => {
+    ({ item, index, section }) => {
       const ComponentToReturn =
-        section.id === 'contacts' ? SwipeableContactRow : ContactRow;
+        section.id === 'contacts' && isContactsCollapsed && index === 3
+          ? ShowMoreRow
+          : ContactRow;
 
       return (
         <ComponentToReturn
           accountType={section.id}
-          onPress={onPressContact}
+          onPress={
+            isContactsCollapsed && index === 3
+              ? onPressShowMore
+              : onPressContact
+          }
           onSelectEdit={handleEditContact}
           onTouch={handleCloseAllDifferentContacts}
           ref={component => {
@@ -131,6 +145,7 @@ export default function SendContactList({
     [
       handleCloseAllDifferentContacts,
       handleEditContact,
+      isContactsCollapsed,
       onPressContact,
       removeContact,
     ]
@@ -183,13 +198,13 @@ export default function SendContactList({
       tmp.push({
         data: filteredContacts,
         id: 'contacts',
-        title: `􀉮 ${lang.t('contacts.contacts_title')}`,
+        title: `${lang.t('contacts.recent')}`,
       });
     filteredAddresses.length &&
       tmp.push({
         data: filteredAddresses,
         id: 'accounts',
-        title: `􀢲 ${lang.t('contacts.my_wallets')}`,
+        title: `${lang.t('contacts.my_wallets')}`,
       });
     filteredWatchedAddresses.length &&
       tmp.push({
@@ -248,7 +263,7 @@ export default function SendContactList({
       >
         <InvalidPasteToast />
       </ToastPositionContainer>
-      {ios && <KeyboardArea keyboardHeight={keyboardHeight} />}
+      {/* {ios && <KeyboardArea keyboardHeight={keyboardHeight} />} */}
     </FlyInAnimation>
   );
 }

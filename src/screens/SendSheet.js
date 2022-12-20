@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { InteractionManager, Keyboard, View } from 'react-native';
+import { InteractionManager, Keyboard, View, StyleSheet } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { useDispatch } from 'react-redux';
 import { useDebounce } from 'use-debounce';
@@ -71,7 +71,7 @@ import { parseGasParamsForTransaction } from '@/parsers';
 import { chainAssets, rainbowTokenList } from '@/references';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
-import { borders } from '@/styles';
+import { borders, fonts } from '@/styles';
 import {
   convertAmountAndPriceToNativeDisplay,
   convertAmountFromNativeValue,
@@ -83,6 +83,9 @@ import logger from '@/utils/logger';
 import { IS_ANDROID, IS_IOS } from '@/env';
 import { NoResults } from '@/components/list';
 import { NoResultsType } from '@/components/list/NoResults';
+import { Text } from '../components/text';
+import { Button } from '../components/buttons';
+import { ens } from '@/raps/actions';
 
 const sheetHeight = deviceUtils.dimensions.height - (IS_ANDROID ? 30 : 10);
 const statusBarHeight = getStatusBarHeight(true);
@@ -125,7 +128,12 @@ export default function SendSheet(props) {
   const recipientFieldRef = useRef();
   const profilesEnabled = useExperimentalFlag(PROFILES);
 
-  const { contacts, onRemoveContact, filteredContacts } = useContacts();
+  const {
+    contacts,
+    onRemoveContact,
+    filteredContacts,
+    onAddOrUpdateContacts,
+  } = useContacts();
   const { userAccounts, watchedAccounts } = useUserAccounts();
   const { sendableUniqueTokens } = useSendableUniqueTokens();
   const { accountAddress, nativeCurrency, network } = useAccountSettings();
@@ -953,6 +961,11 @@ export default function SendSheet(props) {
 
   const isEmptyWallet = !sortedAssets.length && !sendableUniqueTokens.length;
 
+  const handlePressNextButton = useCallback(() => {
+    const address = recipient;
+    onAddOrUpdateContacts(address, nickname, colors.orangeCW, network, ens);
+  }, [recipient, onAddOrUpdateContacts, nickname, colors.orangeCW, network]);
+
   return (
     <Container testID="send-sheet">
       <SheetContainer>
@@ -1057,7 +1070,37 @@ export default function SendSheet(props) {
             }
           />
         )}
+        <View
+          backgroundColor={!isValidAddress ? colors.black10 : colors.greenCW}
+          style={styles.buttonContainer}
+        >
+          <Button
+            backgroundColor="clear"
+            disabled={!isValidAddress}
+            onPress={handlePressNextButton}
+          >
+            <Text
+              align="center"
+              color={!isValidAddress ? colors.black30 : colors.white}
+              style={styles.buttonText}
+            >
+              {lang.t('button.next')}
+            </Text>
+          </Button>
+        </View>
       </SheetContainer>
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    borderRadius: 16,
+    marginTop: 10,
+    marginBottom: 64,
+    width: deviceUtils.dimensions.width - 64,
+  },
+  buttonText: {
+    weight: fonts.weight.medium,
+  },
+});
