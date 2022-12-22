@@ -10,7 +10,8 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Button } from '@/components/buttons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ContactRowInfoButton from '../components/ContactRowInfoButton';
 import Divider from '../components/Divider';
@@ -31,7 +32,7 @@ import { SendButton } from '../components/send';
 import { SheetTitle, SlackSheet } from '../components/sheet';
 import { Text as OldText } from '../components/text';
 import { ENSProfile } from '../entities/ens';
-import { address } from '../utils/abbreviations';
+import abbreviations, { address } from '../utils/abbreviations';
 import {
   addressHashedColorIndex,
   addressHashedEmoji,
@@ -67,9 +68,9 @@ import {
 import { useNavigation } from '@/navigation';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { position, fonts, colors } from '@/styles';
 import { useTheme } from '@/theme';
-import { getUniqueTokenType, promiseUtils } from '@/utils';
+import { deviceUtils, getUniqueTokenType, promiseUtils } from '@/utils';
 import logger from '@/utils/logger';
 
 const Container = styled(Centered).attrs({
@@ -545,242 +546,83 @@ export default function SendConfirmationSheet() {
         contentHeight={contentHeight}
         scrollEnabled={false}
       >
-        <SheetTitle>{lang.t('wallet.transaction.sending_title')}</SheetTitle>
-        <Column height={contentHeight}>
-          <Column padding={24}>
-            <Row>
-              <Column justify="center" width={deviceWidth - 117}>
-                <Heading
-                  numberOfLines={1}
-                  color="primary (Deprecated)"
-                  size="26px / 30px (Deprecated)"
-                  weight="heavy"
-                >
-                  {isNft ? asset?.name : nativeDisplayAmount}
-                </Heading>
-                <Row marginTop={12}>
-                  <Text
-                    color={{
-                      custom: isNft
-                        ? colors.alpha(colors.blueGreyDark, 0.6)
-                        : color,
-                    }}
-                    size="16px / 22px (Deprecated)"
-                    weight={isNft ? 'bold' : 'heavy'}
-                  >
-                    {isNft
-                      ? asset.familyName
-                      : `${amountDetails.assetAmount} ${asset.symbol}`}
-                  </Text>
-                </Row>
-              </Column>
-              <Column align="end" flex={1} justify="center">
-                <Row>
-                  {isNft ? (
-                    // @ts-expect-error JavaScript component
-                    <RequestVendorLogoIcon
-                      backgroundColor={asset.background || colors.lightestGrey}
-                      badgeXPosition={-7}
-                      badgeYPosition={0}
-                      borderRadius={10}
-                      imageUrl={imageUrl}
-                      network={asset.network}
-                      showLargeShadow
-                      size={50}
-                    />
-                  ) : (
-                    <CoinIcon size={50} {...asset} />
-                  )}
-                </Row>
-              </Column>
-            </Row>
-
-            <Row marginVertical={19}>
-              {/* @ts-expect-error – JS component */}
-              <Pill
-                borderRadius={15}
-                height={30}
-                minWidth={39}
-                paddingHorizontal={10}
-                paddingVertical={5.5}
-              >
-                <OldText
-                  align="center"
-                  color={colors.blueGreyDark60}
-                  letterSpacing="roundedMedium"
-                  lineHeight={20}
-                  size="large"
-                  weight="heavy"
-                >
-                  {lang.t('account.tx_to_lowercase')}
-                </OldText>
-              </Pill>
-
-              <Column align="end" flex={1}>
-                <ChevronDown />
-              </Column>
-            </Row>
-            <Row marginBottom={android ? 15 : 30}>
-              <Column flex={1} justify="center">
-                <Row width={android ? '80%' : '90%'}>
-                  <Heading
-                    numberOfLines={1}
-                    color="primary (Deprecated)"
-                    size="26px / 30px (Deprecated)"
-                    weight="heavy"
-                  >
-                    {avatarName}
-                  </Heading>
-                  <Centered marginLeft={4}>
-                    <ContactRowInfoButton
-                      item={{
-                        address: toAddress,
-                        name: avatarName || address(to, 4, 8),
-                      }}
-                      network={network}
-                      scaleTo={0.75}
-                    >
-                      <Text
-                        color={{
-                          custom: colors.alpha(
-                            colors.blueGreyDark,
-                            isDarkMode ? 0.5 : 0.6
-                          ),
-                        }}
-                        size="20px / 24px (Deprecated)"
-                        weight="heavy"
-                      >
-                        􀍡
-                      </Text>
-                    </ContactRowInfoButton>
-                  </Centered>
-                </Row>
-                <Row marginTop={12}>
-                  <Text
-                    color={{ custom: colors.alpha(colors.blueGreyDark, 0.6) }}
-                    size="16px / 22px (Deprecated)"
-                    weight="bold"
-                  >
-                    {isSendingToUserAccount
-                      ? `You own this wallet`
-                      : alreadySentTransactionsTotal === 0
-                      ? `First time send`
-                      : `${alreadySentTransactionsTotal} previous sends`}
-                  </Text>
-                </Row>
-              </Column>
-              <Column align="end" justify="center">
-                {accountImage ? (
-                  <ImageAvatar image={accountImage} size="lmedium" />
-                ) : (
-                  <ContactAvatar
-                    color={avatarColor}
-                    size="lmedium"
-                    value={avatarValue}
-                  />
-                )}
-              </Column>
-            </Row>
-            {/* @ts-expect-error JavaScript component */}
-            <Divider color={colors.rowDividerExtraLight} inset={[0]} />
-          </Column>
-          {(isL2 || isENS || shouldShowChecks) && (
-            <Inset bottom="30px (Deprecated)" horizontal="19px (Deprecated)">
-              <Stack space="19px (Deprecated)">
-                {isL2 && (
-                  <Fragment>
-                    {/* @ts-expect-error JavaScript component */}
-                    <L2Disclaimer
-                      assetType={asset.type}
-                      colors={colors}
-                      hideDivider
-                      marginBottom={0}
-                      marginHorizontal={0}
-                      onPress={handleL2DisclaimerPress}
-                      prominent
-                      sending
-                      symbol={asset.symbol}
-                    />
-                  </Fragment>
-                )}
-                {isENS && checkboxes.length > 0 && (
-                  <ButtonPressAnimation
-                    onPress={handleENSConfigurationPress}
-                    scale={0.95}
-                  >
-                    <Callout
-                      after={
-                        <Text
-                          color="secondary30 (Deprecated)"
-                          size="16px / 22px (Deprecated)"
-                          weight="heavy"
-                        >
-                          􀅵
-                        </Text>
-                      }
-                      before={
-                        <Box
-                          background="accent"
-                          borderRadius={20}
-                          shadow="12px heavy accent (Deprecated)"
-                          style={{ height: 20, width: 20 }}
-                        >
-                          <ENSCircleIcon height={20} width={20} />
-                        </Box>
-                      }
-                    >
-                      {lang.t('wallet.transaction.ens_configuration_options')}
-                    </Callout>
-                  </ButtonPressAnimation>
-                )}
-                {(isENS || shouldShowChecks) && checkboxes.length > 0 && (
-                  <Inset horizontal="10px">
-                    <Stack space="24px">
-                      {checkboxes.map((check, i) => (
-                        <CheckboxField
-                          color={color}
-                          isChecked={check.checked}
-                          key={`check_${i}`}
-                          label={check.label}
-                          onPress={() =>
-                            handleCheckbox({
-                              ...check,
-                              checked: !check.checked,
-                              index: i,
-                            })
-                          }
-                          testID={check.id}
-                        />
-                      ))}
-                    </Stack>
-                  </Inset>
-                )}
-              </Stack>
-            </Inset>
-          )}
-          <SendButtonWrapper>
-            {/* @ts-expect-error JavaScript component */}
-            <SendButton
-              androidWidth={deviceWidth - 60}
-              backgroundColor={color}
-              disabled={!canSubmit}
-              insufficientEth={insufficientEth}
-              isAuthorizing={isAuthorizing}
-              onLongPress={handleSubmit}
-              requiresChecks={shouldShowChecks}
-              smallButton={!isTinyPhone && (android || isSmallPhone)}
-              testID="send-confirmation-button"
-            />
-          </SendButtonWrapper>
-          {isENS && (
-            /* @ts-expect-error JavaScript component */
-            <GasSpeedButton
-              currentNetwork={network}
-              theme={isDarkMode ? 'dark' : 'light'}
-            />
-          )}
-        </Column>
+        <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <OldText style={styles.title}>
+              {lang.t('wallet.transaction.sending_to_title')}
+            </OldText>
+            <ContactAvatar color={colors.greenCW} size="medium" value={'👦'} />
+          </View>
+          <OldText style={styles.address}>
+            {abbreviations.address(toAddress, 4, 6)}
+          </OldText>
+          <OldText
+            style={styles.asset}
+          >{`${amountDetails.assetAmount} ${asset.symbol}`}</OldText>
+          <OldText style={styles.native}>
+            Amount Sending {nativeDisplayAmount}
+          </OldText>
+          <View style={styles.buttonContainer}>
+            <Button backgroundColor="clear" onPress={handleSubmit}>
+              <OldText align="center" style={styles.confirm}>
+                {lang.t('button.confirm')}
+              </OldText>
+            </Button>
+          </View>
+          <TouchableOpacity onPress={goBack}>
+            <OldText align="center" style={styles.cancel}>
+              {lang.t('button.cancel')}
+            </OldText>
+          </TouchableOpacity>
+        </View>
       </SlackSheet>
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    marginTop: 32,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: fonts.size.big,
+    marginRight: 8,
+  },
+  address: {
+    marginTop: 10,
+    fontSize: fonts.size.large,
+    fontWeight: fonts.weight.bold,
+  },
+  asset: {
+    fontSize: fonts.size.h1,
+    fontWeight: fonts.weight.bold,
+    marginTop: 32,
+  },
+  native: {
+    fontSize: fonts.size.bmedium,
+    fontWeight: fonts.weight.medium,
+    color: colors.black50,
+  },
+  buttonContainer: {
+    backgroundColor: colors.black,
+    borderRadius: 16,
+    marginTop: 64,
+    marginBottom: 18,
+    width: deviceUtils.dimensions.width - 64,
+  },
+  confirm: {
+    fontWeight: fonts.weight.medium,
+    fontSize: fonts.size.bmedium,
+    color: colors.white,
+  },
+  cancel: {
+    fontSize: fonts.size.medium,
+    fontWeight: fonts.weight.medium,
+  },
+});

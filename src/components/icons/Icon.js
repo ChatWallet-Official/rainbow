@@ -21,6 +21,7 @@ import ChatIconCW from './svg/ChatIconCW';
 import CheckmarkCircledIcon from './svg/CheckmarkCircledIcon';
 import CheckmarkIcon from './svg/CheckmarkIcon';
 import ClearInputIcon from './svg/ClearInputIcon';
+import ClockCW from './svg/ClockCW';
 import ClockIcon from './svg/ClockIcon';
 import CloseCircledIcon from './svg/CloseCircledIcon';
 import CloseIcon from './svg/CloseIcon';
@@ -80,6 +81,7 @@ import SwapIcon from './svg/SwapIcon';
 import SwapIconCW from './svg/SwapIconCW';
 import TelegramIcon from './svg/TelegramIcon';
 import ThreeDotsIcon from './svg/ThreeDotsIcon';
+import TickGreenCW from './svg/TickGreenCW';
 import TouchIdIcon from './svg/TouchIdIcon';
 import TwitterIcon from './svg/TwitterIcon';
 import WalletConnectIcon from './svg/WalletConnectIcon';
@@ -110,6 +112,7 @@ const IconTypes = {
   checkmarkCircled: CheckmarkCircledIcon,
   clearInput: ClearInputIcon,
   clock: ClockIcon,
+  clockCW: ClockCW,
   close: CloseIcon,
   closeCircled: CloseCircledIcon,
   compass: CompassIcon,
@@ -172,6 +175,7 @@ const IconTypes = {
   swapCW: SwapIconCW,
   telegram: TelegramIcon,
   threeDots: ThreeDotsIcon,
+  tickGreenCW: TickGreenCW,
   touchid: TouchIdIcon,
   twitter: TwitterIcon,
   walletConnect: WalletConnectIcon,

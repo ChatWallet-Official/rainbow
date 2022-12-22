@@ -84,6 +84,7 @@ import { PairHardwareWalletNavigator } from './PairHardwareWalletNavigator';
 import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
 import { TransactionDetails } from '@/screens/transaction-details/TransactionDetails';
 import { SendAssetForm } from '@/components/send';
+import SendResult from '@/screens/SendResult';
 
 const Stack = createStackNavigator();
 const NativeStack = createNativeStackNavigator();
@@ -105,6 +106,7 @@ function SendFlowNavigator() {
         options={sheetPreset}
       />
       <Stack.Screen component={SendAssetForm} name={Routes.SEND_ASSET_FORM} />
+      <Stack.Screen component={SendResult} name={Routes.SEND_RESULT} />
     </Stack.Navigator>
   );
 }

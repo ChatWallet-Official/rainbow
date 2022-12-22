@@ -574,10 +574,10 @@ export default function SendAssetForm() {
 
       if (submitSuccessful) {
         goBack();
-        navigate(Routes.WALLET_SCREEN);
-        InteractionManager.runAfterInteractions(() => {
-          navigate(Routes.PROFILE_SCREEN);
-        });
+        navigate(Routes.SEND_RESULT);
+        // InteractionManager.runAfterInteractions(() => {
+        //   navigate(Routes.PROFILE_SCREEN);
+        // });
       }
     },
     [amountDetails.assetAmount, goBack, navigate, onSubmit]
