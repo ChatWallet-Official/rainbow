@@ -9,6 +9,7 @@ import { Text } from '../text';
 import { analytics } from '@/analytics';
 import { useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
+import { colors } from '@/styles';
 
 const GradientBackground = styled(RadialGradient).attrs(
   ({ colorForAsset, theme: { colors }, width }) => {
@@ -33,12 +34,9 @@ const GradientBackground = styled(RadialGradient).attrs(
   width: ({ width }) => width - 38,
 });
 
-const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
-  scaleTo: 1.05,
-})({
-  borderRadius: 29.5,
-  height: ({ isSmallPhone, isTinyPhone }) =>
-    isTinyPhone ? 40 : isSmallPhone ? 46 : 59,
+const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs()({
+  borderRadius: 16,
+  height: ({ height }) => height,
   overflow: 'hidden',
   paddingBottom: ({ isSmallPhone, isTinyPhone }) =>
     isTinyPhone ? 7 : isSmallPhone ? 8 : 11,
@@ -47,7 +45,7 @@ const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
   paddingTop: ({ isSmallPhone, isTinyPhone }) =>
     isTinyPhone ? 6 : isSmallPhone ? 7 : 10,
   position: 'relative',
-  width: ({ width }) => (android ? width - 38 : '100%'),
+  width: ({ width }) => width - 64,
 });
 
 const SendAssetFormField = (
@@ -65,6 +63,7 @@ const SendAssetFormField = (
     placeholder,
     value,
     testID,
+    height,
     ...props
   },
   ref
@@ -85,13 +84,9 @@ const SendAssetFormField = (
       isTinyPhone={isTinyPhone}
       onPress={() => !android && ref?.current.focus()}
       width={width}
+      height={height}
+      backgroundColor={colors.lighterGrey}
     >
-      <GradientBackground
-        colorForAsset={colorForAsset}
-        isSmallPhone={android || isSmallPhone}
-        isTinyPhone={isTinyPhone}
-        width={width}
-      />
       <RowWithMargins
         align="center"
         flex={1}

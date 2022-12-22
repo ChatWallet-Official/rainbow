@@ -210,7 +210,7 @@ export default function SendContactList({
       tmp.push({
         data: filteredWatchedAddresses,
         id: 'watching',
-        title: `${isDarkMode ? '􀨭' : '􀦧'} ${lang.t('contacts.watching')}`,
+        title: `${lang.t('contacts.watching')}`,
       });
     currentInput?.length >= 3 &&
       filteredEnsSuggestions.length &&

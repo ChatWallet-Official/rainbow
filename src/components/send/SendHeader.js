@@ -60,7 +60,7 @@ const LoadingSpinner = styled(android ? Spinner : ActivityIndicator).attrs(
   marginRight: 2,
 });
 
-const SendSheetTitle = styled(SheetTitle).attrs({
+export const SendSheetTitle = styled(SheetTitle).attrs({
   weight: 'semibold',
 })({
   marginBottom: android ? -10 : 10,

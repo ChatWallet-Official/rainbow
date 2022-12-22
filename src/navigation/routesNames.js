@@ -55,6 +55,7 @@ const Routes = {
   SAVINGS_WITHDRAW_MODAL: 'SavingsWithdrawModal',
   SELECT_ENS_SHEET: 'SelectENSSheet',
   SELECT_UNIQUE_TOKEN_SHEET: 'SelectUniqueTokenSheet',
+  SEND_ASSET_FORM: 'SendAssetForm',
   SEND_CONFIRMATION_SHEET: 'SendConfirmationSheet',
   SEND_SHEET: 'SendSheet',
   SEND_SHEET_NAVIGATOR: 'SendSheetNavigator',

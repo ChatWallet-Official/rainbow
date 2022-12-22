@@ -83,6 +83,7 @@ import QRScannerScreen from '@/screens/QRScannerScreen';
 import { PairHardwareWalletNavigator } from './PairHardwareWalletNavigator';
 import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
 import { TransactionDetails } from '@/screens/transaction-details/TransactionDetails';
+import { SendAssetForm } from '@/components/send';
 
 const Stack = createStackNavigator();
 const NativeStack = createNativeStackNavigator();
@@ -103,6 +104,7 @@ function SendFlowNavigator() {
         name={Routes.SEND_SHEET}
         options={sheetPreset}
       />
+      <Stack.Screen component={SendAssetForm} name={Routes.SEND_ASSET_FORM} />
     </Stack.Navigator>
   );
 }

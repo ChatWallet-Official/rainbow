@@ -39,7 +39,7 @@ const EmptyAssetList = ({
 
   const { refresh, isRefreshing } = useRefreshAccountData();
 
-  const showAddFunds = isLoading || isWalletEthZero;
+  const showAddFunds = !isLoading && isWalletEthZero;
 
   return (
     <ConditionalWrap

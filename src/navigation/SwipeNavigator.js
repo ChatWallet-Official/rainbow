@@ -10,6 +10,8 @@ import { deviceUtils } from '../utils';
 import ScrollPagerWrapper from './ScrollPagerWrapper';
 import Routes from './routesNames';
 import { useAccountSettings, useCoinListEdited } from '@/hooks';
+import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
+import SettingsSheet from '@/screens/SettingsSheet';
 
 const Swipe = createMaterialTopTabNavigator();
 
@@ -34,11 +36,11 @@ export function SwipeNavigator() {
         swipeEnabled={swipeEnabled && !isCoinListEdited}
         tabBar={renderTabBar}
       >
-        <Swipe.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} />
+        {/* <Swipe.Screen component={SettingsSheet} name={Routes.SETTINGS_SHEET} /> */}
         <Swipe.Screen component={WalletScreenCW} name={Routes.WALLET_SCREEN} />
         <Swipe.Screen
-          component={DiscoverScreen}
-          name={Routes.DISCOVER_SCREEN}
+          component={LearnWebViewScreen}
+          name={Routes.LEARN_WEB_VIEW_SCREEN}
           initialParams={params}
         />
       </Swipe.Navigator>

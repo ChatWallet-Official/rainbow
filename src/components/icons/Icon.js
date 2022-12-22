@@ -6,6 +6,7 @@ import ApplePayIcon from './svg/ApplePayIcon';
 import ArrowBackIcon from './svg/ArrowBack';
 import ArrowCircledIcon from './svg/ArrowCircledIcon';
 import ArrowIcon from './svg/ArrowIcon';
+import ArrowRight from './svg/ArrowRight';
 import AvatarIcon from './svg/AvatarIcon';
 import BTCIcon from './svg/BTCIcon';
 import BackspaceIcon from './svg/BackspaceIcon';
@@ -14,6 +15,7 @@ import CameraIcon from './svg/CameraIcon';
 import CaretDownIcon from './svg/CaretDownIcon';
 import CaretDownIconCW from './svg/CaretDownIconCW';
 import CaretIcon from './svg/CaretIcon';
+import CaretLeftIcon from './svg/CaretLeftIcon';
 import CaretThinIcon from './svg/CaretThinIcon';
 import ChatIconCW from './svg/ChatIconCW';
 import CheckmarkCircledIcon from './svg/CheckmarkCircledIcon';
@@ -52,6 +54,7 @@ import LTCIcon from './svg/LTCIcon';
 import LockIcon from './svg/LockIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
 import MoreIconCW from './svg/MoreIconCW';
+import NavBack from './svg/NavBack';
 import OfflineIcon from './svg/OfflineIcon';
 import PasscodeIcon from './svg/PasscodeIcon';
 import PinIcon from './svg/PinIcon';
@@ -90,6 +93,7 @@ const IconTypes = {
   arrow: ArrowIcon,
   arrowBack: ArrowBackIcon,
   arrowCircled: ArrowCircledIcon,
+  arrowRight: ArrowRight,
   avatar: AvatarIcon,
   backspace: BackspaceIcon,
   bridge: BridgeIcon,
@@ -99,6 +103,7 @@ const IconTypes = {
   caret: CaretIcon,
   caretDownIcon: CaretDownIcon,
   caretDownIconCW: CaretDownIconCW,
+  caretLeftIcon: CaretLeftIcon,
   caretThin: CaretThinIcon,
   chatCW: ChatIconCW,
   checkmark: CheckmarkIcon,
@@ -137,6 +142,7 @@ const IconTypes = {
   instagram: InstagramIcon,
   lock: LockIcon,
   ltcCoin: LTCIcon,
+  navBack: NavBack,
   minusCircled: MinusCircledIcon,
   moreCW: MoreIconCW,
   offline: OfflineIcon,

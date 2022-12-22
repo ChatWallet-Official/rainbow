@@ -5,6 +5,7 @@ import { NavbarSvgIcon } from './NavbarSvgIcon';
 import { NavbarItem } from './NavbarItem';
 import { NavbarTextIcon } from './NavbarTextIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BackgroundColor, TextColor } from '@/design-system/color/palettes';
 
 type NavbarProps = {
   hasStatusBarInset?: boolean;
@@ -12,6 +13,7 @@ type NavbarProps = {
   rightComponent?: React.ReactElement | null;
   testID?: string;
   title?: string;
+  labelColor?: TextColor;
 };
 
 export const navbarHeight = 48;
@@ -22,6 +24,7 @@ export function Navbar({
   rightComponent = <Box />,
   testID,
   title,
+  labelColor = 'label',
 }: NavbarProps) {
   const { top: topInset } = useSafeAreaInsets();
 
@@ -44,7 +47,7 @@ export function Navbar({
           </Box>
         </Cover>
         <Inset top="1px (Deprecated)">
-          <Text color="label" size="20pt" weight="heavy">
+          <Text color={labelColor} size="15pt" weight="medium">
             {title}
           </Text>
         </Inset>

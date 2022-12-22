@@ -5,11 +5,18 @@ import SendAssetFormField from './SendAssetFormField';
 import { useDimensions } from '@/hooks';
 import { supportedNativeCurrencies } from '@/references';
 import styled from '@/styled-thing';
-import { removeLeadingZeros } from '@/utils';
+import { removeLeadingZeros, deviceUtils } from '@/utils';
+import { GasSpeedButton } from '../gas';
+import { View, StyleSheet } from 'react-native';
+import { Text } from '../text';
+import { Button } from '../buttons';
+import { fonts } from '@/styles';
+import lang from 'i18n-js';
 
 const footerMargin = getSoftMenuBarHeight() / 2;
 const FooterContainer = styled(Column).attrs({
   justify: 'end',
+  align: 'center',
   marginBottom: android ? footerMargin : 0,
 })({
   width: '100%',
@@ -18,7 +25,6 @@ const FooterContainer = styled(Column).attrs({
 
 const FormContainer = styled(Column).attrs({
   align: 'center',
-  justify: 'center',
 })({
   flex: 1,
   minHeight: ({ isSmallPhone, isTinyPhone }) =>
@@ -47,6 +53,9 @@ export default function SendAssetFormToken({
   selected,
   sendMaxBalance,
   txSpeedRenderer,
+  network,
+  buttonDisabled,
+  onPressSendButton,
   ...props
 }) {
   const { isSmallPhone, isTinyPhone } = useDimensions();
@@ -75,6 +84,7 @@ export default function SendAssetFormToken({
           ref={assetInputRef}
           testID="selected-asset-field"
           value={assetAmount}
+          height={109}
         />
         <Spacer isSmallPhone={isSmallPhone} isTinyPhone={isTinyPhone} />
         <SendAssetFormField
@@ -90,12 +100,48 @@ export default function SendAssetFormToken({
           ref={nativeCurrencyInputRef}
           testID="selected-asset-quantity-field"
           value={nativeAmount}
+          height={66}
         />
       </FormContainer>
       <FooterContainer>
-        {buttonRenderer}
-        {txSpeedRenderer}
+        <GasSpeedButton
+          asset={selected}
+          currentNetwork={network}
+          horizontalPadding={0}
+          marginBottom={17}
+          theme={'light'}
+        />
+        <View
+          backgroundColor={buttonDisabled ? colors.black10 : colors.black}
+          style={styles.buttonContainer}
+        >
+          <Button
+            backgroundColor="clear"
+            disabled={buttonDisabled}
+            onPress={onPressSendButton}
+          >
+            <Text
+              align="center"
+              color={buttonDisabled ? colors.black30 : colors.white}
+              style={styles.buttonText}
+            >
+              {lang.t('button.send')}
+            </Text>
+          </Button>
+        </View>
       </FooterContainer>
     </Fragment>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    borderRadius: 16,
+    marginTop: 10,
+    marginBottom: 64,
+    width: deviceUtils.dimensions.width - 64,
+  },
+  buttonText: {
+    weight: fonts.weight.medium,
+  },
+});

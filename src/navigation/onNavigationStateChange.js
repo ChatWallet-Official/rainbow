@@ -17,8 +17,8 @@ let action = null;
 const isOnSwipeScreen = name =>
   [
     Routes.WALLET_SCREEN,
-    Routes.DISCOVER_SCREEN,
-    Routes.PROFILE_SCREEN,
+    Routes.LEARN_WEB_VIEW_SCREEN,
+    // Routes.SETTINGS_SHEET,
   ].includes(name);
 
 export function triggerOnSwipeLayout(newAction) {

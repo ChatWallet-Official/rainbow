@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/core';
 import { compact, isEmpty, keys } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { InteractionManager, Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OpacityToggler } from '../components/animations';
@@ -29,6 +29,7 @@ import {
   useUserAccounts,
   useWalletSectionsData,
   useWallets,
+  useWalletBalances,
 } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import { updateRefetchSavings } from '@/redux/data';
@@ -43,6 +44,7 @@ import { analytics } from '@/analytics';
 import { LoadingScreen } from '@/components/modal/LoadingScreen';
 import ChatIconCW from '@/components/icons/svg/ChatIconCW';
 import SettingsIconCW from '@/components/icons/svg/SettingsIconCW';
+import { isL2Network, isTestnetNetwork } from '@/handlers/web3';
 
 export const addressCopiedToastAtom = atom({
   default: false,
@@ -91,7 +93,7 @@ export default function WalletScreenCW() {
   const loadAccountData = useLoadAccountData();
   const initializeAccountData = useInitializeAccountData();
   const insets = useSafeAreaInsets();
-  const { isWalletLoading } = useWallets();
+  const { isWalletLoading, wallets } = useWallets();
 
   const revertToMainnet = useCallback(async () => {
     await resetAccountState();
@@ -120,6 +122,18 @@ export default function WalletScreenCW() {
     isEmpty: isSectionsEmpty,
     briefSectionsData: walletBriefSectionsData,
   } = useWalletSectionsData();
+
+  const balances = useWalletBalances(wallets);
+  const isTestnet = isTestnetNetwork(currentNetwork);
+  const isL2 = isL2Network(currentNetwork);
+
+  const walletHasBalance = useMemo(() => {
+    if (isL2 || isTestnet) {
+      return true;
+    } else {
+      return balances[accountAddress] > 0;
+    }
+  }, [isL2, isTestnet, balances, accountAddress]);
 
   useEffect(() => {
     // This is the fix for Android wallet creation problem.
@@ -257,7 +271,7 @@ export default function WalletScreenCW() {
   }, [navigate]);
 
   const handlePressDiscover = useCallback(() => {
-    navigate(Routes.DISCOVER_SCREEN);
+    navigate(Routes.LEARN_WEB_VIEW_SCREEN);
   }, [navigate]);
 
   const isAddressCopiedToastActive = useRecoilValue(addressCopiedToastAtom);
@@ -293,8 +307,8 @@ export default function WalletScreenCW() {
         <AssetList
           disableRefreshControl={isLoadingAssets}
           isEmpty={isAccountEmpty || !!params?.emptyWallet}
-          isLoading={false}
-          isWalletEthZero={false}
+          isLoading={isLoadingAssets}
+          isWalletEthZero={!walletHasBalance}
           network={currentNetwork}
           walletBriefSectionsData={walletBriefSectionsData}
         />
