@@ -108,7 +108,7 @@ const AddressField = (
         value={inputValue}
       />
       {!inputValue && (
-        <Placeholder>
+        <Placeholder pointerEvents="none">
           <TouchableWithoutFeedback onPress={ref?.current?.focus}>
             <PlaceholderText>
               {lang.t('fields.address.short_placeholder')}

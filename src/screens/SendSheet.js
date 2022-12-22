@@ -19,7 +19,7 @@ import { SendContactList, SendHeader } from '../components/send';
 import { SheetActionButton } from '../components/sheet';
 import { PROFILES, useExperimentalFlag } from '@/config';
 import { AssetTypes } from '@/entities';
-
+import { ToastPositionContainer, Toast } from '@/components/toasts';
 import { debouncedFetchSuggestions } from '@/handlers/ens';
 import {
   getProviderForNetwork,
@@ -47,6 +47,8 @@ import {
   useTransactionConfirmation,
   useUpdateAssetOnchainBalance,
   useUserAccounts,
+  useKeyboardHeight,
+  useTimeout,
 } from '@/hooks';
 
 import { useNavigation } from '@/navigation/Navigation';
@@ -133,7 +135,7 @@ export default function SendSheet(props) {
   const [debouncedRecipient] = useDebounce(recipient, 500);
   const recipientOverride = params?.address;
   const [isValidAddress, setIsValidAddress] = useState(!!recipientOverride);
-
+  const keyboardHeight = useKeyboardHeight();
   const theme = useTheme();
   const { colors, isDarkMode } = theme;
 
@@ -144,6 +146,15 @@ export default function SendSheet(props) {
   } = useSendSheetInputRefs();
 
   const showEmptyState = true;
+
+  const [showToast, setShowToast] = useState(false);
+  const [startTimeout, stopTimeout] = useTimeout();
+
+  useEffect(() => {
+    if (showToast) {
+      startTimeout(() => setShowToast(false), 3000);
+    }
+  }, [startTimeout, stopTimeout, showToast]);
 
   useEffect(() => {
     const resolveAddressIfNeeded = async () => {
@@ -189,6 +200,12 @@ export default function SendSheet(props) {
       setIsValidAddress(isValidFormat);
     }
   }, []);
+
+  useEffect(() => {
+    if (isValidAddress) {
+      Keyboard.dismiss();
+    }
+  }, [isValidAddress]);
 
   const [ensSuggestions, setEnsSuggestions] = useState([]);
   const [loadingEnsSuggestions, setLoadingEnsSuggestions] = useState(false);
@@ -269,6 +286,8 @@ export default function SendSheet(props) {
         };
 
         navigate(Routes.SEND_ASSET_FORM, paramsForForm);
+      } else {
+        setShowToast(true);
       }
     },
     [
@@ -341,6 +360,9 @@ export default function SendSheet(props) {
           </Button>
         </View>
       </SheetContainer>
+      <ToastPositionContainer bottom={keyboardHeight}>
+        <Toast isVisible={showToast} text={`No assets to send`} />
+      </ToastPositionContainer>
     </Container>
   );
 }
