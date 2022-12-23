@@ -55,6 +55,7 @@ import {
   qrScannerConfig,
   registerENSNavigatorConfig,
   restoreSheetConfig,
+  selectTokenSheetConfig,
   sendConfirmationSheetConfig,
   settingsSheetConfig,
   stackNavigationConfig,
@@ -85,6 +86,7 @@ import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
 import { TransactionDetails } from '@/screens/transaction-details/TransactionDetails';
 import { SendAssetForm } from '@/components/send';
 import SendResult from '@/screens/SendResult';
+import SelectTokenSheet from '@/screens/SelectTokenSheet';
 
 const Stack = createStackNavigator();
 const NativeStack = createNativeStackNavigator();
@@ -267,6 +269,11 @@ function NativeStackNavigator() {
         component={SendConfirmationSheet}
         name={Routes.SEND_CONFIRMATION_SHEET}
         {...sendConfirmationSheetConfig}
+      />
+      <Stack.Screen
+        component={SelectTokenSheet}
+        name={Routes.SELECT_TOKEN_SHEET}
+        {...selectTokenSheetConfig}
       />
       <NativeStack.Screen
         component={AddTokenSheet}

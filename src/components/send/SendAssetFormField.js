@@ -10,6 +10,7 @@ import { analytics } from '@/analytics';
 import { useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
 import { colors } from '@/styles';
+import { Icon } from '../icons';
 
 const GradientBackground = styled(RadialGradient).attrs(
   ({ colorForAsset, theme: { colors }, width }) => {
@@ -60,6 +61,7 @@ const SendAssetFormField = (
     onChange,
     onFocus,
     onPressButton,
+    onPressLabel,
     placeholder,
     value,
     testID,
@@ -125,11 +127,13 @@ const SendAssetFormField = (
           }
           size={isTinyPhone ? 'big' : android || isSmallPhone ? 'bigger' : 'h3'}
           weight="medium"
+          onPress={onPressLabel}
         >
           {label.length > labelMaxLength
             ? label.substring(0, labelMaxLength)
             : label}
         </Text>
+        {onPressLabel && <Icon name="arrowRight" />}
       </RowWithMargins>
     </Wrapper>
   );

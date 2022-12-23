@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 import { KeyboardArea } from 'react-native-keyboard-area';
 import LinearGradient from 'react-native-linear-gradient';
 import { ButtonPressAnimation } from '../animations';
@@ -258,6 +258,10 @@ export default function SendAssetForm() {
     },
     [selected, sendUpdateAssetAmount, updateMaxInputBalance]
   );
+
+  const navigateToSelectToken = useCallback(() => {
+    navigate(Routes.SELECT_TOKEN_SHEET, { sendUpdateSelected });
+  }, [navigate, sendUpdateSelected]);
 
   // Update all fields passed via params if needed
   useEffect(() => {
@@ -931,6 +935,7 @@ export default function SendAssetForm() {
               txSpeedRenderer={txSpeedRenderer}
               network={network}
               buttonDisabled={buttonDisabled}
+              onPressTokenSelection={navigateToSelectToken}
               onPressSendButton={showConfirmationSheet}
             />
             <KeyboardArea initialHeight={keyboardHeight} isOpen />

@@ -55,6 +55,7 @@ export default function SendAssetFormToken({
   txSpeedRenderer,
   network,
   buttonDisabled,
+  onPressTokenSelection,
   onPressSendButton,
   ...props
 }) {
@@ -80,6 +81,7 @@ export default function SendAssetFormToken({
           onChange={onChangeAssetAmount}
           onFocus={onFocusAssetInput}
           onPressButton={sendMaxBalance}
+          onPressLabel={onPressTokenSelection}
           placeholder="0"
           ref={assetInputRef}
           testID="selected-asset-field"
