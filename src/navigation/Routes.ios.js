@@ -108,6 +108,11 @@ function SendFlowNavigator() {
         options={sheetPreset}
       />
       <Stack.Screen component={SendAssetForm} name={Routes.SEND_ASSET_FORM} />
+      <Stack.Screen
+        component={SelectTokenSheet}
+        name={Routes.SELECT_TOKEN_SHEET}
+        {...selectTokenSheetConfig}
+      />
       <Stack.Screen component={SendResult} name={Routes.SEND_RESULT} />
     </Stack.Navigator>
   );
@@ -269,11 +274,6 @@ function NativeStackNavigator() {
         component={SendConfirmationSheet}
         name={Routes.SEND_CONFIRMATION_SHEET}
         {...sendConfirmationSheetConfig}
-      />
-      <Stack.Screen
-        component={SelectTokenSheet}
-        name={Routes.SELECT_TOKEN_SHEET}
-        {...selectTokenSheetConfig}
       />
       <NativeStack.Screen
         component={AddTokenSheet}

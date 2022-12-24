@@ -30,6 +30,9 @@ import {
 
 const containerStyles = {
   paddingLeft: 19,
+  backgroundColor: '#F7F7F7',
+  borderRadius: 16,
+  height: 72,
 };
 
 export const TRANSACTION_COIN_ROW_VERTICAL_PADDING = 7;
@@ -53,14 +56,14 @@ const BottomRow = ({ description, native, status, type }) => {
     status === TransactionStatusTypes.received &&
     type === TransactionTypes.trade;
 
-  let coinNameColor = colors.dark;
+  let coinNameColor = colors.black50;
   if (isOutgoingSwap) coinNameColor = colors.alpha(colors.blueGreyDark, 0.5);
 
-  let balanceTextColor = colors.alpha(colors.blueGreyDark, 0.5);
-  if (isReceived) balanceTextColor = colors.green;
-  if (isSent) balanceTextColor = colors.dark;
-  if (isIncomingSwap) balanceTextColor = colors.swapPurple;
-  if (isOutgoingSwap) balanceTextColor = colors.dark;
+  let balanceTextColor = colors.alpha(colors.black, 0.5);
+  // if (isReceived) balanceTextColor = colors.green;
+  // if (isSent) balanceTextColor = colors.dark;
+  // if (isIncomingSwap) balanceTextColor = colors.swapPurple;
+  // if (isOutgoingSwap) balanceTextColor = colors.dark;
 
   const nativeDisplay = native?.display;
   const balanceText = nativeDisplay
@@ -70,12 +73,11 @@ const BottomRow = ({ description, native, status, type }) => {
   return (
     <Row align="center" justify="space-between">
       <FlexItem flex={1}>
-        <CoinName color={coinNameColor}>{description}</CoinName>
+        <CoinName color={coinNameColor} size={12} weight={'regular'}>
+          {description}
+        </CoinName>
       </FlexItem>
-      <BalanceText
-        color={balanceTextColor}
-        weight={isReceived ? 'medium' : null}
-      >
+      <BalanceText color={balanceTextColor} size={'smaller'}>
         {balanceText}
       </BalanceText>
     </Row>
@@ -84,10 +86,12 @@ const BottomRow = ({ description, native, status, type }) => {
 
 const TopRow = ({ balance, pending, status, title }) => (
   <RowWithMargins align="center" justify="space-between" margin={19}>
-    <TransactionStatusBadge pending={pending} status={status} title={title} />
-    <Row align="center" flex={1} justify="end">
-      <BottomRowText align="right">{balance?.display ?? ''}</BottomRowText>
+    <Row align="center" flex={1} justify="start">
+      <BottomRowText align="left" color="black">
+        {balance?.display ?? ''}
+      </BottomRowText>
     </Row>
+    <TransactionStatusBadge pending={pending} status={status} title={title} />
   </RowWithMargins>
 );
 

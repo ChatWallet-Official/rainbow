@@ -41,7 +41,7 @@ export default function SelectTokenSheet() {
     params: { sendUpdateSelected },
   } = useRoute<any>();
 
-  const onSelectAsset = selected => {
+  const onSelectAsset = (selected: any) => {
     goBack();
     sendUpdateSelected(selected);
   };

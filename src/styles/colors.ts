@@ -90,6 +90,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     black10: 'rgba(0, 0, 0, 0.1)',
     black30: 'rgba(0, 0, 0, 0.3)',
     black50: 'rgba(0, 0, 0, 0.5)',
+    blueCW: '#2D9CDB',
     blueGreyDark: '#3C4252', // '60, 66, 82'
     blueGreyDark04: '#222326', // this color is blueGreyDark at 4% over white
     blueGreyDark20: '#3A3D45', // this color is blueGreyDark at 20% over white

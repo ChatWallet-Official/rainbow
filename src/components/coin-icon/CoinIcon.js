@@ -16,7 +16,7 @@ import {
   CoinIcon as ReactCoinIcon,
 } from '@/utils';
 
-export const CoinIconSize = 40;
+export const CoinIconSize = 32;
 
 const ContractInteractionIcon = styled(ImgixImage)(({ size }) => ({
   height: size,
