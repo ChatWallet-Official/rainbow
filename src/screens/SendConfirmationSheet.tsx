@@ -551,7 +551,7 @@ export default function SendConfirmationSheet() {
             <OldText style={styles.title}>
               {lang.t('wallet.transaction.sending_to_title')}
             </OldText>
-            <ContactAvatar color={colors.greenCW} size="medium" value={'👦'} />
+            {/* <ContactAvatar color={colors.greenCW} size="medium" value={'👦'} /> */}
           </View>
           <OldText style={styles.address}>
             {abbreviations.address(toAddress, 4, 6)}
@@ -591,13 +591,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: fonts.size.big,
+    fontSize: fonts.size.smedium,
+    color: colors.black50,
     marginRight: 8,
   },
   address: {
     marginTop: 10,
-    fontSize: fonts.size.large,
-    fontWeight: fonts.weight.bold,
+    fontSize: fonts.size.smedium,
   },
   asset: {
     fontSize: fonts.size.h1,
@@ -606,7 +606,6 @@ const styles = StyleSheet.create({
   },
   native: {
     fontSize: fonts.size.bmedium,
-    fontWeight: fonts.weight.medium,
     color: colors.black50,
   },
   buttonContainer: {

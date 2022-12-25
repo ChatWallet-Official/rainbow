@@ -61,8 +61,8 @@
         "request_test_eth": "Request test ETH through the %{testnetName} faucet",
         "send_test_eth_from_another_source": "Send test ETH from another %{testnetName} wallet—or ask a friend!"
       },
-      "to_get_started_android": "To get first crypto asset,buy some BTC",
-      "to_get_started_ios": "To get first crypto asset,buy some BTC",
+      "to_get_started_android": "For your first digital asset, get some ETH",
+      "to_get_started_ios": "For your first digital asset, get some ETH",
       "weekly_limit_reached": "Weekly limit reached",
       "yearly_limit_reached": "Yearly limit reached"
     },
@@ -263,7 +263,7 @@
       "save": "Save",
       "send": "Send",
       "send_another": "Send Another",
-      "send_history": "Send History",
+      "transaction_history": "Transaction History",
       "share": "Share",
       "swap": "Swap",
       "try_again": "Try again",
@@ -367,7 +367,7 @@
       },
       "contacts_title": "Contacts",
       "recent": "Recent",
-      "more": "See more",
+      "more": "More",
       "input_placeholder": "Name",
       "my_wallets": "My wallets",
       "options": {
@@ -381,7 +381,8 @@
       "suggestions": "Suggestions",
       "to_header": "To",
       "send_to_header": "Send to",
-      "watching": "Watching"
+      "watching": "Watching",
+      "select_token": "Select a Token"
     },
     "deeplinks": {
       "couldnt_recognize_url": "Uh oh! We couldn’t recognize this URL!",
@@ -1647,7 +1648,7 @@
           "looks_like_already_imported": "Looks like you already imported this wallet!",
           "oops": "Oops!"
         },
-        "brand_name": "Chat Wallet",
+        "brand_name": "Chatwallet",
         "already_have_wallet": "I already have one",
         "create_wallet": "Create Wallet",
         "add_existing_wallet": "Add an existing wallet",

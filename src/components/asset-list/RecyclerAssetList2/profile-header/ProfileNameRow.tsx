@@ -49,16 +49,16 @@ export function ProfileNameRow({
     navigate(Routes.CHANGE_WALLET_SHEET);
   };
   const onLongPressName = React.useCallback(() => {
-    if (disableOnPress) return;
-    if (!isToastActive) {
-      setToastActive(true);
-      setTimeout(() => {
-        setToastActive(false);
-      }, 2000);
-    }
-    haptics.notificationSuccess();
-    onNewEmoji?.current && onNewEmoji.current();
-    Clipboard.setString(accountAddress);
+    // if (disableOnPress) return;
+    // if (!isToastActive) {
+    //   setToastActive(true);
+    //   setTimeout(() => {
+    //     setToastActive(false);
+    //   }, 2000);
+    // }
+    // haptics.notificationSuccess();
+    // onNewEmoji?.current && onNewEmoji.current();
+    // Clipboard.setString(accountAddress);
   }, [accountAddress, disableOnPress, isToastActive, setToastActive]);
 
   const name = accountENS

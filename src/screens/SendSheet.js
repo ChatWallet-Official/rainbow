@@ -328,19 +328,17 @@ export default function SendSheet(props) {
           userAccounts={userAccounts}
           watchedAccounts={watchedAccounts}
         />
-        {showEmptyState && (
-          <SendContactList
-            contacts={filteredContacts}
-            currentInput={currentInput}
-            ensSuggestions={ensSuggestions}
-            key={sendContactListDataKey}
-            loadingEnsSuggestions={loadingEnsSuggestions}
-            onPressContact={onPressContact}
-            removeContact={onRemoveContact}
-            userAccounts={userAccounts}
-            watchedAccounts={watchedAccounts}
-          />
-        )}
+        <SendContactList
+          contacts={filteredContacts}
+          currentInput={currentInput}
+          ensSuggestions={ensSuggestions}
+          key={sendContactListDataKey}
+          loadingEnsSuggestions={loadingEnsSuggestions}
+          onPressContact={onPressContact}
+          removeContact={onRemoveContact}
+          userAccounts={userAccounts}
+          watchedAccounts={watchedAccounts}
+        />
         <View
           backgroundColor={!isValidAddress ? colors.black10 : colors.greenCW}
           style={styles.buttonContainer}

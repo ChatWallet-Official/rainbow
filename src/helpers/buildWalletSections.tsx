@@ -473,7 +473,11 @@ const withBriefBalanceSection = (
     content = EMPTY_WALLET_CONTENT;
   }
 
-  return [...header, ...content];
+  if (isEmpty) {
+    return header;
+  } else {
+    return [...header, ...content];
+  }
 };
 
 const withUniqueTokenFamiliesSection = (uniqueTokens: any, data: any) => {

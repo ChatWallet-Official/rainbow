@@ -65,6 +65,7 @@ export default function SendAssetFormToken({
   const {
     mask: nativeMask,
     placeholder: nativePlaceholder,
+    symbol: nativeSymbol,
   } = supportedNativeCurrencies[nativeCurrency];
 
   return (
@@ -76,6 +77,7 @@ export default function SendAssetFormToken({
       >
         <SendAssetFormField
           colorForAsset={colorForAsset}
+          size={64}
           format={removeLeadingZeros}
           label={selected.symbol}
           onChange={onChangeAssetAmount}
@@ -92,13 +94,14 @@ export default function SendAssetFormToken({
         <SendAssetFormField
           autoFocus
           colorForAsset={colors.alpha(colors.blueGreyDark, 0.8)}
+          size={fonts.size.big}
           label={nativeCurrency}
           mask={nativeMask}
           maxLabelColor={colors.alpha(colors.blueGreyDark, 0.6)}
           onChange={onChangeNativeAmount}
           onFocus={onFocusNativeInput}
           onPressButton={sendMaxBalance}
-          placeholder={nativePlaceholder}
+          placeholder={nativeSymbol + nativePlaceholder}
           ref={nativeCurrencyInputRef}
           testID="selected-asset-quantity-field"
           value={nativeAmount}

@@ -19,6 +19,7 @@ import { SendAssetList } from '@/components/send';
 import { useTheme } from '@/theme/ThemeContext';
 import { useRoute, StackActions } from '@react-navigation/native';
 import { Text } from '@/components/text';
+import { SendSheetTitle } from '@/components/send/SendHeader';
 
 const Container = styled(Centered).attrs({
   direction: 'column',
@@ -60,6 +61,7 @@ export default function SelectTokenSheet() {
         contentHeight={deviceHeight / 2}
         scrollEnabled={false}
       >
+        <SendSheetTitle>{lang.t('contacts.select_token')}</SendSheetTitle>
         <SendAssetList
           hiddenCoins={hiddenCoinsObj}
           nativeCurrency={nativeCurrency}

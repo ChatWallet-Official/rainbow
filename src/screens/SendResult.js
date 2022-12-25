@@ -35,7 +35,7 @@ export default function SendResult() {
   }, []);
 
   const onPressDone = () => {
-    navigate(Routes.WALLET_SCREEN);
+    goBack();
   };
 
   return (
@@ -52,7 +52,7 @@ export default function SendResult() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.history}>
           <Text style={styles.historyText}>
-            {lang.t('button.send_history')}
+            {lang.t('button.transaction_history')}
           </Text>
         </TouchableOpacity>
       </View>
