@@ -1,4 +1,4 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IS_TESTING } from 'react-native-dotenv';
 import { ActivityList } from '../components/activity-list';
@@ -33,8 +33,8 @@ const ProfileScreenPage = styled(Page)({
 export default function ProfileScreen({ navigation }) {
   const [activityListInitialized, setActivityListInitialized] = useState(false);
   const isFocused = useIsFocused();
-  const { navigate } = useNavigation();
-
+  const { goBack, navigate } = useNavigation();
+  const { params } = useRoute();
   const accountTransactions = useAccountTransactions(
     activityListInitialized,
     isFocused
@@ -51,6 +51,10 @@ export default function ProfileScreen({ navigation }) {
   const { network } = useAccountSettings();
 
   const isEmpty = !transactionsCount && !pendingRequestCount;
+
+  useEffect(() => {
+    if (params && params.goBackImmediately) goBack();
+  }, [goBack, params]);
 
   useEffect(() => {
     setTimeout(() => {

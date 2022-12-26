@@ -35,7 +35,11 @@ export default function SendResult() {
   }, []);
 
   const onPressDone = () => {
-    goBack();
+    navigate(Routes.PROFILE_SCREEN, { goBackImmediately: true });
+  };
+
+  const onPressHistory = () => {
+    navigate(Routes.PROFILE_SCREEN);
   };
 
   return (
@@ -50,7 +54,7 @@ export default function SendResult() {
         <TouchableOpacity style={styles.done} onPress={onPressDone}>
           <Text style={styles.doneText}>{lang.t('button.done')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.history}>
+        <TouchableOpacity style={styles.history} onPress={onPressHistory}>
           <Text style={styles.historyText}>
             {lang.t('button.transaction_history')}
           </Text>
