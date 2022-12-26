@@ -87,6 +87,7 @@ import { TransactionDetails } from '@/screens/transaction-details/TransactionDet
 import { SendAssetForm } from '@/components/send';
 import SendResult from '@/screens/SendResult';
 import SelectTokenSheet from '@/screens/SelectTokenSheet';
+import ProfileScreen from '@/screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 const NativeStack = createNativeStackNavigator();
@@ -171,6 +172,7 @@ function MainNavigator() {
         name={Routes.WELCOME_SCREEN}
         options={{ animationEnabled: false, gestureEnabled: false }}
       />
+      <Stack.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} />
       <Stack.Screen
         component={AvatarBuilder}
         name={Routes.AVATAR_BUILDER}

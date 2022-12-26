@@ -14,13 +14,14 @@ const Container = styled(Column)({
   alignSelf: 'center',
   marginTop: verticalOffset,
   width: 200,
+  height: deviceUtils.dimensions.height,
 });
 
 const ActivityListEmptyState = ({ children, emoji, label }) => {
   const { colors } = useTheme();
 
   return (
-    <View>
+    <View backgroundColor="white">
       {children}
       <Container>
         <Centered>

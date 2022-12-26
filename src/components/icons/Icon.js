@@ -55,6 +55,7 @@ import LTCIcon from './svg/LTCIcon';
 import LockIcon from './svg/LockIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
 import MoreIconCW from './svg/MoreIconCW';
+import MoreProfileIcon from './svg/MoreProfileIcon';
 import NavBack from './svg/NavBack';
 import OfflineIcon from './svg/OfflineIcon';
 import PasscodeIcon from './svg/PasscodeIcon';
@@ -147,6 +148,7 @@ const IconTypes = {
   ltcCoin: LTCIcon,
   navBack: NavBack,
   minusCircled: MinusCircledIcon,
+  moreProfile: MoreProfileIcon,
   moreCW: MoreIconCW,
   offline: OfflineIcon,
   passcode: PasscodeIcon,
