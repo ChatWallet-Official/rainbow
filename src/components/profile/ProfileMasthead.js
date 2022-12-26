@@ -9,11 +9,12 @@ import { useAccountProfile, useDimensions, useOnAvatarPress } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
-import { abbreviations } from '@/utils';
+import { abbreviations, showActionSheetWithOptions } from '@/utils';
 import { useForegroundColor } from '@/design-system';
 import { colors, fonts } from '@/styles';
 import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import lang from 'i18n-js';
 
 // NOTE:
 // If you’re trying to edit this file for iOS and you’re not seeing any changes,
@@ -93,6 +94,28 @@ export default function ProfileMasthead({
     })
   )();
 
+  const onPressAccountEdit = useCallback(() => {
+    showActionSheetWithOptions(
+      {
+        cancelButtonIndex: 2,
+        options: [
+          lang.t('profiles.actions.edit_emoji'),
+          lang.t('profiles.actions.rename_wallet'),
+          lang.t('button.cancel'),
+        ],
+      },
+      buttonIndex => {
+        if (buttonIndex === 0) {
+          navigate(Routes.AVATAR_BUILDER, {
+            initialAccountColor: accountColor,
+            initialAccountSymbol: accountSymbol,
+            initialAccountName: accountName,
+          });
+        }
+      }
+    );
+  }, [accountColor, accountName, accountSymbol, navigate]);
+
   return (
     <View>
       <View style={styles.background}></View>
@@ -109,7 +132,7 @@ export default function ProfileMasthead({
           onSelectionCallback={onSelectionCallback}
           style={android && { marginTop: 10 }}
         />
-        <ButtonPressAnimation onPress={handlePressChangeWallet} flex={1}>
+        <ButtonPressAnimation onPress={onPressAccountEdit} flex={1}>
           <Row justify="space-between" align="center">
             <View style={styles.accountContainer}>
               <AccountName

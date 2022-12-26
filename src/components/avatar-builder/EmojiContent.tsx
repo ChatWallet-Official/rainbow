@@ -54,7 +54,6 @@ const EmojiContent = ({
               key: `categoryEmojiTouchableOpacity${rowContent[0]}${singleLine.sort_order}`,
               onPress: () => onEmojiSelect(singleLine),
               style: {
-                backgroundColor: colors.white,
                 height: cellSize,
                 width: cellSize,
               },
@@ -63,7 +62,6 @@ const EmojiContent = ({
               <TouchableOpacity activeOpacity={0.5} {...touchableProps}>
                 <Text
                   style={{
-                    backgroundColor: colors.white,
                     color: colors.black,
                     fontSize,
                     height: cellSize,
@@ -78,7 +76,6 @@ const EmojiContent = ({
               <GHTouchableOpacity activeOpacity={0.7} {...touchableProps}>
                 <Text
                   style={{
-                    backgroundColor: colors.white,
                     color: colors.black,
                     fontSize,
                     height: cellSize,

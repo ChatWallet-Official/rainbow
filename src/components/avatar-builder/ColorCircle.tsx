@@ -20,12 +20,7 @@ const ColorCircle = ({ backgroundColor = 'blue', onPressColor }: Props) => {
         scaleTo={0.7}
         style={sx.button}
       >
-        <View
-          style={[
-            sx.circle,
-            { backgroundColor, shadowColor: colors.shadowBlack },
-          ]}
-        />
+        <View style={[sx.circle, { backgroundColor }]} />
       </ButtonPressAnimation>
     </View>
   );
@@ -38,12 +33,6 @@ const sx = StyleSheet.create({
   circle: {
     borderRadius: 15,
     height: 24,
-    shadowOffset: {
-      height: 4,
-      width: 0,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
     width: 24,
   },
   container: {

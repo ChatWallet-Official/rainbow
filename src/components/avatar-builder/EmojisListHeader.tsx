@@ -25,11 +25,7 @@ const EmojisListHeader = ({
   if (showSectionTitles) {
     return (
       <Animated.View
-        style={[
-          avatarBuilderStyles.sectionHeaderWrap,
-          { backgroundColor: colors.white },
-          animatedStyle,
-        ]}
+        style={[avatarBuilderStyles.sectionHeaderWrap, animatedStyle]}
       >
         <Text
           style={[

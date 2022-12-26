@@ -204,7 +204,10 @@ export function EmojiAvatar({ size }: { size: number }) {
   const { colors } = useTheme();
   const { accountColor, accountSymbol } = useAccountProfile();
 
-  const accentColor = colors.greenCW;
+  const accentColor =
+    accountColor !== undefined
+      ? colors.avatarBackgrounds[accountColor]
+      : colors.skeleton;
 
   return (
     <AccentColorProvider color={accentColor}>

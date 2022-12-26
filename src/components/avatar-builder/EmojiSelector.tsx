@@ -39,6 +39,7 @@ import getFormattedAllEmojiList, {
 } from './helpers/getFormattedAllEmojiList';
 import { EmojiCategory, EmojiEntry } from './types';
 import { useTheme } from '@/theme';
+import { colors } from '@/styles';
 
 const { width } = Dimensions.get('screen');
 
@@ -313,6 +314,9 @@ export const EmojiSelector = ({
 
   return (
     <View style={sx.frame} {...other}>
+      {showTabs ? (
+        <TabsWithShadows category={category} onTabSelect={handleTabSelect} />
+      ) : null}
       <TapGestureHandler onHandlerStateChange={onTapChange}>
         <View style={sx.outerContainer}>
           {!isReady ? <EmojisLoader /> : null}
@@ -342,9 +346,6 @@ export const EmojiSelector = ({
           </View>
         </View>
       </TapGestureHandler>
-      {showTabs ? (
-        <TabsWithShadows category={category} onTabSelect={handleTabSelect} />
-      ) : null}
     </View>
   );
 };

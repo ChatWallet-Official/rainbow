@@ -1085,7 +1085,9 @@
         "unwatch_ens": "Unwatch %{ensName}",
         "unwatch_ens_title": "Are you sure you want to unwatch %{ensName}?",
         "watch": "Watch",
-        "watching": "Watching"
+        "watching": "Watching",
+        "edit_emoji": "Edit Emoji",
+        "rename_wallet": "Rename wallet"
       },
       "banner": {
         "register_name": "Create Your ENS Profile",

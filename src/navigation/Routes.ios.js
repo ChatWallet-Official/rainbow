@@ -176,7 +176,7 @@ function MainNavigator() {
       <Stack.Screen
         component={AvatarBuilder}
         name={Routes.AVATAR_BUILDER}
-        options={emojiPreset}
+        // options={emojiPreset}
       />
       <Stack.Screen
         component={AvatarBuilder}

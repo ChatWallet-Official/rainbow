@@ -21,15 +21,15 @@ const TabsWithShadows = ({ category, onTabSelect }: Props) => {
   const { isDarkMode, colors } = useTheme();
   return (
     <View style={sx.tabBar}>
-      <View style={[sx.tabBarShadowImage, { opacity: isDarkMode ? 0.3 : 0.6 }]}>
+      {/* <View style={[sx.tabBarShadowImage, { opacity: isDarkMode ? 0.3 : 0.6 }]}>
         <ImgixImage
           pointerEvents="none"
           // @ts-expect-error
           source={EmojiTabBarShadow}
           style={StyleSheet.absoluteFill}
         />
-      </View>
-      <View style={[{ shadowColor: colors.shadowBlack }, sx.gradientContainer]}>
+      </View> */}
+      {/* <View style={[{ shadowColor: colors.shadowBlack }, sx.gradientContainer]}>
         <LinearGradient
           colors={[
             colors.white,
@@ -41,7 +41,7 @@ const TabsWithShadows = ({ category, onTabSelect }: Props) => {
           start={{ x: 0.5, y: 0 }}
           style={sx.gradient}
         />
-      </View>
+      </View> */}
       <TabBar
         activeCategory={category}
         categoryKeys={categoryKeys}
@@ -64,14 +64,15 @@ const sx = StyleSheet.create({
     ...position.coverAsObject,
   },
   tabBar: {
-    alignSelf: 'center',
-    bottom: 24,
+    // alignSelf: 'center',
+    // bottom: 24,
     flexDirection: 'row',
     height: 38,
     justifyContent: 'space-between',
     padding: 4,
-    position: 'absolute',
+    // position: 'absolute',
     width: 276,
+    marginHorizontal: 12,
   },
   tabBarShadowImage: {
     height: 138,

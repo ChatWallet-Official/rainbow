@@ -20,11 +20,13 @@ import CaretThinIcon from './svg/CaretThinIcon';
 import ChatIconCW from './svg/ChatIconCW';
 import CheckmarkCircledIcon from './svg/CheckmarkCircledIcon';
 import CheckmarkIcon from './svg/CheckmarkIcon';
+import CheckMarkIconCW from './svg/CheckMarkIconCW';
 import ClearInputIcon from './svg/ClearInputIcon';
 import ClockCW from './svg/ClockCW';
 import ClockIcon from './svg/ClockIcon';
 import CloseCircledIcon from './svg/CloseCircledIcon';
 import CloseIcon from './svg/CloseIcon';
+import CloseMarkIconCW from './svg/CloseMarkIconCW';
 import CompassIcon from './svg/CompassIcon';
 import CopyIcon from './svg/CopyIcon';
 import CrosshairIcon from './svg/CrosshairIcon';
@@ -111,11 +113,13 @@ const IconTypes = {
   chatCW: ChatIconCW,
   checkmark: CheckmarkIcon,
   checkmarkCircled: CheckmarkCircledIcon,
+  checkMarkIconCW: CheckMarkIconCW,
   clearInput: ClearInputIcon,
   clock: ClockIcon,
   clockCW: ClockCW,
   close: CloseIcon,
   closeCircled: CloseCircledIcon,
+  closeMarkIconCW: CloseMarkIconCW,
   compass: CompassIcon,
   copy: CopyIcon,
   crosshair: CrosshairIcon,
