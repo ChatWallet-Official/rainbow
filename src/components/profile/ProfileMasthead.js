@@ -5,16 +5,24 @@ import { Icon } from '../icons';
 import { Centered, Column, Row } from '../layout';
 import { TruncatedText } from '../text';
 import AvatarCircle from './AvatarCircle';
-import { useAccountProfile, useDimensions, useOnAvatarPress } from '@/hooks';
+import {
+  useAccountProfile,
+  useDimensions,
+  useOnAvatarPress,
+  useWallets,
+  useWebData,
+} from '@/hooks';
 import { useNavigation } from '@/navigation';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
 import { abbreviations, showActionSheetWithOptions } from '@/utils';
 import { useForegroundColor } from '@/design-system';
 import { colors, fonts } from '@/styles';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, InteractionManager } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import lang from 'i18n-js';
+import { useDispatch } from 'react-redux';
+import { walletsSetSelected, walletsUpdate } from '@/redux/wallets';
 
 // NOTE:
 // If you’re trying to edit this file for iOS and you’re not seeing any changes,
@@ -54,7 +62,16 @@ export default function ProfileMasthead({
   showBottomDivider = true,
 }) {
   const { width: deviceWidth } = useDimensions();
-  const { navigate } = useNavigation();
+  const { goBack, navigate } = useNavigation();
+  const dispatch = useDispatch();
+  const { updateWebProfile } = useWebData();
+
+  const { selectedWallet, wallets } = useWallets();
+
+  const [currentSelectedWallet, setCurrentSelectedWallet] = useState(
+    selectedWallet
+  );
+
   const {
     accountColor,
     accountSymbol,
@@ -111,10 +128,96 @@ export default function ProfileMasthead({
             initialAccountSymbol: accountSymbol,
             initialAccountName: accountName,
           });
+        } else if (buttonIndex === 1) {
+          renameWallet(currentSelectedWallet.id, accountAddress);
         }
       }
     );
-  }, [accountColor, accountName, accountSymbol, navigate]);
+  }, [
+    accountAddress,
+    accountColor,
+    accountName,
+    accountSymbol,
+    currentSelectedWallet.id,
+    navigate,
+    renameWallet,
+  ]);
+
+  const renameWallet = useCallback(
+    (walletId, address) => {
+      const wallet = wallets?.[walletId];
+      if (!wallet) return;
+      const account = wallet.addresses.find(
+        account => account.address === address
+      );
+
+      InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+          navigate(Routes.MODAL_SCREEN, {
+            address,
+            asset: [],
+            onCloseModal: async (args: any) => {
+              if (args) {
+                if ('name' in args) {
+                  const walletAddresses = wallets[walletId].addresses;
+                  const walletAddressIndex = walletAddresses.findIndex(
+                    account => account.address === address
+                  );
+                  const walletAddress = walletAddresses[walletAddressIndex];
+
+                  const updatedWalletAddress = {
+                    ...walletAddress,
+                    color: args.color,
+                    label: args.name,
+                  };
+                  const updatedWalletAddresses = [...walletAddresses];
+                  updatedWalletAddresses[
+                    walletAddressIndex
+                  ] = updatedWalletAddress;
+
+                  const updatedWallet = {
+                    ...wallets[walletId],
+                    addresses: updatedWalletAddresses,
+                  };
+                  const updatedWallets = {
+                    ...wallets,
+                    [walletId]: updatedWallet,
+                  };
+
+                  if (currentSelectedWallet.id === walletId) {
+                    await setCurrentSelectedWallet(updatedWallet);
+                    await dispatch(walletsSetSelected(updatedWallet));
+                  }
+
+                  updateWebProfile(
+                    address,
+                    args.name,
+                    colors.avatarBackgrounds[args.color]
+                  );
+
+                  await dispatch(walletsUpdate(updatedWallets));
+                }
+              }
+            },
+            profile: {
+              color: account?.color,
+              image: account?.image || ``,
+              name: account?.label || ``,
+            },
+            type: 'wallet_profile',
+          });
+        }, 50);
+      });
+    },
+    [
+      wallets,
+      goBack,
+      navigate,
+      dispatch,
+      currentSelectedWallet.id,
+      updateWebProfile,
+    ]
+  );
 
   return (
     <View>

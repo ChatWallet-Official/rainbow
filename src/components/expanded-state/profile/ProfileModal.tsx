@@ -1,17 +1,17 @@
 import lang from 'i18n-js';
 import React, { useCallback, useRef } from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Divider from '../../Divider';
 import { ButtonPressAnimation } from '../../animations';
 import { BiometricButtonContent } from '../../buttons';
 import CopyTooltip from '../../copy-tooltip';
-import { Centered, ColumnWithDividers } from '../../layout';
+import { Centered, RowWithDividers } from '../../layout';
 import { AvatarCircle } from '../../profile';
 import { Text, TruncatedAddress } from '../../text';
 import ProfileModalContainer from './ProfileModalContainer';
 import ProfileNameInput from './ProfileNameInput';
 import styled from '@/styled-thing';
-import { margin, padding, position } from '@/styles';
+import { margin, padding, position, fonts, colors } from '@/styles';
 import { useTheme } from '@/theme';
 
 const ProfileAddressText = styled(TruncatedAddress).attrs(
@@ -36,13 +36,13 @@ const ProfileButton = styled(ButtonPressAnimation)({
   ...padding.object(15, 0, 19),
   ...position.centeredAsObject,
   flexDirection: 'row',
-  height: 58,
-  width: '100%',
+  height: 48,
+  width: '50%',
 });
 
 const ProfileButtonText = styled(Text).attrs({
   align: 'center',
-  size: 'larger',
+  size: 'medium',
 })({});
 
 const ProfileDivider = styled(Divider).attrs(({ theme: { colors } }: any) => ({
@@ -94,6 +94,12 @@ const ProfileModal = ({
     inputRef,
   ]);
 
+  const onPressDone = () => {
+    if (inputValue.length > 0) {
+      handleSubmit();
+    }
+  };
+
   return (
     <Container>
       <Centered
@@ -102,28 +108,7 @@ const ProfileModal = ({
         testID="wallet-info-modal"
         width="100%"
       >
-        {toggleAvatar &&
-          (imageAvatar ? (
-            <AvatarCircle
-              image={imageAvatar}
-              isAvatarPickerAvailable={false}
-              onPress={null}
-              overlayStyles={null}
-              showcaseAccountColor={isDarkMode ? colors.trueBlack : colors.dark}
-              showcaseAccountSymbol={null}
-              size="large"
-            />
-          ) : (
-            <AvatarCircle
-              image={null}
-              isAvatarPickerAvailable={false}
-              onPress={null}
-              overlayStyles={null}
-              showcaseAccountColor={accentColor}
-              showcaseAccountSymbol={emojiAvatar}
-            />
-          ))}
-        {!toggleAvatar && <Spacer />}
+        <Text style={styles.title}>Enter your wallet name</Text>
         <ProfileNameInput
           onChange={onChange}
           onSubmitEditing={handleSubmit}
@@ -132,39 +117,62 @@ const ProfileModal = ({
           selectionColor={accentColor}
           testID="wallet-info-input"
           value={inputValue}
+          style={styles.input}
         />
-        {address && (
-          <CopyTooltip
-            onHide={handleTriggerFocusInput}
-            textToCopy={address}
-            tooltipText={lang.t('wallet.settings.copy_address_capitalized')}
-          >
-            <ProfileAddressText address={address} />
-          </CopyTooltip>
-        )}
       </Centered>
-      <ColumnWithDividers dividerRenderer={ProfileDivider} width="100%">
-        <ProfileButton onPress={handleSubmit}>
-          <BiometricButtonContent
-            label={submitButtonText}
-            showIcon={toggleSubmitButtonIcon}
-            testID="wallet-info-submit-button"
-          />
-        </ProfileButton>
+      <View style={styles.buttonContainer}>
         <ProfileButton onPress={handleCancel}>
           <ProfileButtonText
             color={colors.alpha(colors.blueGreyDark, 0.6)}
             letterSpacing="roundedMedium"
             testID="wallet-info-cancel-button"
-            weight="medium"
+            weight="semibold"
             {...(android && { lineHeight: 21 })}
           >
             {lang.t('button.cancel')}
           </ProfileButtonText>
         </ProfileButton>
-      </ColumnWithDividers>
+        <View style={styles.divider} />
+        <ProfileButton onPress={onPressDone}>
+          <BiometricButtonContent
+            color={
+              inputValue.length > 0
+                ? colors.dark
+                : colors.alpha(colors.dark, 0.3)
+            }
+            label={submitButtonText}
+            showIcon={toggleSubmitButtonIcon}
+            testID="wallet-info-submit-button"
+            weight="semibold"
+            size="medium"
+          />
+        </ProfileButton>
+      </View>
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: fonts.size.bmedium,
+    fontWeight: fonts.weight.medium,
+    marginBottom: 16,
+  },
+  input: {
+    backgroundColor: colors.lighterGrey,
+    height: 56,
+    borderRadius: 8,
+    padding: 16,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  divider: {
+    backgroundColor: colors.lighterGrey,
+    width: 1,
+    height: 48,
+  },
+});
 
 export default ProfileModal;
