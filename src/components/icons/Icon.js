@@ -86,6 +86,7 @@ import TelegramIcon from './svg/TelegramIcon';
 import ThreeDotsIcon from './svg/ThreeDotsIcon';
 import TickGreenCW from './svg/TickGreenCW';
 import TouchIdIcon from './svg/TouchIdIcon';
+import TrashIconCW from './svg/TrashIconCW';
 import TwitterIcon from './svg/TwitterIcon';
 import WalletConnectIcon from './svg/WalletConnectIcon';
 import WalletSwitcherCaret from './svg/WalletSwitcherCaret';
@@ -183,6 +184,7 @@ const IconTypes = {
   threeDots: ThreeDotsIcon,
   tickGreenCW: TickGreenCW,
   touchid: TouchIdIcon,
+  trashCW: TrashIconCW,
   twitter: TwitterIcon,
   walletConnect: WalletConnectIcon,
   walletSwitcherCaret: WalletSwitcherCaret,

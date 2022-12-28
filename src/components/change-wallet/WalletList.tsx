@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, {
   Easing,
@@ -26,12 +26,12 @@ import WalletOption from './WalletOption';
 import { EthereumAddress } from '@rainbow-me/entities';
 import { useAccountSettings } from '@/hooks';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { position, colors } from '@/styles';
 import { EditWalletContextMenuActions } from '@/screens/ChangeWalletSheet';
 import { HARDWARE_WALLETS, useExperimentalFlag } from '@/config';
 
 const listTopPadding = 7.5;
-const rowHeight = 59;
+const rowHeight = 65 + 12;
 const transitionDuration = 75;
 
 const RowTypes = {
@@ -246,6 +246,7 @@ export default function WalletList({
                 editMode={editMode}
                 onPress={item.onPress}
               />
+              <View style={{ height: 12 }} />
             </Column>
           );
         default:
@@ -274,13 +275,13 @@ export default function WalletList({
           <WalletListFooter>
             <WalletOption
               editMode={editMode}
-              label={`􀁍 ${lang.t('wallet.action.create_new')}`}
-              onPress={onPressAddAccount}
+              label={`􀅼 ${lang.t('wallet.action.add_existing')}`}
+              onPress={onPressImportSeedPhrase}
             />
             <WalletOption
               editMode={editMode}
-              label={`􀂍 ${lang.t('wallet.action.add_existing')}`}
-              onPress={onPressImportSeedPhrase}
+              label={`􀅼 ${lang.t('wallet.action.create_new')}`}
+              onPress={onPressAddAccount}
             />
             {hardwareWalletsEnabled && (
               <WalletOption

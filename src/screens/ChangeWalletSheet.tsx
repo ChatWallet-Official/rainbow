@@ -3,7 +3,7 @@ import { useRoute } from '@react-navigation/core';
 import { captureException } from '@sentry/react-native';
 import lang from 'i18n-js';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { InteractionManager } from 'react-native';
+import { Alert, InteractionManager } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { useDispatch } from 'react-redux';
 import Divider from '../components/Divider';
@@ -52,11 +52,12 @@ import {
 import logger from '@/utils/logger';
 import { useTheme } from '@/theme';
 import { EthereumAddress } from '@/entities';
+import { fonts, colors } from '@/styles';
 
 const deviceHeight = deviceUtils.dimensions.height;
 const footerHeight = getExperimetalFlag(HARDWARE_WALLETS) ? 164 : 111;
 const listPaddingBottom = 6;
-const walletRowHeight = 59;
+const walletRowHeight = 65 + 12;
 const maxListHeight = deviceHeight - 220;
 
 const EditButton = styled(ButtonPressAnimation).attrs(
@@ -70,7 +71,7 @@ const EditButton = styled(ButtonPressAnimation).attrs(
   ios
     ? {
         position: 'absolute',
-        right: 20,
+        right: 24,
         top: -11,
       }
     : {
@@ -84,10 +85,10 @@ const EditButton = styled(ButtonPressAnimation).attrs(
 const EditButtonLabel = styled(Text).attrs(
   ({ theme: { colors }, editMode }: { theme: any; editMode: boolean }) => ({
     align: 'right',
-    color: colors.appleBlue,
+    color: colors.greenCW,
     letterSpacing: 'roundedMedium',
-    size: 'large',
-    weight: editMode ? 'bold' : 'semibold',
+    size: 'bmedium',
+    weight: 'semibold',
   })
 )({
   height: 40,
@@ -364,39 +365,42 @@ export default function ChangeWalletSheet() {
           break;
         }
       }
-      // Delete wallet with confirmation
-      showActionSheetWithOptions(
-        {
-          cancelButtonIndex: 1,
-          destructiveButtonIndex: 0,
-          message: lang.t('wallet.action.remove_confirm'),
-          options: [lang.t('wallet.action.remove'), lang.t('button.cancel')],
-        },
-        async (buttonIndex: number) => {
-          if (buttonIndex === 0) {
-            analytics.track('Tapped "Delete Wallet" (final confirm)');
-            await deleteWallet(walletId, address);
-            ReactNativeHapticFeedback.trigger('notificationSuccess');
-            if (!isLastAvailableWallet) {
-              await cleanUpWalletKeys();
-              goBack();
-              navigate(Routes.WELCOME_SCREEN);
-            } else {
-              // If we're deleting the selected wallet
-              // we need to switch to another one
-              if (wallets && address === currentAddress) {
-                const { wallet: foundWallet, key } =
-                  doesWalletsContainAddress({
-                    address: address,
-                    wallets,
-                  }) || {};
-                if (foundWallet) {
-                  await onChangeAccount(key, foundWallet.address, true);
+      Alert.alert(
+        lang.t('wallet.action.remove'),
+        lang.t('wallet.action.remove_message'),
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Remove',
+            onPress: async () => {
+              analytics.track('Tapped "Delete Wallet" (final confirm)');
+              await deleteWallet(walletId, address);
+              ReactNativeHapticFeedback.trigger('notificationSuccess');
+              if (!isLastAvailableWallet) {
+                await cleanUpWalletKeys();
+                goBack();
+                navigate(Routes.WELCOME_SCREEN);
+              } else {
+                // If we're deleting the selected wallet
+                // we need to switch to another one
+                if (wallets && address === currentAddress) {
+                  const { wallet: foundWallet, key } =
+                    doesWalletsContainAddress({
+                      address: address,
+                      wallets,
+                    }) || {};
+                  if (foundWallet) {
+                    await onChangeAccount(key, foundWallet.address, true);
+                  }
                 }
               }
-            }
-          }
-        }
+            },
+            style: 'destructive',
+          },
+        ]
       );
     },
     [currentAddress, deleteWallet, goBack, navigate, onChangeAccount, wallets]
@@ -412,117 +416,79 @@ export default function ChangeWalletSheet() {
       InteractionManager.runAfterInteractions(() => {
         goBack();
       });
-      InteractionManager.runAfterInteractions(() => {
-        setTimeout(() => {
-          navigate(Routes.MODAL_SCREEN, {
-            actionType: 'Create',
-            asset: [],
-            isNewProfile: true,
-            onCloseModal: async (args: any) => {
-              if (args) {
-                setIsWalletLoading(WalletLoadingStates.CREATING_WALLET);
-                const name = args?.name ?? '';
-                const color = args?.color ?? null;
-                // Check if the selected wallet is the primary
-                let primaryWalletKey = selectedWallet.primary
-                  ? selectedWallet.id
-                  : null;
 
-                // If it's not, then find it
-                !primaryWalletKey &&
-                  Object.keys(wallets as any).some(key => {
-                    const wallet = wallets?.[key];
-                    if (
-                      wallet?.type === WalletTypes.mnemonic &&
-                      wallet.primary
-                    ) {
-                      primaryWalletKey = key;
-                      return true;
-                    }
-                    return false;
-                  });
+      setIsWalletLoading(WalletLoadingStates.CREATING_WALLET);
+      const name = '';
+      const color = 6;
+      // Check if the selected wallet is the primary
+      let primaryWalletKey = selectedWallet.primary ? selectedWallet.id : null;
 
-                // If there's no primary wallet at all,
-                // we fallback to an imported one with a seed phrase
-                !primaryWalletKey &&
-                  Object.keys(wallets as any).some(key => {
-                    const wallet = wallets?.[key];
-                    if (
-                      wallet?.type === WalletTypes.mnemonic &&
-                      wallet.imported
-                    ) {
-                      primaryWalletKey = key;
-                      return true;
-                    }
-                    return false;
-                  });
+      // If it's not, then find it
+      !primaryWalletKey &&
+        Object.keys(wallets as any).some(key => {
+          const wallet = wallets?.[key];
+          if (wallet?.type === WalletTypes.mnemonic && wallet.primary) {
+            primaryWalletKey = key;
+            return true;
+          }
+          return false;
+        });
 
-                try {
-                  // If we found it and it's not damaged use it to create the new account
-                  if (
-                    primaryWalletKey &&
-                    !wallets?.[primaryWalletKey].damaged
-                  ) {
-                    const newWallets = await dispatch(
-                      createAccountForWallet(primaryWalletKey, color, name)
-                    );
-                    // @ts-ignore
-                    await initializeWallet();
-                    // If this wallet was previously backed up to the cloud
-                    // We need to update userData backup so it can be restored too
-                    if (
-                      wallets?.[primaryWalletKey].backedUp &&
-                      wallets[primaryWalletKey].backupType ===
-                        WalletBackupTypes.cloud
-                    ) {
-                      try {
-                        await backupUserDataIntoCloud({ wallets: newWallets });
-                      } catch (e) {
-                        logger.sentry(
-                          'Updating wallet userdata failed after new account creation'
-                        );
-                        captureException(e);
-                        throw e;
-                      }
-                    }
+      // If there's no primary wallet at all,
+      // we fallback to an imported one with a seed phrase
+      !primaryWalletKey &&
+        Object.keys(wallets as any).some(key => {
+          const wallet = wallets?.[key];
+          if (wallet?.type === WalletTypes.mnemonic && wallet.imported) {
+            primaryWalletKey = key;
+            return true;
+          }
+          return false;
+        });
 
-                    // If doesn't exist, we need to create a new wallet
-                  } else {
-                    await createWallet(
-                      null,
-                      color,
-                      name,
-                      false,
-                      null,
-                      null,
-                      false,
-                      true
-                    );
-                    await dispatch(walletsLoadState(profilesEnabled));
-                    // @ts-ignore
-                    await initializeWallet();
-                  }
-                } catch (e) {
-                  logger.sentry('Error while trying to add account');
-                  captureException(e);
-                  if (isDamaged) {
-                    setTimeout(() => {
-                      showWalletErrorAlert();
-                    }, 1000);
-                  }
-                }
-              }
-              creatingWallet.current = false;
-              setIsWalletLoading(null);
-            },
-            profile: {
-              color: null,
-              name: ``,
-            },
-            type: 'wallet_profile',
-          });
-        }, 50);
-      });
+      try {
+        // If we found it and it's not damaged use it to create the new account
+        if (primaryWalletKey && !wallets?.[primaryWalletKey].damaged) {
+          const newWallets = await dispatch(
+            createAccountForWallet(primaryWalletKey, color, name)
+          );
+          // @ts-ignore
+          await initializeWallet();
+          // If this wallet was previously backed up to the cloud
+          // We need to update userData backup so it can be restored too
+          if (
+            wallets?.[primaryWalletKey].backedUp &&
+            wallets[primaryWalletKey].backupType === WalletBackupTypes.cloud
+          ) {
+            try {
+              await backupUserDataIntoCloud({ wallets: newWallets });
+            } catch (e) {
+              logger.sentry(
+                'Updating wallet userdata failed after new account creation'
+              );
+              captureException(e);
+              throw e;
+            }
+          }
+
+          // If doesn't exist, we need to create a new wallet
+        } else {
+          await createWallet(null, color, name, false, null, null, false, true);
+          await dispatch(walletsLoadState(profilesEnabled));
+          // @ts-ignore
+          await initializeWallet();
+        }
+      } catch (e) {
+        logger.sentry('Error while trying to add account');
+        captureException(e);
+        if (isDamaged) {
+          setTimeout(() => {
+            showWalletErrorAlert();
+          }, 1000);
+        }
+      }
+      creatingWallet.current = false;
+      setIsWalletLoading(null);
     } catch (e) {
       setIsWalletLoading(null);
       logger.log('Error while trying to add account', e);
@@ -532,7 +498,6 @@ export default function ChangeWalletSheet() {
     goBack,
     initializeWallet,
     isDamaged,
-    navigate,
     selectedWallet.id,
     selectedWallet.primary,
     setIsWalletLoading,
@@ -564,7 +529,11 @@ export default function ChangeWalletSheet() {
       {android && <Whitespace />}
       <Column height={headerHeight} justify="space-between">
         <Centered>
-          <SheetTitle testID="change-wallet-sheet-title">
+          <SheetTitle
+            size={fonts.size.bmedium}
+            weight={fonts.weight.semibold}
+            testID="change-wallet-sheet-title"
+          >
             {lang.t('wallet.label')}
           </SheetTitle>
 

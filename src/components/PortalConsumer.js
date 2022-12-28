@@ -9,9 +9,10 @@ export default function PortalConsumer() {
   const { isWalletLoading } = useWallets();
   const { setComponent, hide } = usePortal();
   useEffect(() => {
-    const blackList = [WalletLoadingStates.CREATING_WALLET];
-
-    if (isWalletLoading && !blackList.includes(isWalletLoading)) {
+    if (
+      isWalletLoading &&
+      isWalletLoading !== WalletLoadingStates.INITIALIZING_WALLET
+    ) {
       setComponent(
         <LoadingOverlay
           paddingTop={sheetVerticalOffset}

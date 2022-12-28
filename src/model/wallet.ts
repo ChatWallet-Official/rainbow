@@ -568,7 +568,13 @@ export const createWallet = async (
     const { dispatch } = store;
 
     if (!silent) {
-      dispatch(setIsWalletLoading(WalletLoadingStates.CREATING_WALLET));
+      dispatch(
+        setIsWalletLoading(
+          !seed && !color
+            ? WalletLoadingStates.INITIALIZING_WALLET
+            : WalletLoadingStates.CREATING_WALLET
+        )
+      );
     }
 
     const {

@@ -5,6 +5,7 @@ export const WalletLoadingStates = {
   IMPORTING_WALLET: 'Importing...',
   IMPORTING_WALLET_SILENTLY: '',
   RESTORING_WALLET: 'Restoring...',
+  INITIALIZING_WALLET: 'Initializing wallet...',
 } as const;
 
 export type WalletLoadingState = typeof WalletLoadingStates[keyof typeof WalletLoadingStates];

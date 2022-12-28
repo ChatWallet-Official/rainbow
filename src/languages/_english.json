@@ -1522,6 +1522,7 @@
         "reject": "Reject",
         "remove": "Remove Wallet",
         "remove_confirm": "Are you sure you want to remove this wallet?",
+        "remove_message": "After removal, you will not be able to gain access to this wallet again unless you keep your private key!",
         "send": "Send",
         "to": "To",
         "unhide": "Unhide",
@@ -1632,7 +1633,7 @@
       },
       "invalid_ens_name": "This is not a valid ENS name",
       "invalid_unstoppable_name": "This is not a valid Unstoppable name",
-      "label": "Wallets",
+      "label": "Wallet",
       "loading": {
         "error": "There has been an error loading the wallet. Please kill the app and retry.",
         "message": "Loading"

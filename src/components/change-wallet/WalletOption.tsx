@@ -27,11 +27,9 @@ const WalletOption = ({
   return (
     <Container as={ButtonPressAnimation} disabled={editMode} onPress={onPress}>
       <Text
-        color={
-          editMode ? colors.alpha(colors.blueGreyDark, 0.2) : colors.appleBlue
-        }
+        color={colors.greenCW}
         letterSpacing="roundedMedium"
-        size="lmedium"
+        size="medium"
         weight="bold"
       >
         {label}
