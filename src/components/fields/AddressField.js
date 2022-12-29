@@ -8,6 +8,7 @@ import { Label } from '../text';
 import { useClipboard, useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
 import { abbreviations, addressUtils } from '@/utils';
+import { Keyboard } from 'react-native';
 
 const AddressInput = styled(Input).attrs({
   autoCapitalize: 'none',
@@ -93,6 +94,10 @@ const AddressField = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, editable, name]);
 
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
     <Row flex={1}>
       <AddressInput
@@ -106,6 +111,8 @@ const AddressField = (
         ref={ref}
         testID={testID}
         value={inputValue}
+        onSubmitEditing={hideKeyboard}
+        returnKeyType="done"
       />
       {!inputValue && (
         <Placeholder pointerEvents="none">

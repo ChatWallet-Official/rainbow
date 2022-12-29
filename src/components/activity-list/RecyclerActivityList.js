@@ -187,7 +187,17 @@ export default class RecyclerActivityList extends PureComponent {
     if (!data.hash) return <RequestCoinRow item={data} />;
     if (!data.symbol && data.dappName)
       return <ContractInteractionCoinRow item={data} />;
-    if (this.state.headersIndices.includes(index - 1))
+    const isTheFirstOne = this.state.headersIndices.includes(index - 1);
+    const isTheLastOne =
+      this.state.headersIndices.includes(index + 2) ||
+      index === this.state.dataProvider.getSize() - 1;
+    if (isTheFirstOne && isTheLastOne)
+      return (
+        <View marginHorizontal={24} backgroundColor="#F7F7F7" borderRadius={16}>
+          <TransactionCoinRow item={data} />
+        </View>
+      );
+    if (isTheFirstOne)
       return (
         <View
           marginHorizontal={24}
@@ -198,10 +208,7 @@ export default class RecyclerActivityList extends PureComponent {
           <TransactionCoinRow item={data} />
         </View>
       );
-    if (
-      this.state.headersIndices.includes(index + 2) ||
-      index === this.state.dataProvider.getSize() - 1
-    )
+    if (isTheLastOne)
       return (
         <View
           marginHorizontal={24}

@@ -14,6 +14,7 @@ import { Navbar } from '@/components/navbar/Navbar';
 import { Box, ColorModeProvider } from '@/design-system';
 import { SheetHandle } from '@/components/sheet';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useRoute, useNavigation } from '@react-navigation/core';
 
 const Background = styled(View)({
   backgroundColor: 'black',
@@ -41,6 +42,14 @@ export default function QRScannerScreen() {
   const { result: isEmulator } = useIsEmulator();
 
   const { top: topInset } = useSafeAreaInsets();
+  const { goBack, navigate } = useNavigation();
+  const { params } = useRoute();
+  const onQRCodeRead = (params as any)?.onQRCodeRead;
+
+  const onBarCodeRead = ({ data }) => {
+    goBack();
+    onQRCodeRead(data);
+  };
 
   return (
     <View pointerEvents="box-none">
@@ -54,7 +63,7 @@ export default function QRScannerScreen() {
           <Box alignItems="center" paddingTop="8px" height={{ custom: 16 }}>
             <SheetHandle color="rgba(245, 248, 255, 0.4)" showBlur={false} />
           </Box>
-          <Navbar hasStatusBarInset={false} title="Scan to Connect" />
+          <Navbar hasStatusBarInset={false} title="Scan" />
         </Box>
         <ScannerContainer>
           <Background />
@@ -64,7 +73,7 @@ export default function QRScannerScreen() {
                 <EmulatorPasteUriButton />
               </ScannerHeader>
             )}
-            {!isEmulator && <QRCodeScanner />}
+            {!isEmulator && <QRCodeScanner onQRCodeRead={onBarCodeRead} />}
           </CameraDimmer>
           {ios && (
             <ScannerHeader>

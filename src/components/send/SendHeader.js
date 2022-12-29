@@ -222,8 +222,14 @@ export default function SendHeader({
   );
 
   const handlePressQRScanner = useCallback(() => {
-    navigate(Routes.QR_SCANNER_SCREEN);
+    navigate(Routes.QR_SCANNER_SCREEN, { onQRCodeRead });
   }, [navigate]);
+
+  const onQRCodeRead = data => {
+    if (data) {
+      onChange(data);
+    }
+  };
 
   return (
     <Fragment backgroundColor="red">
@@ -239,7 +245,18 @@ export default function SendHeader({
           <AddressFieldLabel>
             {lang.t('contacts.send_to_header')}:
           </AddressFieldLabel>
-          <ButtonPressAnimation onPress={handlePressQRScanner}>
+          <ButtonPressAnimation
+            onPress={handlePressQRScanner}
+            style={{
+              width: 48,
+              height: 48,
+              position: 'absolute',
+              right: -16,
+              top: -16,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Icon name={'scanCW'} />
           </ButtonPressAnimation>
         </AddressInputHeader>
