@@ -73,6 +73,7 @@ import {
   isL2Network,
   resolveNameOrAddress,
   web3Provider,
+  isHexString,
 } from '@/handlers/web3';
 import {
   checkIsValidAddressOrDomain,
@@ -862,40 +863,6 @@ export default function SendAssetForm() {
       {isTinyPhone ? null : (
         <SendSheetTitle>{lang.t('contacts.send_header')}</SendSheetTitle>
       )}
-      {/* <ButtonPressAnimation
-        onPress={onResetAssetSelection}
-        overflowMargin={30}
-        scaleTo={0.925}
-      >
-        <ShadowStack
-          alignSelf="center"
-          backgroundColor={colors.white}
-          borderRadius={20}
-          height={SendCoinRow.selectedHeight}
-          overflow={isTinyPhone ? 'visible' : 'hidden'}
-          shadows={isTinyPhone ? noShadows : shadows}
-          width={deviceWidth - 38}
-        >
-          {isTinyPhone ? null : <AssetRowGradient />}
-          <AssetRowElement
-            badgeYPosition={5}
-            disablePressAnimation
-            item={selected}
-            selected
-            showNativeValue={showNativeValue}
-            testID="send-asset-form"
-          >
-            <Text
-              align="center"
-              color={colorForAsset || colors.dark}
-              size="large"
-              weight="heavy"
-            >
-              􀁴
-            </Text>
-          </AssetRowElement>
-        </ShadowStack>
-      </ButtonPressAnimation> */}
       <TouchableOpacity
         style={styles.addressContainer}
         onPress={onPressAddress}
@@ -903,7 +870,9 @@ export default function SendAssetForm() {
         <View style={styles.toContainer}>
           <Text style={styles.toHeader}>{lang.t('contacts.to_header')}: </Text>
           <Text style={styles.address}>
-            {abbreviations.address(toAddress, 4, 6)}
+            {isHexString(toAddress)
+              ? abbreviations.address(toAddress, 4, 6)
+              : toAddress}
           </Text>
         </View>
         <Icon name="arrowRight" />

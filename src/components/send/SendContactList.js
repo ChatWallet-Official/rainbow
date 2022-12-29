@@ -2,7 +2,7 @@ import { toChecksumAddress } from 'ethereumjs-util';
 import lang from 'i18n-js';
 import { sortBy } from 'lodash';
 import React, { useCallback, useMemo, useRef } from 'react';
-import { SectionList } from 'react-native';
+import { Keyboard, SectionList } from 'react-native';
 import * as DeviceInfo from 'react-native-device-info';
 import LinearGradient from 'react-native-linear-gradient';
 import { useDeepCompareMemo } from 'use-deep-compare';
@@ -237,6 +237,10 @@ export default function SendContactList({
     ensSuggestions.length === 0 &&
     !loadingEnsSuggestions;
 
+  const hideKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
     <FlyInAnimation key={flyInKey}>
       {shouldShowEmptyState ? (
@@ -252,6 +256,7 @@ export default function SendContactList({
           )}
           sections={sections}
           testID="send-contact-list"
+          onScroll={hideKeyboard}
         />
       )}
       <ToastPositionContainer

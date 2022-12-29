@@ -228,7 +228,7 @@ const SettingsSection = ({
   return (
     <MenuContainer testID="settings-menu-container">
       <Menu>
-        {canBeBackedUp && (
+        {/* {canBeBackedUp && (
           <MenuItem
             hasRightArrow
             leftComponent={
@@ -267,7 +267,7 @@ const SettingsSection = ({
               <MenuItem.Title text={lang.t('settings.notifications')} />
             }
           />
-        )}
+        )} */}
         <MenuItem
           hasRightArrow
           leftComponent={
@@ -305,7 +305,7 @@ const SettingsSection = ({
           />
         )}
 
-        {!isReadOnlyWallet && (
+        {/* {!isReadOnlyWallet && (
           <MenuItem
             hasRightArrow
             leftComponent={
@@ -352,10 +352,10 @@ const SettingsSection = ({
           size={60}
           testID="app-icon-section"
           titleComponent={<MenuItem.Title text={lang.t('settings.app_icon')} />}
-        />
+        /> */}
       </Menu>
       <Menu>
-        <MenuItem
+        {/* <MenuItem
           leftComponent={<MenuItem.TextIcon icon="🌈" isEmoji />}
           onPress={onPressShare}
           size={52}
@@ -370,7 +370,7 @@ const SettingsSection = ({
           size={52}
           testID="learn-section"
           titleComponent={<MenuItem.Title text={lang.t('settings.learn')} />}
-        />
+        /> */}
         <MenuItem
           leftComponent={<MenuItem.TextIcon icon="🐦" isEmoji />}
           onPress={onPressTwitter}
@@ -380,7 +380,7 @@ const SettingsSection = ({
             <MenuItem.Title text={lang.t('settings.follow_us_on_twitter')} />
           }
         />
-        <MenuItem
+        {/* <MenuItem
           leftComponent={<MenuItem.TextIcon icon="💬" isEmoji />}
           onPress={onSendFeedback}
           size={52}
@@ -413,7 +413,7 @@ const SettingsSection = ({
               <MenuItem.Title text={lang.t('settings.restore')} />
             }
           />
-        )}
+        )} */}
         <MenuItem
           leftComponent={<MenuItem.TextIcon icon={ios ? '🚧' : '🐞'} isEmoji />}
           onPress={onPressDev}
