@@ -178,6 +178,7 @@ export type BackgroundColor =
   | 'surfaceSecondaryElevated'
   | 'fill'
   | 'fillSecondary'
+  | 'fillTertiary'
   | 'blue'
   | 'green'
   | 'red'
@@ -258,6 +259,16 @@ export const backgroundColors: Record<
     },
     dark: {
       color: globalColors.white20,
+      mode: 'dark',
+    },
+  },
+  'fillTertiary': {
+    light: {
+      color: globalColors.grey10,
+      mode: 'light',
+    },
+    dark: {
+      color: globalColors.white10,
       mode: 'dark',
     },
   },

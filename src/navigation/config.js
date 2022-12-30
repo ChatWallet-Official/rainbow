@@ -1,8 +1,12 @@
 import React from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import BackButton from '../components/header/BackButton';
 import { Icon } from '../components/icons';
-import { SheetHandleFixedToTopHeight } from '../components/sheet';
+import {
+  SheetHandleFixedToTopHeight,
+  SheetHandleFixedToTop,
+  SheetHandle,
+} from '../components/sheet';
 import { Text } from '../components/text';
 import { getENSAdditionalRecordsSheetHeight } from '../screens/ENSAdditionalRecordsSheet';
 import { ENSConfirmRegisterSheetHeight } from '../screens/ENSConfirmRegisterSheet';
@@ -426,11 +430,10 @@ export const exchangeTabNavigatorConfig = {
 };
 
 const BackArrow = styled(Icon).attrs({
-  color: colors.themedColors.appleBlue,
-  direction: 'left',
-  name: 'caret',
+  color: colors.themedColors.black,
+  name: 'navBack',
 })({
-  marginLeft: 15,
+  marginLeft: 25,
   marginRight: 5,
   marginTop: android ? 2 : 0.5,
 });
@@ -485,6 +488,15 @@ const SettingsTitle = ({ children }) => {
   );
 };
 
+function SettingsHeader({ children }) {
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <SheetHandle marginBottom={10} />
+      <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{children}</Text>
+    </View>
+  );
+}
+
 export const wyreWebviewOptions = colors => ({
   ...headerConfigOptions,
   headerLeft: props => <BackButton {...props} textChevron />,
@@ -505,7 +517,7 @@ export const settingsOptions = colors => ({
   ...headerConfigOptions,
   cardShadowEnabled: false,
   cardStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     overflow: 'visible',
   },
   gestureEnabled: ios,
@@ -514,7 +526,7 @@ export const settingsOptions = colors => ({
   headerBackTitle: ' ',
   headerStatusBarHeight: 0,
   headerStyle: {
-    backgroundColor: ios ? colors.cardBackdrop : 'transparent',
+    backgroundColor: 'white',
     elevation: 0,
     height: 60,
     shadowColor: 'transparent',
@@ -523,6 +535,7 @@ export const settingsOptions = colors => ({
     ...headerConfigOptions.headerTitleStyle,
     color: colors.dark,
   },
+  headerTitle: props => <SettingsHeader {...props} />,
   ...(android && {
     headerLeft: props => <BackButton {...props} textChevron />,
     headerRight: () => <EmptyButtonPlaceholder />,

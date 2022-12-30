@@ -1317,6 +1317,8 @@
       "no_thanks": "No thanks"
     },
     "settings": {
+      "about": "About",
+      "app_security": "App Security",
       "backup": "Backup",
       "currency": "Currency",
       "app_icon": "App Icon",
