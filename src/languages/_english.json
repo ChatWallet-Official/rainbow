@@ -1318,6 +1318,11 @@
     },
     "settings": {
       "about": "About",
+      "about_section": {
+        "help": "Help",
+        "privacy_policy": "Privacy Policy",
+        "terms_of_use": "Terms of Use"
+      },
       "app_security": "App Security",
       "backup": "Backup",
       "currency": "Currency",

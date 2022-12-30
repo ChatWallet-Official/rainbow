@@ -85,6 +85,7 @@ const checkAllWallets = (wallets: any) => {
 
 interface SettingsSectionProps {
   onCloseModal: () => void;
+  onPressAbout: () => void;
   onPressAppIcon: () => void;
   onPressBackup: () => void;
   onPressCurrency: () => void;
@@ -93,10 +94,12 @@ interface SettingsSectionProps {
   onPressNetwork: () => void;
   onPressPrivacy: () => void;
   onPressNotifications: () => void;
+  onPressSecurity: () => void;
 }
 
 const SettingsSection = ({
   onCloseModal,
+  onPressAbout,
   onPressAppIcon,
   onPressBackup,
   onPressCurrency,
@@ -105,6 +108,7 @@ const SettingsSection = ({
   onPressNetwork,
   onPressPrivacy,
   onPressNotifications,
+  onPressSecurity,
 }: SettingsSectionProps) => {
   const isReviewAvailable = false;
   const { wallets, isReadOnlyWallet } = useWallets();
@@ -285,7 +289,7 @@ const SettingsSection = ({
         <MenuItem
           hasRightArrow
           leftComponent={<MenuItem.ImageIcon size={26} source={SecurityIcon} />}
-          onPress={onPressCurrency}
+          onPress={onPressSecurity}
           size={56}
           testID="currency-section"
           titleComponent={
@@ -389,7 +393,7 @@ const SettingsSection = ({
         <MenuItem
           hasRightArrow
           leftComponent={<MenuItem.ImageIcon size={26} source={AboutIcon} />}
-          onPress={onPressTwitter}
+          onPress={onPressAbout}
           size={56}
           testID="twitter-section"
           titleComponent={<MenuItem.Title text={lang.t('settings.about')} />}

@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { Animated, InteractionManager } from 'react-native';
 import ModalHeaderButton from '../components/modal/ModalHeaderButton';
 import {
+  AboutSection,
   AppIconSection,
   CurrencySection,
   DevSection,
@@ -15,6 +16,7 @@ import {
   NetworkSection,
   NotificationsSection,
   PrivacySection,
+  SecuritySection,
   SettingsSection,
   WalletNotificationsSettings,
   TransactionDetailsPlayground,
@@ -66,6 +68,11 @@ function cardStyleInterpolator({
 }
 
 const SettingsPages = {
+  about: {
+    component: AboutSection,
+    getTitle: () => lang.t('settings.about'),
+    key: 'AboutSection',
+  },
   appIcon: {
     component: AppIconSection,
     getTitle: () => lang.t('settings.app_icon'),
@@ -110,6 +117,11 @@ const SettingsPages = {
     component: PrivacySection,
     getTitle: () => lang.t('settings.privacy'),
     key: 'PrivacySection',
+  },
+  security: {
+    component: SecuritySection,
+    getTitle: () => lang.t('settings.app_security'),
+    key: 'SecuritySection',
   },
 };
 
@@ -220,6 +232,7 @@ export default function SettingsSheet() {
           {() => (
             <SettingsSection
               onCloseModal={goBack}
+              onPressAbout={onPressSection(SettingsPages.about)}
               onPressAppIcon={onPressSection(SettingsPages.appIcon)}
               onPressBackup={onPressSection(SettingsPages.backup)}
               onPressCurrency={onPressSection(SettingsPages.currency)}
@@ -228,6 +241,7 @@ export default function SettingsSheet() {
               onPressNetwork={onPressSection(SettingsPages.network)}
               onPressNotifications={onPressSection(SettingsPages.notifications)}
               onPressPrivacy={onPressSection(SettingsPages.privacy)}
+              onPressSecurity={onPressSection(SettingsPages.security)}
             />
           )}
         </Stack.Screen>

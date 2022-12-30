@@ -88,6 +88,7 @@ import TickGreenCW from './svg/TickGreenCW';
 import TouchIdIcon from './svg/TouchIdIcon';
 import TrashIconCW from './svg/TrashIconCW';
 import TwitterIcon from './svg/TwitterIcon';
+import UmbrellaIcon from './svg/UmbrellaIcon';
 import WalletConnectIcon from './svg/WalletConnectIcon';
 import WalletSwitcherCaret from './svg/WalletSwitcherCaret';
 import WarningCircledIcon from './svg/WarningCircledIcon';
@@ -186,6 +187,7 @@ const IconTypes = {
   touchid: TouchIdIcon,
   trashCW: TrashIconCW,
   twitter: TwitterIcon,
+  umbrella: UmbrellaIcon,
   walletConnect: WalletConnectIcon,
   walletSwitcherCaret: WalletSwitcherCaret,
   warning: WarningIcon,
