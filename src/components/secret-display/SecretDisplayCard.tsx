@@ -45,7 +45,7 @@ function SeedWordGrid({ seed }: SeedWordGridProps) {
                 <GridItem justify="end" key={`grid_number_${number}`}>
                   <GridText
                     align="right"
-                    color={colors.alpha(colors.appleBlue, 0.6)}
+                    color={colors.alpha(colors.greenCW, 0.6)}
                   >
                     {number}
                   </GridText>
@@ -79,12 +79,12 @@ export default function SecretDisplayCard({
     <Centered>
       <Inset vertical="10px">
         <Box
-          background="card (Deprecated)"
+          // background="card (Deprecated)"
           borderRadius={25}
           height={{ custom: 240 }}
           paddingHorizontal="30px (Deprecated)"
           paddingVertical="19px (Deprecated)"
-          shadow="21px light (Deprecated)"
+          // shadow="21px light (Deprecated)"
         >
           <CopyTooltip
             textToCopy={seed}

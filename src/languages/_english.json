@@ -181,7 +181,8 @@
         "show_recovery": "Show Recovery %{typeName}",
         "view_private_key": "View private key",
         "view_secret_phrase": "View secret phrase",
-        "you_need_to_authenticate": "You need to authenticate in order to access your recovery %{typeName}"
+        "you_need_to_authenticate": "You need to authenticate in order to access your recovery %{typeName}",
+        "please_keep_safe": "Please keep %{typeName} somewhere safe to access your wallet in the future!"
       }
     },
     "button": {
