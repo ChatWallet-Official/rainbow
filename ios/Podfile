@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '12.0'
 install! 'cocoapods', :deterministic_uuids => false
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
@@ -50,6 +50,7 @@ target 'Rainbow' do
   pod 'Shimmer'
   pod 'RNExitApp', :path => '../node_modules/react-native-exit-app'
   pod 'react-native-palette-full', :path => '../node_modules/react-native-palette-full'
+  pod 'RNSquareInAppPayments', :path => '../node_modules/react-native-square-in-app-payments'
 
   use_native_modules!
   if ENV['SKIP_FLIPPER'] != "true"
