@@ -82,4 +82,6 @@ declare module 'react-native-dotenv' {
   export const LOG_LEVEL: 'debug' | 'info' | 'warn' | 'error';
   export const LOG_DEBUG: string;
   export const QUIET_OLD_LOGGER: string;
+  export const SQUARE_APP_ID: string;
+  export const SQUARE_LOCATION_ID: string;
 }

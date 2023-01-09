@@ -1558,7 +1558,8 @@
         "running_checks": "Running checks...",
         "success_message": "It's here 🥳",
         "watching_mode_confirm_message": "The wallet you have open is read-only, so you can’t control what’s inside. Are you sure you want to add cash to %{truncatedAddress}?",
-        "watching_mode_confirm_title": "You’re in Watching Mode"
+        "watching_mode_confirm_title": "You’re in Watching Mode",
+        "pay_by_card": "Pay by card"
       },
       "alert": {
         "finish_importing": "Finish Importing",

@@ -35,6 +35,7 @@ interface Props {
   onClearError: () => void;
   onLimitExceeded: (limit: 'weekly' | 'yearly') => void;
   onPurchase: (params: { address: string; value: string }) => void;
+  onPurchaseByCard: (params: { address: string; value: string }) => void;
   onShake: () => void;
   shakeAnim: Animated.SharedValue<number>;
 }
@@ -44,6 +45,7 @@ const AddCashForm = ({
   onClearError,
   onLimitExceeded,
   onPurchase,
+  onPurchaseByCard,
   onShake,
   shakeAnim,
 }: Props) => {
@@ -240,6 +242,7 @@ const AddCashForm = ({
           }
           onDisabledPress={onShake}
           onSubmit={onSubmit}
+          onPurchaseByCard={onPurchaseByCard}
         />
       </ColumnWithMargins>
     </Animated.View>

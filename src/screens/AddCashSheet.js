@@ -16,6 +16,7 @@ import {
   useShakeAnimation,
   useTimeout,
   useWyreApplePay,
+  useSquarePay,
 } from '@/hooks';
 import styled from '@/styled-thing';
 import { borders } from '@/styles';
@@ -81,6 +82,8 @@ export default function AddCashSheet() {
     transferStatus,
   } = useWyreApplePay();
 
+  const { onPurchaseByCard } = useSquarePay();
+
   const onLimitExceeded = useCallback(
     limit => {
       stopErrorTimeout();
@@ -130,6 +133,7 @@ export default function AddCashSheet() {
               onClearError={onClearError}
               onLimitExceeded={onLimitExceeded}
               onPurchase={onPurchase}
+              onPurchaseByCard={onPurchaseByCard}
               onShake={onShake}
               shakeAnim={errorAnimation}
             />

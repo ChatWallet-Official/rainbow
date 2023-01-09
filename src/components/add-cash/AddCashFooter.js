@@ -12,7 +12,13 @@ import { useDimensions } from '@/hooks';
 import Routes from '@/navigation/routesNames';
 import { position } from '@/styles';
 
-const AddCashFooter = ({ disabled, onDisabledPress, onSubmit, ...props }) => {
+const AddCashFooter = ({
+  disabled,
+  onDisabledPress,
+  onSubmit,
+  onPurchaseByCard,
+  ...props
+}) => {
   const { isTallPhone, isTinyPhone } = useDimensions();
   const { colors } = useTheme();
   const { navigate } = useNavigation();
@@ -39,7 +45,7 @@ const AddCashFooter = ({ disabled, onDisabledPress, onSubmit, ...props }) => {
       </Row>
       {!isTinyPhone && (
         <ButtonPressAnimation
-          onPress={onSupportedGeoPress}
+          onPress={onPurchaseByCard}
           paddingBottom={isTallPhone ? 10 : 15}
           paddingHorizontal={10}
           scaleTo={0.96}
@@ -54,15 +60,15 @@ const AddCashFooter = ({ disabled, onDisabledPress, onSubmit, ...props }) => {
               size="lmedium"
               weight="semibold"
             >
-              {lang.t('wallet.add_cash.card_notice')}
+              {lang.t('wallet.add_cash.pay_by_card')}
             </Text>
-            <Centered marginLeft={2} marginTop={0.5}>
+            {/* <Centered marginLeft={2} marginTop={0.5}>
               <Icon
                 {...position.sizeAsObject(18)}
                 color={colors.alpha(colors.blueGreyDark, 0.3)}
                 name="info"
               />
-            </Centered>
+            </Centered> */}
           </RowWithMargins>
         </ButtonPressAnimation>
       )}
@@ -74,6 +80,7 @@ AddCashFooter.propTypes = {
   disabled: PropTypes.bool,
   onDisabledPress: PropTypes.func,
   onSubmit: PropTypes.func,
+  onPurchaseByCard: PropTypes.func,
 };
 
 export default React.memo(AddCashFooter);

@@ -13,7 +13,7 @@ import {
 
 // eslint-disable-next-line import/default
 import codePush from 'react-native-code-push';
-import { IS_TESTING } from 'react-native-dotenv';
+import { IS_TESTING, SQUARE_APP_ID } from 'react-native-dotenv';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import { connect, Provider as ReduxProvider } from 'react-redux';
@@ -149,7 +149,7 @@ class OldApp extends Component {
     );
     analyticsV2.track(analyticsV2.event.applicationDidMount);
 
-    await SQIPCore.setSquareApplicationId('REPLACE_WITH_APPLICATION_ID');
+    await SQIPCore.setSquareApplicationId(SQUARE_APP_ID);
   }
 
   componentDidUpdate(prevProps) {
