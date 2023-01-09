@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-const CloseMarkIconCW = props => (
+const CloseMarkIconCW = ({ color, ...props }) => (
   <Svg
     width={24}
     height={24}
@@ -13,7 +13,7 @@ const CloseMarkIconCW = props => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="m12 10.586 5.657-5.657 1.414 1.414L13.414 12l5.657 5.657-1.414 1.414L12 13.414l-5.657 5.657-1.414-1.414L10.586 12 4.929 6.343l1.414-1.414L12 10.586Z"
-      fill="#fff"
+      fill={color || '#fff'}
       fillOpacity={0.9}
     />
   </Svg>

@@ -22,6 +22,11 @@ import styled from '@/styled-thing';
 import { borders } from '@/styles';
 import { useTheme } from '@/theme';
 import { IS_IOS } from '@/env';
+import { useNavigation } from '@/navigation';
+import Routes from '@/navigation/routesNames';
+import { Navbar } from '@/components/navbar/Navbar';
+import { Icon } from '@/components/icons';
+import { TouchableOpacity, View } from 'react-native';
 
 const deviceHeight = deviceUtils.dimensions.height;
 const statusBarHeight = getStatusBarHeight(true);
@@ -47,7 +52,7 @@ export default function AddCashSheet() {
 
   const [errorAnimation, onShake] = useShakeAnimation();
   const [startErrorTimeout, stopErrorTimeout] = useTimeout();
-
+  const { goBack, navigate, dangerouslyGetParent } = useNavigation();
   const [errorIndex, setErrorIndex] = useState(null);
   const onClearError = useCallback(() => setErrorIndex(null), []);
 
@@ -98,24 +103,46 @@ export default function AddCashSheet() {
       <Column
         align="center"
         height={IS_IOS ? sheetHeight : '100%'}
+        paddingTop={statusBarHeight}
         paddingBottom={isNarrowPhone ? 15 : insets.bottom + 11}
       >
         <Column align="center" paddingVertical={6}>
-          <SheetHandle />
-          <ColumnWithMargins
-            align="center"
-            margin={4}
-            paddingTop={IS_IOS ? 7 : 5}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              width: deviceUtils.dimensions.width,
+            }}
           >
-            <SheetTitle>{lang.t('button.add_cash')}</SheetTitle>
-            <SheetSubtitleCycler
-              errorIndex={errorIndex}
-              interval={subtitleInterval}
-              isPaymentComplete={isPaymentComplete}
-              items={Object.values(cashLimits)}
-              sharedValue={errorAnimation}
-            />
-          </ColumnWithMargins>
+            <TouchableOpacity
+              onPress={goBack}
+              style={{
+                width: 50,
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                left: 10,
+              }}
+            >
+              <Icon name="closeMarkIconCW" color="black" />
+            </TouchableOpacity>
+
+            <ColumnWithMargins
+              align="center"
+              margin={4}
+              paddingTop={IS_IOS ? 7 : 5}
+            >
+              <SheetTitle>{lang.t('button.add_cash')}</SheetTitle>
+              <SheetSubtitleCycler
+                errorIndex={errorIndex}
+                interval={subtitleInterval}
+                isPaymentComplete={isPaymentComplete}
+                items={Object.values(cashLimits)}
+                sharedValue={errorAnimation}
+              />
+            </ColumnWithMargins>
+          </View>
         </Column>
         <FlexItem width="100%">
           {isPaymentComplete ? (

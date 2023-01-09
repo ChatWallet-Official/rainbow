@@ -194,9 +194,8 @@ const AddFundsInterstitialCW = ({ network }) => {
       }
 
       if (ios) {
-        navigate(Routes.ADD_CASH_FLOW, {
+        navigate(Routes.ADD_CASH_SHEET, {
           params: !isNaN(amount) ? { amount } : null,
-          screen: Routes.ADD_CASH_SCREEN_NAVIGATOR,
         });
         analyticsV2.track(analyticsV2.event.buyButtonPressed, {
           amount,

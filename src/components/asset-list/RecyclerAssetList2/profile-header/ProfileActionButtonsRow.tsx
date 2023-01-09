@@ -145,7 +145,7 @@ function BuyButton() {
     });
 
     if (ios) {
-      navigate(Routes.ADD_CASH_FLOW);
+      navigate(Routes.ADD_CASH_SHEET);
     } else {
       navigate(Routes.WYRE_WEBVIEW_NAVIGATOR, {
         params: {
