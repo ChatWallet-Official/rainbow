@@ -4,9 +4,16 @@ import { IS_IOS } from '@/env';
 import { SQUARE_LOCATION_ID } from 'react-native-dotenv';
 import { Alert } from '@/components/alerts';
 import lang from 'i18n-js';
+import useAccountSettings from './useAccountSettings';
+import chargeCardNonce from './Charge';
 
 export default function useSquarePay() {
-  const onPurchaseByCard = useCallback(async ({ address, value }) => {
+  const { accountAddress, network } = useAccountSettings();
+
+  let numberValue;
+
+  const onPurchaseByCard = async ({ address, value }) => {
+    numberValue = Number(value) * 100;
     const cardEntryConfig = {
       collectPostalCode: true,
       squareLocationId: SQUARE_LOCATION_ID,
@@ -33,10 +40,11 @@ export default function useSquarePay() {
       onCardNonceRequestSuccess,
       onCardEntryCancel
     );
-  }, []);
+  };
 
   const onCardNonceRequestSuccess = async cardDetails => {
     try {
+      await chargeCardNonce(cardDetails.nonce, accountAddress, numberValue);
       SQIPCardEntry.completeCardEntry(() => {
         console.log(JSON.stringify(cardDetails));
         var cardData = cardDetails.card;

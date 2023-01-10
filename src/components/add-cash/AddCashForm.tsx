@@ -66,6 +66,10 @@ const AddCashForm = ({
   const { isReadOnlyWallet } = useWallets();
   const { accountAddress } = useAccountSettings();
 
+  const onPressPayWithCard = useCallback(async () => {
+    await onPurchaseByCard({ address: currency, value });
+  }, [currency, onPurchaseByCard, value]);
+
   const onSubmit = useCallback(async () => {
     if (paymentSheetVisible) return;
 
@@ -242,7 +246,7 @@ const AddCashForm = ({
           }
           onDisabledPress={onShake}
           onSubmit={onSubmit}
-          onPurchaseByCard={onPurchaseByCard}
+          onPurchaseByCard={onPressPayWithCard}
         />
       </ColumnWithMargins>
     </Animated.View>
