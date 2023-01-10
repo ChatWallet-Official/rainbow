@@ -60,7 +60,7 @@ const AddCashFooter = ({
               size="lmedium"
               weight="semibold"
             >
-              {lang.t('wallet.add_cash.pay_by_card')}
+              {lang.t('wallet.add_cash.pay_with_card')}
             </Text>
             {/* <Centered marginLeft={2} marginTop={0.5}>
               <Icon
