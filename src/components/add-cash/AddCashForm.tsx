@@ -234,12 +234,6 @@ const AddCashForm = ({
         </ColumnWithMargins>
       </Centered>
       <ColumnWithMargins align="center" margin={isTallPhone ? 27 : 12}>
-        <Centered maxWidth={313}>
-          <Numpad
-            onPress={handleNumpadPress}
-            width={isNarrowPhone ? 275 : '100%'}
-          />
-        </Centered>
         <AddCashFooter
           disabled={
             isEmpty(value) || parseFloat(value) < minimumPurchaseAmountUSD
@@ -248,6 +242,12 @@ const AddCashForm = ({
           onSubmit={onSubmit}
           onPurchaseByCard={onPressPayWithCard}
         />
+        <Centered maxWidth={313}>
+          <Numpad
+            onPress={handleNumpadPress}
+            width={isNarrowPhone ? 275 : '100%'}
+          />
+        </Centered>
       </ColumnWithMargins>
     </Animated.View>
   );

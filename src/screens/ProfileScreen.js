@@ -101,7 +101,7 @@ export default function ProfileScreen({ navigation }) {
           </Navbar.Item>
         }
       />
-      {network === NetworkTypes.mainnet && ios ? (
+      {/* {network === NetworkTypes.mainnet && ios ? (
         <TransactionList
           addCashAvailable={addCashAvailable}
           contacts={contacts}
@@ -111,25 +111,25 @@ export default function ProfileScreen({ navigation }) {
           requests={requests}
           transactions={transactions}
         />
-      ) : (
-        <ActivityList
-          addCashAvailable={addCashAvailable}
-          contacts={contacts}
-          header={
-            <ProfileMasthead
-              addCashAvailable={addCashAvailable}
-              onChangeWallet={onChangeWallet}
-            />
-          }
-          isEmpty={isEmpty}
-          isLoading={isLoading}
-          navigation={navigation}
-          network={network}
-          recyclerListView={ios}
-          sections={sections}
-          {...accountTransactions}
-        />
-      )}
+      ) : ( */}
+      <ActivityList
+        addCashAvailable={addCashAvailable}
+        contacts={contacts}
+        header={
+          <ProfileMasthead
+            addCashAvailable={addCashAvailable}
+            onChangeWallet={onChangeWallet}
+          />
+        }
+        isEmpty={isEmpty}
+        isLoading={isLoading}
+        navigation={navigation}
+        network={network}
+        recyclerListView={ios}
+        sections={sections}
+        {...accountTransactions}
+      />
+      {/* )} */}
     </ProfileScreenPage>
   );
 }

@@ -77,7 +77,7 @@ export default function SendAssetFormToken({
       >
         <SendAssetFormField
           colorForAsset={colorForAsset}
-          size={64}
+          size={32}
           format={removeLeadingZeros}
           label={selected.symbol}
           onChange={onChangeAssetAmount}

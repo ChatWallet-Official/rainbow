@@ -19,7 +19,7 @@ import {
   useSquarePay,
 } from '@/hooks';
 import styled from '@/styled-thing';
-import { borders } from '@/styles';
+import { borders, fonts } from '@/styles';
 import { useTheme } from '@/theme';
 import { IS_IOS } from '@/env';
 import { useNavigation } from '@/navigation';
@@ -133,14 +133,16 @@ export default function AddCashSheet() {
               margin={4}
               paddingTop={IS_IOS ? 7 : 5}
             >
-              <SheetTitle>{lang.t('button.add_cash')}</SheetTitle>
-              <SheetSubtitleCycler
+              <SheetTitle size={fonts.size.medium} weight={fonts.weight.medium}>
+                {lang.t('wallet.buy')}
+              </SheetTitle>
+              {/* <SheetSubtitleCycler
                 errorIndex={errorIndex}
                 interval={subtitleInterval}
                 isPaymentComplete={isPaymentComplete}
                 items={Object.values(cashLimits)}
                 sharedValue={errorAnimation}
-              />
+              /> */}
             </ColumnWithMargins>
           </View>
         </Column>
