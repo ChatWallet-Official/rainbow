@@ -515,7 +515,7 @@ const GasSpeedButton = ({
   ]);
 
   return (
-    <View style={{ position: 'relative', right: 100 }}>
+    <View>
       <AnimateNumber
         formatter={formatGasPrice}
         interval={6}

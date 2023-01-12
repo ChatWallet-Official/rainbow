@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
   avatar: {
     borderRadius: AvatarCircleSize,
     borderWidth: 1,
-    borderColor: colors.white,
+    borderColor: colors.alpha(colors.white, 0.8),
   },
 });

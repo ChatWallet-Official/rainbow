@@ -50,8 +50,8 @@ const SettingsExternalURLs = {
   rainbowLearn: 'https://learn.rainbow.me',
   review:
     'itms-apps://itunes.apple.com/us/app/appName/id1457119021?mt=8&action=write-review',
-  twitterDeepLink: 'twitter://user?screen_name=rainbowdotme',
-  twitterWebUrl: 'https://twitter.com/rainbowdotme',
+  twitterDeepLink: 'twitter://user?screen_name=ChatWalletWeb3',
+  twitterWebUrl: 'https://twitter.com/ChatWalletWeb3',
 };
 
 const capitalizeFirstLetter = (str: string) => {

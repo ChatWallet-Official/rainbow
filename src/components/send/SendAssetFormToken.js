@@ -109,13 +109,16 @@ export default function SendAssetFormToken({
         />
       </FormContainer>
       <FooterContainer>
-        <GasSpeedButton
-          asset={selected}
-          currentNetwork={network}
-          horizontalPadding={0}
-          marginBottom={17}
-          theme={'light'}
-        />
+        <View style={styles.gasButtonContainer}>
+          <GasSpeedButton
+            asset={selected}
+            currentNetwork={network}
+            horizontalPadding={0}
+            marginBottom={17}
+            theme={'light'}
+          />
+        </View>
+
         <View
           backgroundColor={buttonDisabled ? colors.black10 : colors.black}
           style={styles.buttonContainer}
@@ -148,5 +151,10 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     weight: fonts.weight.medium,
+  },
+  gasButtonContainer: {
+    width: '100%',
+    alignItems: 'flex-start',
+    paddingLeft: 15,
   },
 });

@@ -189,7 +189,7 @@ const AvatarBuilder = ({ route: { params } }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: colors.black10,
+    backgroundColor: colors.black50,
     position: 'absolute',
     top: 0,
     right: 0,
