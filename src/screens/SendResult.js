@@ -14,19 +14,14 @@ import Routes from '@/navigation/routesNames';
 export default function SendResult() {
   const [activityListInitialized, setActivityListInitialized] = useState(false);
   const isFocused = useIsFocused();
-  const { goBack, navigate } = useNavigation();
+  const { reset } = useNavigation();
   const { params } = useRoute();
   const accountTransactions = useAccountTransactions(
     activityListInitialized,
     isFocused
   );
 
-  const {
-    isLoadingTransactions: isLoading,
-    sections,
-    transactions,
-    transactionsCount,
-  } = accountTransactions;
+  const { sections } = accountTransactions;
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,11 +30,18 @@ export default function SendResult() {
   }, []);
 
   const onPressDone = () => {
-    navigate(Routes.PROFILE_SCREEN, { goBackImmediately: true });
+    reset({
+      index: 0,
+      routes: [{ name: Routes.STACK }],
+    });
   };
 
   const onPressHistory = () => {
-    navigate(Routes.PROFILE_SCREEN);
+    reset({
+      index: 0,
+      routes: [{ name: Routes.WALLET_SCREEN }],
+    });
+    params.onPressHistoryOnSendResult();
   };
 
   return (

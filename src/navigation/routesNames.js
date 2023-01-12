@@ -97,7 +97,7 @@ export const NATIVE_ROUTES = [
   Routes.SAVINGS_DEPOSIT_MODAL,
   ...(IS_IOS
     ? [
-        Routes.SEND_SHEET_NAVIGATOR,
+        // Routes.SEND_SHEET_NAVIGATOR,
         Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR,
         Routes.ADD_CASH_SCREEN_NAVIGATOR,
       ]
@@ -112,7 +112,7 @@ const RoutesWithPlatformDifferences = {
   IMPORT_SEED_PHRASE_FLOW: IS_IOS
     ? Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR
     : Routes.IMPORT_SEED_PHRASE_SHEET,
-  SEND_FLOW: Routes.SEND_SHEET_NAVIGATOR,
+  SEND_FLOW: Routes.SEND_SHEET,
 };
 
 export default RoutesWithPlatformDifferences;

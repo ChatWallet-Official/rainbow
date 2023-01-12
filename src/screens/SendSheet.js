@@ -273,7 +273,7 @@ export default function SendSheet(props) {
         sendableUniqueTokens
       );
 
-      if (assets.length > 0) {
+      if (assets.length > 0 && assets[0]) {
         const paramsForForm = {
           ...props,
           ...params,

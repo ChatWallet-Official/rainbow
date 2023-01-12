@@ -129,6 +129,7 @@ export default function SendAssetForm() {
     recipient,
     nativeAmount: nativeAmountOverride,
     asset: assetOverride,
+    onPressHistoryOnSendResult,
     ...props
   } = params;
 
@@ -579,10 +580,7 @@ export default function SendAssetForm() {
 
       if (submitSuccessful) {
         goBack();
-        navigate(Routes.SEND_RESULT);
-        // InteractionManager.runAfterInteractions(() => {
-        //   navigate(Routes.PROFILE_SCREEN);
-        // });
+        navigate(Routes.SEND_RESULT, { onPressHistoryOnSendResult });
       }
     },
     [amountDetails.assetAmount, goBack, navigate, onSubmit]

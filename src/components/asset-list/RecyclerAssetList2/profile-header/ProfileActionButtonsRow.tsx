@@ -1,7 +1,7 @@
 import Clipboard from '@react-native-community/clipboard';
 import lang from 'i18n-js';
 import * as React from 'react';
-import { Image, PressableProps } from 'react-native';
+import { Image, InteractionManager, PressableProps } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -209,17 +209,21 @@ function SendButton() {
 
   const { navigate } = useNavigation();
 
+  const onPressHistoryOnSendResult = React.useCallback(() => {
+    navigate(Routes.PROFILE_SCREEN);
+  }, [navigate]);
+
   const handlePress = React.useCallback(() => {
     if (!isReadOnlyWallet || enableActionsOnReadOnlyWallet) {
       analytics.track('Tapped "Send"', {
         category: 'home screen',
       });
 
-      navigate(Routes.SEND_FLOW);
+      navigate(Routes.SEND_FLOW, { onPressHistoryOnSendResult });
     } else {
       watchingAlert();
     }
-  }, [navigate, isReadOnlyWallet]);
+  }, [isReadOnlyWallet, navigate, onPressHistoryOnSendResult]);
 
   return (
     <ActionButton icon="sendCW" onPress={handlePress} testID="send-button">

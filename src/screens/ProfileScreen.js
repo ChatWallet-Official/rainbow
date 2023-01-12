@@ -53,10 +53,6 @@ export default function ProfileScreen({ navigation }) {
   const isEmpty = !transactionsCount && !pendingRequestCount;
 
   useEffect(() => {
-    if (params && params.goBackImmediately) goBack();
-  }, [goBack, params]);
-
-  useEffect(() => {
     setTimeout(() => {
       setActivityListInitialized(true);
     }, ACTIVITY_LIST_INITIALIZATION_DELAY);
