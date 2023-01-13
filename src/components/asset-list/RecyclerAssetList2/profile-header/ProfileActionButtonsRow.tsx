@@ -38,6 +38,7 @@ import { addressCopiedToastAtom } from '@/screens/WalletScreenCW';
 import config from '@/model/config';
 import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
 import { Icon } from '@/components/icons';
+import { useNavigationState } from '@react-navigation/core';
 
 export const ProfileActionButtonsRowHeight = 80;
 
@@ -208,6 +209,7 @@ function SendButton() {
   const { isReadOnlyWallet } = useWallets();
 
   const { navigate } = useNavigation();
+  const state = useNavigationState(state => state);
 
   const onPressHistoryOnSendResult = React.useCallback(() => {
     navigate(Routes.PROFILE_SCREEN);
@@ -218,12 +220,11 @@ function SendButton() {
       analytics.track('Tapped "Send"', {
         category: 'home screen',
       });
-
-      navigate(Routes.SEND_FLOW, { onPressHistoryOnSendResult });
+      navigate(Routes.SEND_FLOW, { state, onPressHistoryOnSendResult });
     } else {
       watchingAlert();
     }
-  }, [isReadOnlyWallet, navigate, onPressHistoryOnSendResult]);
+  }, [isReadOnlyWallet, navigate, onPressHistoryOnSendResult, state]);
 
   return (
     <ActionButton icon="sendCW" onPress={handlePress} testID="send-button">

@@ -93,25 +93,25 @@ platform :ios do
   lane :distribute do
     latest_release = firebase_app_distribution_get_latest_release(
       app: "1:779229053551:ios:2a55f1739556587dfb439a",
-      service_credentials_file: "fastlane/chatwallet-21f22-a94a2aa31737.json",
+      service_credentials_file: "fastlane/chatwallet-21f22-151cb16b9125.json",
     )
     increment_build_number({ build_number: latest_release[:buildVersion].to_i + 1 })
 
-    sync_code_signing(readonly: true)
+    sync_code_signing(type: "adhoc", readonly: true)
 
     build_app(
       workspace: "Rainbow.xcworkspace",
       scheme: "Rainbow",
-      configuration: "Debug",
-      export_method: "development",
+      configuration: "Release",
+      export_method: "ad-hoc",
       export_options: ({iCloudContainerEnvironment: 'Development'})
     )
 
     firebase_app_distribution(
         app: "1:779229053551:ios:2a55f1739556587dfb439a",
-        service_credentials_file: "fastlane/chatwallet-21f22-a94a2aa31737.json",
+        service_credentials_file: "fastlane/chatwallet-21f22-151cb16b9125.json",
         groups: "inGroup",
-        release_notes: "Our first awesome build!"
+        release_notes: ""
     )
   end
 end

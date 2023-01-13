@@ -129,6 +129,7 @@ export default function SendAssetForm() {
     recipient,
     nativeAmount: nativeAmountOverride,
     asset: assetOverride,
+    state,
     onPressHistoryOnSendResult,
     ...props
   } = params;
@@ -580,10 +581,17 @@ export default function SendAssetForm() {
 
       if (submitSuccessful) {
         goBack();
-        navigate(Routes.SEND_RESULT, { onPressHistoryOnSendResult });
+        navigate(Routes.SEND_RESULT, { state, onPressHistoryOnSendResult });
       }
     },
-    [amountDetails.assetAmount, goBack, navigate, onSubmit]
+    [
+      amountDetails.assetAmount,
+      goBack,
+      navigate,
+      onPressHistoryOnSendResult,
+      onSubmit,
+      state,
+    ]
   );
 
   const { buttonDisabled, buttonLabel } = useMemo(() => {
