@@ -220,7 +220,10 @@ function SendButton() {
       analytics.track('Tapped "Send"', {
         category: 'home screen',
       });
-      navigate(Routes.SEND_FLOW, { state, onPressHistoryOnSendResult });
+      navigate(Routes.SEND_FLOW, {
+        screen: Routes.SEND_SHEET,
+        params: { state, onPressHistoryOnSendResult },
+      });
     } else {
       watchingAlert();
     }

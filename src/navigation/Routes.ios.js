@@ -437,27 +437,10 @@ function NativeStackNavigator() {
           />
         </>
       )}
-      {/* <NativeStack.Screen
+      <NativeStack.Screen
         component={SendFlowNavigator}
         name={Routes.SEND_SHEET_NAVIGATOR}
-      /> */}
-      {/* <Stack.Screen
-        component={ModalScreen}
-        name={Routes.MODAL_SCREEN}
-        options={overlayExpandedPreset}
-      /> */}
-      <Stack.Screen
-        component={SendSheet}
-        name={Routes.SEND_SHEET}
-        options={sheetPreset}
       />
-      <Stack.Screen component={SendAssetForm} name={Routes.SEND_ASSET_FORM} />
-      <Stack.Screen
-        component={SelectTokenSheet}
-        name={Routes.SELECT_TOKEN_SHEET}
-        {...selectTokenSheetConfig}
-      />
-      <Stack.Screen component={SendResult} name={Routes.SEND_RESULT} />
       <NativeStack.Screen
         component={ImportSeedPhraseFlowNavigator}
         name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
