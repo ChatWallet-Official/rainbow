@@ -1,7 +1,7 @@
 import { useRoute } from '@react-navigation/core';
 import { compact, isEmpty, keys } from 'lodash';
-import React, { useEffect, useState } from 'react';
-import { InteractionManager } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { InteractionManager, Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OpacityToggler } from '../components/animations';
 import { AssetList } from '../components/asset-list';
@@ -28,6 +28,8 @@ import {
   useTrackENSProfile,
   useUserAccounts,
   useWalletSectionsData,
+  useWallets,
+  useWalletBalances,
 } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import { updateRefetchSavings } from '@/redux/data';
@@ -39,6 +41,10 @@ import { Toast, ToastPositionContainer } from '@/components/toasts';
 import { atom, useRecoilValue } from 'recoil';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { analytics } from '@/analytics';
+import { LoadingScreen } from '@/components/modal/LoadingScreen';
+import ChatIconCW from '@/components/icons/svg/ChatIconCW';
+import SettingsIconCW from '@/components/icons/svg/SettingsIconCW';
+import { isL2Network, isTestnetNetwork } from '@/handlers/web3';
 
 export const addressCopiedToastAtom = atom({
   default: false,
@@ -87,6 +93,7 @@ export default function WalletScreen() {
   const loadAccountData = useLoadAccountData();
   const initializeAccountData = useInitializeAccountData();
   const insets = useSafeAreaInsets();
+  const { isWalletLoading, wallets } = useWallets();
 
   const revertToMainnet = useCallback(async () => {
     await resetAccountState();
@@ -110,10 +117,23 @@ export default function WalletScreen() {
   const {
     isWalletEthZero,
     refetchSavings,
+    sections,
     shouldRefetchSavings,
     isEmpty: isSectionsEmpty,
     briefSectionsData: walletBriefSectionsData,
   } = useWalletSectionsData();
+
+  const balances = useWalletBalances(wallets);
+  const isTestnet = isTestnetNetwork(currentNetwork);
+  const isL2 = isL2Network(currentNetwork);
+
+  const walletHasBalance = useMemo(() => {
+    if (isL2 || isTestnet) {
+      return true;
+    } else {
+      return balances[accountAddress] > 0;
+    }
+  }, [isL2, isTestnet, balances, accountAddress]);
 
   useEffect(() => {
     // This is the fix for Android wallet creation problem.
@@ -195,6 +215,20 @@ export default function WalletScreen() {
   }, [portfolios, portfoliosFetched, trackPortfolios, userAccounts.length]);
 
   useEffect(() => {
+    if (initialized && assetsSocket && !fetchedCharts) {
+      const balancesSection = sections.find(({ name }) => name === 'balances');
+      const assetCodes = compact(
+        balancesSection?.data.map(({ address }) => address)
+      );
+
+      if (!isEmpty(assetCodes)) {
+        dispatch(emitChartsRequest(assetCodes));
+        setFetchedCharts(true);
+      }
+    }
+  }, [assetsSocket, dispatch, fetchedCharts, initialized, sections]);
+
+  useEffect(() => {
     if (walletReady && assetsSocket) {
       loadAccountLateData();
       loadGlobalLateData();
@@ -228,8 +262,8 @@ export default function WalletScreen() {
 
   const { navigate } = useNavigation();
 
-  const handlePressActivity = useCallback(() => {
-    navigate(Routes.PROFILE_SCREEN);
+  const handlePressSettings = useCallback(() => {
+    navigate(Routes.SETTINGS_SHEET);
   }, [navigate]);
 
   const handlePressQRScanner = useCallback(() => {
@@ -237,7 +271,7 @@ export default function WalletScreen() {
   }, [navigate]);
 
   const handlePressDiscover = useCallback(() => {
-    navigate(Routes.DISCOVER_SCREEN);
+    navigate(Routes.LEARN_WEB_VIEW_SCREEN);
   }, [navigate]);
 
   const isAddressCopiedToastActive = useRecoilValue(addressCopiedToastAtom);
@@ -251,20 +285,17 @@ export default function WalletScreen() {
         <Navbar
           hasStatusBarInset
           leftComponent={
-            <Navbar.Item onPress={handlePressActivity} testID="activity-button">
-              <Navbar.TextIcon icon="􀐫" />
+            <Navbar.Item onPress={handlePressSettings} testID="activity-button">
+              <Navbar.SvgIcon icon={SettingsIconCW} />
             </Navbar.Item>
           }
           rightComponent={
             <Inline space={{ custom: 17 }}>
-              <Navbar.Item onPress={handlePressQRScanner}>
-                <Navbar.TextIcon icon="􀎹" />
-              </Navbar.Item>
               <Navbar.Item
                 onPress={handlePressDiscover}
                 testID="discover-button"
               >
-                <Navbar.TextIcon icon="􀎬" />
+                <Navbar.SvgIcon icon={ChatIconCW} />
               </Navbar.Item>
             </Inline>
           }
@@ -289,6 +320,9 @@ export default function WalletScreen() {
           testID="address-copied-toast"
         />
       </ToastPositionContainer>
+      <Modal visible={isWalletLoading !== null}>
+        <LoadingScreen />
+      </Modal>
     </WalletPage>
   );
 }

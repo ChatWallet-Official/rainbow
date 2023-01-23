@@ -5,7 +5,7 @@ import { TestnetToast } from '../components/toasts';
 import { web3Provider } from '@/handlers/web3';
 import DiscoverScreen from '../screens/discover/DiscoverScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import WalletScreenCW from '../screens/WalletScreenCW';
+import WalletScreen from '../screens/WalletScreen';
 import { deviceUtils } from '../utils';
 import ScrollPagerWrapper from './ScrollPagerWrapper';
 import Routes from './routesNames';
@@ -37,7 +37,7 @@ export function SwipeNavigator() {
         tabBar={renderTabBar}
       >
         {/* <Swipe.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} /> */}
-        <Swipe.Screen component={WalletScreenCW} name={Routes.WALLET_SCREEN} />
+        <Swipe.Screen component={WalletScreen} name={Routes.WALLET_SCREEN} />
         <Swipe.Screen
           component={LearnWebViewScreen}
           name={Routes.LEARN_WEB_VIEW_SCREEN}

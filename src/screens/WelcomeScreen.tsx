@@ -1,12 +1,9 @@
-import MaskedView from '@react-native-masked-view/masked-view';
 import lang from 'i18n-js';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Linking, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import Reanimated, {
   Easing,
-  interpolateColor,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withDelay,
   withRepeat,
@@ -18,10 +15,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAndroidBackHandler } from 'react-navigation-backhandler';
 import { ButtonPressAnimation } from '../components/animations';
 import { BaseButtonAnimationProps } from '../components/animations/ButtonPressAnimation/types';
-import RainbowText from '../components/icons/svg/RainbowText';
 import { RowWithMargins } from '../components/layout';
-import { RainbowsBackground } from '../components/rainbows-background/RainbowsBackground';
-import { Emoji, Text } from '../components/text';
+import { Text } from '../components/text';
 import {
   fetchUserDataFromCloud,
   isCloudBackupAvailable,
@@ -34,13 +29,13 @@ import { useHideSplashScreen } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
-import { position, shadow } from '@/styles';
+import { fonts, position } from '@/styles';
 import { ThemeContextProps, useTheme } from '@/theme';
 import logger from '@/utils/logger';
-import { IS_ANDROID, IS_TEST } from '@/env';
+import { IS_TEST } from '@/env';
 
 const ButtonContainer = styled(Reanimated.View)({
-  borderRadius: ({ height }: { height: number }) => height / 2,
+  borderRadius: 16,
 });
 
 const ButtonContent = styled(RowWithMargins).attrs({
@@ -55,74 +50,35 @@ const ButtonContent = styled(RowWithMargins).attrs({
 const ButtonLabel = styled(Text).attrs(
   ({
     textColor: color,
+    textSize: string,
     theme: { colors },
   }: {
     textColor: string;
+    textSize: string;
     theme: ThemeContextProps;
   }) => ({
     align: 'center',
     color: color || colors.dark,
-    size: 'larger',
+    size: string,
     weight: 'bold',
   })
 )({});
 
-const ButtonEmoji = styled(Emoji).attrs({
-  align: 'center',
-  size: 16.25,
-})({
-  paddingBottom: 1.5,
-});
-
-const DarkShadow = styled(Reanimated.View)(
-  ({ theme: { colors, isDarkMode } }: { theme: ThemeContextProps }) => ({
-    ...shadow.buildAsObject(0, 10, 30, colors.dark, isDarkMode ? 0 : 1),
-    backgroundColor: colors.white,
-    borderRadius: 30,
-    height: 60,
-    left: -3,
-    opacity: 0.2,
-    position: 'absolute',
-    top: -3,
-    width: 236,
-  })
-);
-
-const Shadow = styled(Reanimated.View)(
-  ({ theme: { colors, isDarkMode } }: { theme: ThemeContextProps }) => ({
-    ...shadow.buildAsObject(0, 5, 15, colors.shadow, isDarkMode ? 0 : 0.4),
-    borderRadius: 30,
-    height: 60,
-    position: 'absolute',
-    width: 236,
-    ...(ios
-      ? {
-          left: -3,
-          top: -3,
-        }
-      : {
-          elevation: 30,
-        }),
-  })
-);
-
 interface RainbowButtonProps extends BaseButtonAnimationProps {
   height: number;
   textColor: string;
+  textSize: string;
   text: string;
-  emoji: string;
   shadowStyle?: StyleProp<ViewStyle>;
   darkShadowStyle?: StyleProp<ViewStyle>;
 }
 
 const RainbowButton = ({
-  darkShadowStyle,
-  emoji,
   height,
   onPress,
-  shadowStyle,
   style,
   textColor,
+  textSize,
   text,
   ...props
 }: RainbowButtonProps) => {
@@ -130,16 +86,15 @@ const RainbowButton = ({
     <ButtonPressAnimation
       onPress={onPress}
       overflowMargin={40}
-      radiusAndroid={height / 2}
+      radiusAndroid={16}
       scaleTo={0.9}
       {...props}
     >
-      {ios && <DarkShadow style={darkShadowStyle} />}
-      <Shadow style={shadowStyle} />
       <ButtonContainer height={height} style={style}>
         <ButtonContent>
-          <ButtonEmoji name={emoji} />
-          <ButtonLabel textColor={textColor}>{text}</ButtonLabel>
+          <ButtonLabel textColor={textColor} textSize={textSize}>
+            {text}
+          </ButtonLabel>
         </ButtonContent>
       </ButtonContainer>
     </ButtonPressAnimation>
@@ -157,7 +112,7 @@ const Container = styled.View({
 
 const ContentWrapper = styled(Reanimated.View)({
   alignItems: 'center',
-  height: 192,
+  height: 122,
   justifyContent: 'space-between',
   marginBottom: 20,
   zIndex: 10,
@@ -171,25 +126,8 @@ const ButtonWrapper = styled(Reanimated.View)({
 const TermsOfUse = styled.View(({ bottomInset }) => ({
   bottom: bottomInset / 2 + 32,
   position: 'absolute',
-  width: 200,
+  width: 300,
 }));
-
-const RAINBOW_TEXT_HEIGHT = 32;
-const RAINBOW_TEXT_WIDTH = 125;
-
-const RainbowTextMask = styled(Reanimated.View)({
-  height: RAINBOW_TEXT_HEIGHT,
-  width: RAINBOW_TEXT_WIDTH,
-});
-
-const animationColors = [
-  'rgb(255,73,74)',
-  'rgb(255,170,0)',
-  'rgb(0,163,217)',
-  'rgb(0,163,217)',
-  'rgb(115,92,255)',
-  'rgb(255,73,74)',
-];
 
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
@@ -202,15 +140,6 @@ export default function WelcomeScreen() {
   const contentAnimation = useSharedValue(1);
   const colorAnimation = useSharedValue(0);
   const shouldAnimateRainbows = useSharedValue(false);
-  const calculatedColor = useDerivedValue(
-    () =>
-      interpolateColor(
-        colorAnimation.value,
-        [0, 1, 2, 3, 4, 5],
-        animationColors
-      ),
-    [colorAnimation]
-  );
   const createWalletButtonAnimation = useSharedValue(1);
 
   useEffect(() => {
@@ -306,20 +235,9 @@ export default function WelcomeScreen() {
     ],
   }));
 
-  const textStyle = useAnimatedStyle(() => ({
-    backgroundColor: calculatedColor.value,
-  }));
-
   const createWalletButtonAnimatedStyle = useAnimatedStyle(() => ({
-    backgroundColor: isDarkMode ? colors.blueGreyDarkLight : colors.dark,
-    borderColor: calculatedColor.value,
-    borderWidth: ios ? 0 : 3,
-    width: 230 + (ios ? 0 : 6),
-  }));
-
-  const createWalletButtonAnimatedShadowStyle = useAnimatedStyle(() => ({
-    backgroundColor: calculatedColor.value,
-    shadowColor: calculatedColor.value,
+    backgroundColor: isDarkMode ? colors.blueGreyDarkLight : colors.greenCW,
+    width: 270 + (ios ? 0 : 6),
   }));
 
   const onCreateWallet = useCallback(async () => {
@@ -337,11 +255,8 @@ export default function WelcomeScreen() {
 
   const showRestoreSheet = useCallback(() => {
     analytics.track('Tapped "I already have one"');
-    navigate(Routes.ADD_WALLET_NAVIGATOR, {
-      userData,
-      isFirstWallet: true,
-    });
-  }, [navigate, userData]);
+    navigate(Routes.IMPORT_SEED_PHRASE_FLOW);
+  }, [navigate]);
 
   useAndroidBackHandler(() => {
     return true;
@@ -349,44 +264,31 @@ export default function WelcomeScreen() {
 
   return (
     <Container testID="welcome-screen">
-      <RainbowsBackground shouldAnimate={shouldAnimateRainbows} />
+      <Text style={sx.branding}>{lang.t('wallet.new.brand_name')}</Text>
       <ContentWrapper style={contentStyle}>
-        {IS_ANDROID && IS_TEST ? (
-          // @ts-expect-error JS component
-          <RainbowText colors={colors} />
-        ) : (
-          // @ts-expect-error JS component
-          <MaskedView maskElement={<RainbowText colors={colors} />}>
-            <RainbowTextMask style={textStyle} />
-          </MaskedView>
-        )}
-
         <ButtonWrapper style={buttonStyle}>
           <RainbowButton
-            emoji="castle"
             height={54 + (ios ? 0 : 6)}
             onPress={onCreateWallet}
-            shadowStyle={createWalletButtonAnimatedShadowStyle}
-            style={createWalletButtonAnimatedStyle}
+            style={[
+              createWalletButtonAnimatedStyle,
+              { backgroundColor: colors.greenCW, width: 270 },
+            ]}
             testID="new-wallet-button"
             text={lang.t('wallet.new.get_new_wallet')}
             textColor={isDarkMode ? colors.dark : colors.white}
+            textSize={'larger'}
           />
         </ButtonWrapper>
         <ButtonWrapper>
           <RainbowButton
-            darkShadowStyle={sx.existingWalletShadow}
-            emoji="old_key"
             height={56}
             onPress={showRestoreSheet}
-            shadowStyle={sx.existingWalletShadow}
-            style={[
-              sx.existingWallet,
-              { backgroundColor: colors.blueGreyDarkLight },
-            ]}
+            style={[sx.existingWallet]}
             testID="already-have-wallet-button"
-            text={lang.t('wallet.new.already_have_wallet')}
-            textColor={colors.alpha(colors.blueGreyDark, 0.8)}
+            text={lang.t('wallet.new.add_existing_wallet')}
+            textColor={colors.greenCW}
+            textSize={'medium'}
           />
         </ButtonWrapper>
       </ContentWrapper>
@@ -400,7 +302,7 @@ export default function WelcomeScreen() {
         >
           {lang.t('wallet.new.terms')}
           <Text
-            color={colors.paleBlue}
+            color={colors.greenCW}
             lineHeight="loose"
             onPress={handlePressTerms}
             size="smedium"
@@ -421,5 +323,11 @@ const sx = StyleSheet.create({
   },
   existingWalletShadow: {
     opacity: 0,
+  },
+  branding: {
+    fontSize: fonts.size.h2,
+    fontWeight: fonts.weight.bold,
+    position: 'relative',
+    bottom: 150,
   },
 });

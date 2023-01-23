@@ -36,7 +36,7 @@ import TransactionConfirmationScreen from '../screens/TransactionConfirmationScr
 import WalletConnectApprovalSheet from '../screens/WalletConnectApprovalSheet';
 import WalletConnectRedirectSheet from '../screens/WalletConnectRedirectSheet';
 import WalletDiagnosticsSheet from '../screens/WalletDiagnosticsSheet';
-import WelcomeScreenCW from '../screens/WelcomeScreenCW';
+import WelcomeScreen from '../screens/WelcomeScreen';
 import WithdrawModal from '../screens/WithdrawModal';
 import WyreWebview from '../screens/WyreWebview';
 import RegisterENSNavigator from './RegisterENSNavigator';
@@ -215,7 +215,7 @@ function MainNavigator() {
         name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
       />
       <Stack.Screen
-        component={WelcomeScreenCW}
+        component={WelcomeScreen}
         name={Routes.WELCOME_SCREEN}
         options={{ animationEnabled: false, gestureEnabled: false }}
       />

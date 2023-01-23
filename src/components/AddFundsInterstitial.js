@@ -1,7 +1,7 @@
 import { captureMessage } from '@sentry/react-native';
 import lang from 'i18n-js';
 import React, { Fragment, useCallback } from 'react';
-import { Linking, View } from 'react-native';
+import { Linking, View, StyleSheet } from 'react-native';
 import networkInfo from '../helpers/networkInfo';
 import networkTypes from '../helpers/networkTypes';
 import showWalletErrorAlert from '../helpers/support';
@@ -11,7 +11,7 @@ import { deviceUtils, magicMemo } from '../utils';
 import Divider from './Divider';
 import { ButtonPressAnimation, ScaleButtonZoomableAndroid } from './animations';
 import { Icon } from './icons';
-import { Centered, Row, RowWithMargins } from './layout';
+import { Centered, Row, Column, RowWithMargins, Flex } from './layout';
 import { Text } from './text';
 import { analyticsV2 } from '@/analytics';
 import { useAccountSettings, useDimensions, useWallets } from '@/hooks';
@@ -22,14 +22,12 @@ import ShadowStack from '@/react-native-shadow-stack';
 import config from '@/model/config';
 import { useRoute } from '@react-navigation/core';
 
-const ContainerWidth = 261;
-
 const Container = styled(Centered).attrs({ direction: 'column' })(
   ({ isSmallPhone }) => ({
     ...(isSmallPhone && { bottom: 80 }),
     position: 'absolute',
     top: 60,
-    width: ContainerWidth,
+    width: deviceUtils.dimensions.width,
   })
 );
 
@@ -72,7 +70,7 @@ const CopyAddressButtonContent = styled(RowWithMargins).attrs(
 });
 
 const AmountBPA = styled(ButtonPressAnimation)({
-  borderRadius: 25,
+  borderRadius: 20,
   overflow: 'visible',
 });
 
@@ -92,8 +90,8 @@ const Title = styled(Text).attrs(({ theme: { colors } }) => ({
   align: 'center',
   color: colors.dark,
   lineHeight: 32,
-  size: 'bigger',
-  weight: 'heavy',
+  size: 'h2',
+  weight: 'bold',
 }))({
   marginHorizontal: 27,
 });
@@ -108,26 +106,22 @@ const AmountText = styled(Text).attrs(({ children }) => ({
   align: 'center',
   children: android ? `  ${children.join('')}  ` : children,
   letterSpacing: 'roundedTightest',
-  size: 'bigger',
+  size: 'h2',
   weight: 'heavy',
 }))(({ color }) => ({
-  ...(android ? padding.object(15, 4.5) : padding.object(24, 15, 25)),
+  ...(android ? padding.object(15, 4.5) : padding.object(15, 15, 15)),
   alignSelf: 'center',
-  textShadowColor: color,
-  textShadowOffset: { height: 0, width: 0 },
-  textShadowRadius: 20,
   zIndex: 1,
 }));
 
 const { isVeryNarrowPhone } = deviceUtils;
 
-const AmountButtonWrapper = styled(Row).attrs({
+const AmountButtonWrapper = styled(View).attrs({
   justify: 'center',
-  marginLeft: isVeryNarrowPhone ? 5 : 7.5,
-  marginRight: isVeryNarrowPhone ? 5 : 7.5,
-})({
-  ...(android && { width: isVeryNarrowPhone ? 95 : 100 }),
-});
+  marginLeft: isVeryNarrowPhone ? 20 : 32,
+  marginRight: isVeryNarrowPhone ? 20 : 32,
+  height: 72,
+})();
 
 const onAddFromFaucet = accountAddress =>
   Linking.openURL(`https://faucet.paradigm.xyz/?addr=${accountAddress}`);
@@ -151,16 +145,15 @@ const AmountButton = ({ amount, backgroundColor, color, onPress }) => {
   };
 
   return (
-    <AmountButtonWrapper>
+    <AmountButtonWrapper style={styles.button}>
       <Wrapper disabled={android} onPress={handlePress}>
         <ShadowStack
           {...position.coverAsObject}
           backgroundColor={backgroundColor}
-          borderRadius={25}
+          borderRadius={20}
           shadows={shadows?.[backgroundColor] || []}
           {...(android && {
             height: 80,
-            width: isVeryNarrowPhone ? 95 : 100,
           })}
         />
         <InnerBPA
@@ -201,9 +194,8 @@ const AddFundsInterstitial = ({ network }) => {
       }
 
       if (ios) {
-        navigate(Routes.ADD_CASH_FLOW, {
+        navigate(Routes.ADD_CASH_SHEET, {
           params: !isNaN(amount) ? { amount } : null,
-          screen: Routes.ADD_CASH_SCREEN_NAVIGATOR,
         });
         analyticsV2.track(analyticsV2.event.buyButtonPressed, {
           amount,
@@ -244,58 +236,46 @@ const AddFundsInterstitial = ({ network }) => {
   }, [navigate, isDamaged]);
 
   return (
-    <Container isSmallPhone={isSmallPhone}>
+    <Container isSmallPhone={isSmallPhone} style={styles.absoluteFill}>
       {network === networkTypes.mainnet ? (
-        <Fragment>
-          <Title>
+        <Column justify="space-between" style={styles.absoluteFill}>
+          <Title style={styles.title}>
             {ios
               ? lang.t('add_funds.to_get_started_ios')
               : lang.t('add_funds.to_get_started_android')}
           </Title>
-          <Row justify="space-between" marginVertical={30}>
-            <AmountButton
-              amount={100}
-              backgroundColor={colors.swapPurple}
-              color={colors.neonSkyblue}
+          <View style={styles.buttonContainer}>
+            <Column marginVertical={20}>
+              <AmountButton
+                amount={50}
+                backgroundColor={colors.greenCW}
+                color={colors.white}
+                onPress={handlePressAmount}
+              />
+              <AmountButton
+                amount={100}
+                backgroundColor={colors.greenCW}
+                color={colors.white}
+                onPress={handlePressAmount}
+              />
+              <AmountButton
+                amount={200}
+                backgroundColor={colors.orangeCW}
+                color={colors.white}
+                onPress={handlePressAmount}
+              />
+            </Column>
+            <Text
+              align="center"
+              color={colors.greenCW}
+              size="medium"
+              weight="bold"
               onPress={handlePressAmount}
-            />
-            <AmountButton
-              amount={200}
-              backgroundColor={colors.swapPurple}
-              color={colors.neonSkyblue}
-              onPress={handlePressAmount}
-            />
-            <AmountButton
-              amount={300}
-              backgroundColor={colors.purpleDark}
-              color={colors.pinkLight}
-              onPress={handlePressAmount}
-            />
-          </Row>
-          <InterstitialButtonRow>
-            <InterstitialButton onPress={handlePressAmount} radiusAndroid={23}>
-              <InterstitialButtonContent>
-                <Text
-                  align="center"
-                  color={colors.alpha(colors.blueGreyDark, 0.6)}
-                  lineHeight="loose"
-                  size="large"
-                  weight="bold"
-                >
-                  {`􀍡 ${lang.t('wallet.add_cash.interstitial.other_amount')}`}
-                </Text>
-              </InterstitialButtonContent>
-            </InterstitialButton>
-          </InterstitialButtonRow>
-          {!isSmallPhone && <InterstitialDivider />}
-          <Subtitle isSmallPhone={isSmallPhone}>
-            {lang.t('add_funds.eth.or_send_eth')}
-          </Subtitle>
-
-          <Paragraph>
-            {lang.t('add_funds.eth.send_from_another_source')}
-          </Paragraph>
-        </Fragment>
+            >
+              {lang.t('wallet.add_cash.interstitial.other_amount')}
+            </Text>
+          </View>
+        </Column>
       ) : (
         <Fragment>
           <Title>
@@ -327,31 +307,28 @@ const AddFundsInterstitial = ({ network }) => {
           </Paragraph>
         </Fragment>
       )}
-      <CopyAddressButton
-        onPress={handlePressCopyAddress}
-        radiusAndroid={23}
-        testID="copy-address-button"
-      >
-        <CopyAddressButtonContent>
-          <Icon
-            color={colors.appleBlue}
-            marginTop={0.5}
-            name="copy"
-            size={19}
-          />
-          <Text
-            align="center"
-            color={colors.appleBlue}
-            lineHeight="loose"
-            size="large"
-            weight="bold"
-          >
-            {lang.t('wallet.settings.copy_address')}
-          </Text>
-        </CopyAddressButtonContent>
-      </CopyAddressButton>
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  absoluteFill: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  },
+  title: {
+    marginTop: 130,
+  },
+  buttonContainer: {
+    marginBottom: 80,
+  },
+  button: {
+    marginVertical: 8,
+    marginHorizontal: 32,
+  },
+});
 
 export default magicMemo(AddFundsInterstitial, ['network', 'offsetY']);
