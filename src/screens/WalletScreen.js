@@ -215,20 +215,6 @@ export default function WalletScreen() {
   }, [portfolios, portfoliosFetched, trackPortfolios, userAccounts.length]);
 
   useEffect(() => {
-    if (initialized && assetsSocket && !fetchedCharts) {
-      const balancesSection = sections.find(({ name }) => name === 'balances');
-      const assetCodes = compact(
-        balancesSection?.data.map(({ address }) => address)
-      );
-
-      if (!isEmpty(assetCodes)) {
-        dispatch(emitChartsRequest(assetCodes));
-        setFetchedCharts(true);
-      }
-    }
-  }, [assetsSocket, dispatch, fetchedCharts, initialized, sections]);
-
-  useEffect(() => {
     if (walletReady && assetsSocket) {
       loadAccountLateData();
       loadGlobalLateData();

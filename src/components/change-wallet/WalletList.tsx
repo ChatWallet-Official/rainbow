@@ -111,6 +111,7 @@ interface Props {
     walletId: string,
     address: EthereumAddress | undefined
   ) => void;
+  onPressAddAccount: () => void;
   onPressAddAnotherWallet: () => void;
   onPressImportSeedPhrase: () => void;
   onPressPairHardwareWallet: () => void;
@@ -127,6 +128,7 @@ export default function WalletList({
   editMode,
   height,
   onChangeAccount,
+  onPressAddAccount,
   onPressAddAnotherWallet,
   onPressImportSeedPhrase,
   onPressPairHardwareWallet,
@@ -282,7 +284,7 @@ export default function WalletList({
             <WalletOption
               editMode={editMode}
               label={`􀅼 ${lang.t('wallet.action.create_new')}`}
-              onPress={onPressAddAnotherWallet}
+              onPress={onPressAddAccount}
             />
             {hardwareWalletsEnabled && (
               <WalletOption

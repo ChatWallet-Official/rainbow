@@ -245,14 +245,13 @@ const withBriefBalanceSection = (
   } else if (hasNFTsOnly) {
     content = ONLY_NFTS_CONTENT;
   } else if (isEmpty) {
-    content = EMPTY_WALLET_CONTENT;
+    content = [];
   }
 
-  if (isEmpty) {
-    return header;
-  } else {
-    return [...header, ...content];
-  }
+  return {
+    balanceSection: [...header, ...content],
+    isEmpty,
+  };
 };
 
 const briefUniqueTokenDataSelector = createSelector(

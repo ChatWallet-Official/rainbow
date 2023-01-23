@@ -453,6 +453,10 @@ function NativeStackNavigator() {
         name={Routes.SEND_SHEET_NAVIGATOR}
       />
       <NativeStack.Screen
+        component={ImportSeedPhraseFlowNavigator}
+        name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
+      />
+      <NativeStack.Screen
         component={AddCashFlowNavigator}
         name={Routes.ADD_CASH_SCREEN_NAVIGATOR}
       />

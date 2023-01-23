@@ -303,7 +303,7 @@ function MoreButton() {
       },
     ],
     ...(ios ? { menuTitle: '' } : {}),
-  }
+  };
 
   const handlePressMenuItem = React.useCallback(
     e => {

@@ -1,7 +1,8 @@
 import { IS_TESTING } from 'react-native-dotenv';
 import { useRoute } from '@react-navigation/core';
 import lang from 'i18n-js';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { captureException } from '@sentry/react-native';
 import { Alert, InteractionManager } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { useDispatch } from 'react-redux';
@@ -11,16 +12,29 @@ import WalletList from '../components/change-wallet/WalletList';
 import { Centered, Column, Row } from '../components/layout';
 import { Sheet, SheetTitle } from '../components/sheet';
 import { Text } from '../components/text';
+import { backupUserDataIntoCloud } from '../handlers/cloudBackup';
 import { removeWalletData } from '../handlers/localstorage/removeWallet';
-import { cleanUpWalletKeys } from '../model/wallet';
+import showWalletErrorAlert from '../helpers/support';
+import { WalletLoadingStates } from '../helpers/walletLoadingStates';
+import WalletTypes from '../helpers/walletTypes';
+import { cleanUpWalletKeys, createWallet } from '../model/wallet';
 import { useNavigation } from '../navigation/Navigation';
 import {
   addressSetSelected,
+  createAccountForWallet,
+  walletsLoadState,
   walletsSetSelected,
   walletsUpdate,
 } from '../redux/wallets';
 import { analytics, analyticsV2 } from '@/analytics';
-import { getExperimetalFlag, HARDWARE_WALLETS } from '@/config';
+import {
+  getExperimetalFlag,
+  HARDWARE_WALLETS,
+  PROFILES,
+  useExperimentalFlag,
+} from '@/config';
+import WalletBackupTypes from '@/helpers/walletBackupTypes';
+
 import { runCampaignChecks } from '@/campaigns/campaignChecks';
 import {
   useAccountSettings,
@@ -43,7 +57,7 @@ import { fonts, colors } from '@/styles';
 import { getNotificationSettingsForWalletWithAddress } from '@/notifications/settings/storage';
 
 const deviceHeight = deviceUtils.dimensions.height;
-const footerHeight = getExperimetalFlag(HARDWARE_WALLETS) ? 100 : 60;
+const footerHeight = getExperimetalFlag(HARDWARE_WALLETS) ? 164 : 111;
 const listPaddingBottom = 6;
 const walletRowHeight = 65 + 12;
 const maxListHeight = deviceHeight - 220;
@@ -112,7 +126,12 @@ export type EditWalletContextMenuActions = {
 export default function ChangeWalletSheet() {
   const { params = {} as any } = useRoute();
   const { onChangeWallet, watchOnly = false, currentAccountAddress } = params;
-  const { selectedWallet, wallets } = useWallets();
+  const {
+    isDamaged,
+    selectedWallet,
+    setIsWalletLoading,
+    wallets,
+  } = useWallets();
 
   const { colors } = useTheme();
   const { updateWebProfile } = useWebData();
@@ -121,6 +140,9 @@ export default function ChangeWalletSheet() {
   const dispatch = useDispatch();
   const initializeWallet = useInitializeWallet();
   const walletsWithBalancesAndNames = useWalletsWithBalancesAndNames();
+
+  const creatingWallet = useRef<boolean>();
+  const profilesEnabled = useExperimentalFlag(PROFILES);
 
   const [editMode, setEditMode] = useState(false);
   const [currentAddress, setCurrentAddress] = useState(
@@ -578,7 +600,9 @@ export default function ChangeWalletSheet() {
         editMode={editMode}
         height={listHeight}
         onChangeAccount={onChangeAccount}
+        onPressAddAccount={onPressAddAccount}
         onPressAddAnotherWallet={onPressAddAnotherWallet}
+        onPressImportSeedPhrase={onPressImportSeedPhrase}
         onPressPairHardwareWallet={onPressPairHardwareWallet}
         scrollEnabled={scrollEnabled}
         showDividers={showDividers}

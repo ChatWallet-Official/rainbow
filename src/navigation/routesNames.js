@@ -30,6 +30,8 @@ const Routes = {
   EXPLAIN_SHEET: 'ExplainSheet',
   EXTERNAL_LINK_WARNING_SHEET: 'ExternalLinkWarningSheet',
   IMPORT_SCREEN: 'ImportScreen',
+  IMPORT_SEED_PHRASE_SHEET: 'ImportSeedPhraseSheet',
+  IMPORT_SEED_PHRASE_SHEET_NAVIGATOR: 'ImportSeedPhraseSheetNavigator',
   IMPORT_OR_WATCH_WALLET_SHEET: 'ImportOrWatchWalletSheet',
   LEARN_WEB_VIEW_SCREEN: 'LearnWebViewScreen',
   MAIN_EXCHANGE_NAVIGATOR: 'MainExchangeNavigator',
@@ -101,7 +103,11 @@ export const NATIVE_ROUTES = [
   Routes.SAVINGS_WITHDRAW_MODAL,
   Routes.SAVINGS_DEPOSIT_MODAL,
   ...(IS_IOS
-    ? [Routes.SEND_SHEET_NAVIGATOR, Routes.ADD_CASH_SCREEN_NAVIGATOR]
+    ? [
+        Routes.SEND_SHEET_NAVIGATOR,
+        Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR,
+        Routes.ADD_CASH_SCREEN_NAVIGATOR,
+      ]
     : []),
 ];
 
@@ -110,6 +116,9 @@ const RoutesWithPlatformDifferences = {
   ADD_CASH_FLOW: IS_IOS
     ? Routes.ADD_CASH_SCREEN_NAVIGATOR
     : Routes.ADD_CASH_SHEET,
+  IMPORT_SEED_PHRASE_FLOW: IS_IOS
+    ? Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR
+    : Routes.IMPORT_SEED_PHRASE_SHEET,
   SEND_FLOW: Routes.SEND_SHEET_NAVIGATOR,
 };
 

@@ -1,7 +1,18 @@
 import React from 'react';
 import { useTheme } from '../../theme/ThemeContext';
 import { ButtonPressAnimation } from '../animations';
-import { Text } from '@/design-system';
+import { Text } from '../text';
+import { Row } from '../layout';
+import styled from '@/styled-thing';
+import { padding } from '@/styles';
+
+const Container = styled(Row).attrs({
+  align: 'center',
+  scaleTo: 0.97,
+})({
+  ...padding.object(0, 30),
+  height: 49,
+});
 
 const WalletOption = ({
   editMode,
@@ -16,12 +27,7 @@ const WalletOption = ({
 }) => {
   const { colors } = useTheme();
   return (
-    <ButtonPressAnimation
-      disabled={editMode}
-      onPress={onPress}
-      scaleTo={0.96}
-      testID={testID}
-    >
+    <Container as={ButtonPressAnimation} disabled={editMode} onPress={onPress}>
       <Text
         color={colors.greenCW}
         letterSpacing="roundedMedium"
@@ -30,7 +36,7 @@ const WalletOption = ({
       >
         {label}
       </Text>
-    </ButtonPressAnimation>
+    </Container>
   );
 };
 
