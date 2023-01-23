@@ -39,6 +39,7 @@ import config from '@/model/config';
 import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
 import { Icon } from '@/components/icons';
 import { useNavigationState } from '@react-navigation/core';
+import { getAllActiveSessionsSync } from '@/utils/walletConnect';
 
 export const ProfileActionButtonsRowHeight = 80;
 
@@ -60,21 +61,29 @@ export function ProfileActionButtonsRow() {
   }));
 
   if (!accentColorLoaded) return null;
+
+  const addCashEnabled = config.f2c_enabled;
+  const swapEnabled = config.swagg_enabled;
+
   return (
     <Box width="full">
       <Inset horizontal={{ custom: 30 }}>
         <AccentColorProvider color={accentColor}>
           <Columns>
-            <Column>
-              <Animated.View style={[expandStyle]}>
-                <BuyButton />
-              </Animated.View>
-            </Column>
-            <Column>
-              <Animated.View style={[expandStyle]}>
-                <SwapButton />
-              </Animated.View>
-            </Column>
+            {addCashEnabled && (
+              <Column>
+                <Animated.View style={[expandStyle]}>
+                  <BuyButton />
+                </Animated.View>
+              </Column>
+            )}
+            {swapEnabled && (
+              <Column>
+                <Animated.View style={[expandStyle]}>
+                  <SwapButton />
+                </Animated.View>
+              </Column>
+            )}
             <Column>
               <Animated.View style={[expandStyle]}>
                 <SendButton />
@@ -245,6 +254,9 @@ function MoreButton() {
   );
   const { accountAddress } = useAccountProfile();
   const { navigate } = useNavigation();
+  const [activeWCV2Sessions, setActiveWCV2Sessions] = React.useState(
+    getAllActiveSessionsSync()
+  );
 
   const handlePressCopy = React.useCallback(() => {
     if (!isToastActive) {
@@ -277,24 +289,21 @@ function MoreButton() {
 
   const qrIcon = Image.resolveAssetSource(require('@/assets/qrCode.png'));
 
-  const menuConfig = React.useMemo(
-    () => ({
-      menuItems: [
-        {
-          actionKey: 'copy',
-          actionTitle: lang.t('wallet.copy_address'),
-          icon: { iconType: 'REQUIRE', iconValue: copyIcon },
-        },
-        {
-          actionKey: 'qrCode',
-          actionTitle: lang.t('button.my_qr_code'),
-          icon: { iconType: 'REQUIRE', iconValue: qrIcon },
-        },
-      ],
-      ...(ios ? { menuTitle: '' } : {}),
-    }),
-    []
-  );
+  const menuConfig = {
+    menuItems: [
+      {
+        actionKey: 'copy',
+        actionTitle: lang.t('wallet.copy_address'),
+        icon: { iconType: 'REQUIRE', iconValue: copyIcon },
+      },
+      {
+        actionKey: 'qrCode',
+        actionTitle: lang.t('button.my_qr_code'),
+        icon: { iconType: 'REQUIRE', iconValue: qrIcon },
+      },
+    ],
+    ...(ios ? { menuTitle: '' } : {}),
+  }
 
   const handlePressMenuItem = React.useCallback(
     e => {
@@ -311,8 +320,14 @@ function MoreButton() {
     [handlePressConnectedApps, handlePressCopy, handlePressQRCode]
   );
 
+  const onMenuWillShow = React.useCallback(() => {
+    // update state to potentially hide the menu button
+    setActiveWCV2Sessions(getAllActiveSessionsSync());
+  }, [setActiveWCV2Sessions]);
+
   return (
     <ContextMenuButton
+      onMenuWillShow={onMenuWillShow}
       menuConfig={menuConfig}
       onPressMenuItem={handlePressMenuItem}
     >

@@ -27,6 +27,7 @@ import SettingsSheet from '../screens/SettingsSheet';
 import ShowcaseScreen from '../screens/ShowcaseSheet';
 import SpeedUpAndCancelSheet from '../screens/SpeedUpAndCancelSheet';
 import SwapsPromoSheet from '../screens/SwapsPromoSheet';
+import NotificationsPromoSheet from '../screens/NotificationsPromoSheet';
 import TransactionConfirmationScreen from '../screens/TransactionConfirmationScreen';
 import WalletConnectApprovalSheet from '../screens/WalletConnectApprovalSheet';
 import WalletConnectRedirectSheet from '../screens/WalletConnectRedirectSheet';
@@ -53,6 +54,7 @@ import {
   profileConfig,
   profilePreviewConfig,
   qrScannerConfig,
+  promoSheetConfig,
   registerENSNavigatorConfig,
   restoreSheetConfig,
   selectTokenSheetConfig,
@@ -60,14 +62,14 @@ import {
   settingsSheetConfig,
   stackNavigationConfig,
   swapDetailsSheetConfig,
-  swapsPromoSheetConfig,
   learnWebViewScreenConfig,
   transactionDetailsConfig,
+  addWalletNavigatorConfig,
+  opRewardsSheetConfig,
 } from './config';
 import {
   emojiPreset,
   emojiPresetWallet,
-  exchangePreset,
   overlayExpandedPreset,
   sheetPreset,
 } from './effects';
@@ -76,9 +78,7 @@ import { nativeStackConfig } from './nativeStackConfig';
 import { onNavigationStateChange } from './onNavigationStateChange';
 import Routes from './routesNames';
 import { ExchangeModalNavigator } from './index';
-import { StatusBarHelper } from '@/helpers';
 import useExperimentalFlag, { PROFILES } from '@/config/experimentalHooks';
-import { omitFlatten } from '@/helpers/utilities';
 import createNativeStackNavigator from '@/react-native-cool-modals/createNativeStackNavigator';
 import QRScannerScreen from '@/screens/QRScannerScreen';
 import { PairHardwareWalletNavigator } from './PairHardwareWalletNavigator';
@@ -88,6 +88,8 @@ import { SendAssetForm } from '@/components/send';
 import SendResult from '@/screens/SendResult';
 import SelectTokenSheet from '@/screens/SelectTokenSheet';
 import ProfileScreen from '@/screens/ProfileScreen';
+import { AddWalletNavigator } from './AddWalletNavigator';
+import { RewardsSheet } from '@/screens/rewards/RewardsSheet';
 
 const Stack = createStackNavigator();
 const NativeStack = createNativeStackNavigator();
@@ -291,7 +293,12 @@ function NativeStackNavigator() {
       <NativeStack.Screen
         component={SwapsPromoSheet}
         name={Routes.SWAPS_PROMO_SHEET}
-        {...swapsPromoSheetConfig}
+        {...promoSheetConfig}
+      />
+      <NativeStack.Screen
+        component={NotificationsPromoSheet}
+        name={Routes.NOTIFICATIONS_PROMO_SHEET}
+        {...promoSheetConfig}
       />
       <NativeStack.Screen
         component={ExternalLinkWarningSheet}
@@ -396,7 +403,11 @@ function NativeStackNavigator() {
         name={Routes.PAIR_HARDWARE_WALLET_NAVIGATOR}
         {...pairHardwareWalletNavigatorConfig}
       />
-
+      <NativeStack.Screen
+        component={AddWalletNavigator}
+        name={Routes.ADD_WALLET_NAVIGATOR}
+        {...addWalletNavigatorConfig}
+      />
       {profilesEnabled && (
         <>
           <NativeStack.Screen
@@ -442,10 +453,6 @@ function NativeStackNavigator() {
         name={Routes.SEND_SHEET_NAVIGATOR}
       />
       <NativeStack.Screen
-        component={ImportSeedPhraseFlowNavigator}
-        name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
-      />
-      <NativeStack.Screen
         component={AddCashFlowNavigator}
         name={Routes.ADD_CASH_SCREEN_NAVIGATOR}
       />
@@ -463,6 +470,11 @@ function NativeStackNavigator() {
         name={Routes.TRANSACTION_DETAILS}
         component={TransactionDetails}
         {...transactionDetailsConfig}
+      />
+      <NativeStack.Screen
+        name={Routes.OP_REWARDS_SHEET}
+        component={RewardsSheet}
+        {...opRewardsSheetConfig}
       />
     </NativeStack.Navigator>
   );

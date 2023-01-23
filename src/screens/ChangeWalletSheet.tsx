@@ -1,8 +1,7 @@
 import { IS_TESTING } from 'react-native-dotenv';
 import { useRoute } from '@react-navigation/core';
-import { captureException } from '@sentry/react-native';
 import lang from 'i18n-js';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Alert, InteractionManager } from 'react-native';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import { useDispatch } from 'react-redux';
@@ -12,28 +11,16 @@ import WalletList from '../components/change-wallet/WalletList';
 import { Centered, Column, Row } from '../components/layout';
 import { Sheet, SheetTitle } from '../components/sheet';
 import { Text } from '../components/text';
-import { backupUserDataIntoCloud } from '../handlers/cloudBackup';
 import { removeWalletData } from '../handlers/localstorage/removeWallet';
-import showWalletErrorAlert from '../helpers/support';
-import { WalletLoadingStates } from '../helpers/walletLoadingStates';
-import WalletTypes from '../helpers/walletTypes';
-import { cleanUpWalletKeys, createWallet } from '../model/wallet';
+import { cleanUpWalletKeys } from '../model/wallet';
 import { useNavigation } from '../navigation/Navigation';
 import {
   addressSetSelected,
-  createAccountForWallet,
-  walletsLoadState,
   walletsSetSelected,
   walletsUpdate,
 } from '../redux/wallets';
-import { analytics } from '@/analytics';
-import {
-  getExperimetalFlag,
-  HARDWARE_WALLETS,
-  PROFILES,
-  useExperimentalFlag,
-} from '@/config';
-import WalletBackupTypes from '@/helpers/walletBackupTypes';
+import { analytics, analyticsV2 } from '@/analytics';
+import { getExperimetalFlag, HARDWARE_WALLETS } from '@/config';
 import { runCampaignChecks } from '@/campaigns/campaignChecks';
 import {
   useAccountSettings,
@@ -53,9 +40,10 @@ import logger from '@/utils/logger';
 import { useTheme } from '@/theme';
 import { EthereumAddress } from '@/entities';
 import { fonts, colors } from '@/styles';
+import { getNotificationSettingsForWalletWithAddress } from '@/notifications/settings/storage';
 
 const deviceHeight = deviceUtils.dimensions.height;
-const footerHeight = getExperimetalFlag(HARDWARE_WALLETS) ? 164 : 111;
+const footerHeight = getExperimetalFlag(HARDWARE_WALLETS) ? 100 : 60;
 const listPaddingBottom = 6;
 const walletRowHeight = 65 + 12;
 const maxListHeight = deviceHeight - 220;
@@ -124,12 +112,7 @@ export type EditWalletContextMenuActions = {
 export default function ChangeWalletSheet() {
   const { params = {} as any } = useRoute();
   const { onChangeWallet, watchOnly = false, currentAccountAddress } = params;
-  const {
-    isDamaged,
-    selectedWallet,
-    setIsWalletLoading,
-    wallets,
-  } = useWallets();
+  const { selectedWallet, wallets } = useWallets();
 
   const { colors } = useTheme();
   const { updateWebProfile } = useWebData();
@@ -138,8 +121,6 @@ export default function ChangeWalletSheet() {
   const dispatch = useDispatch();
   const initializeWallet = useInitializeWallet();
   const walletsWithBalancesAndNames = useWalletsWithBalancesAndNames();
-  const creatingWallet = useRef<boolean>();
-  const profilesEnabled = useExperimentalFlag(PROFILES);
 
   const [editMode, setEditMode] = useState(false);
   const [currentAddress, setCurrentAddress] = useState(
@@ -339,10 +320,25 @@ export default function ChangeWalletSheet() {
   const onPressNotifications = useCallback(
     (walletName, address) => {
       analytics.track('Tapped "Notification Settings"');
-      navigate(Routes.SETTINGS_SHEET, {
-        params: { address, title: walletName },
-        screen: Routes.WALLET_NOTIFICATIONS_SETTINGS,
-      });
+      const walletNotificationSettings = getNotificationSettingsForWalletWithAddress(
+        address
+      );
+      if (walletNotificationSettings) {
+        navigate(Routes.SETTINGS_SHEET, {
+          params: {
+            address,
+            title: walletName,
+            notificationSettings: walletNotificationSettings,
+          },
+          screen: Routes.WALLET_NOTIFICATIONS_SETTINGS,
+        });
+      } else {
+        Alert.alert(
+          lang.t('wallet.action.notifications.alert_title'),
+          lang.t('wallet.action.notifications.alert_message'),
+          [{ text: 'OK' }]
+        );
+      }
     },
     [navigate]
   );
@@ -511,10 +507,26 @@ export default function ChangeWalletSheet() {
   }, [navigate]);
 
   const onPressPairHardwareWallet = useCallback(() => {
-    analytics.track('Tapped "Pair Hardware Wallet"');
+    analyticsV2.track(analyticsV2.event.addWalletFlowStarted, {
+      isFirstWallet: false,
+      type: 'ledger_nano_x',
+    });
     goBack();
     InteractionManager.runAfterInteractions(() => {
       navigate(Routes.PAIR_HARDWARE_WALLET_NAVIGATOR);
+    });
+  }, [goBack, navigate]);
+
+  const onPressAddAnotherWallet = useCallback(() => {
+    analyticsV2.track(analyticsV2.event.pressedButton, {
+      buttonName: 'AddAnotherWalletButton',
+      action: 'Navigates from WalletList to AddWalletSheet',
+    });
+    goBack();
+    InteractionManager.runAfterInteractions(() => {
+      navigate(Routes.ADD_WALLET_NAVIGATOR, {
+        screen: Routes.ADD_WALLET_SHEET,
+      });
     });
   }, [goBack, navigate]);
 
@@ -566,8 +578,7 @@ export default function ChangeWalletSheet() {
         editMode={editMode}
         height={listHeight}
         onChangeAccount={onChangeAccount}
-        onPressAddAccount={onPressAddAccount}
-        onPressImportSeedPhrase={onPressImportSeedPhrase}
+        onPressAddAnotherWallet={onPressAddAnotherWallet}
         onPressPairHardwareWallet={onPressPairHardwareWallet}
         scrollEnabled={scrollEnabled}
         showDividers={showDividers}

@@ -31,6 +31,7 @@ import SettingsSheet, {
 import ShowcaseSheet from '../screens/ShowcaseSheet';
 import SpeedUpAndCancelSheet from '../screens/SpeedUpAndCancelSheet';
 import SwapsPromoSheet from '../screens/SwapsPromoSheet';
+import NotificationsPromoSheet from '../screens/NotificationsPromoSheet';
 import TransactionConfirmationScreen from '../screens/TransactionConfirmationScreen';
 import WalletConnectApprovalSheet from '../screens/WalletConnectApprovalSheet';
 import WalletConnectRedirectSheet from '../screens/WalletConnectRedirectSheet';
@@ -48,19 +49,17 @@ import {
   restoreSheetConfig,
   stackNavigationConfig,
   learnWebViewScreenConfig,
-  transactionDetailsConfig,
   wyreWebviewOptions,
 } from './config';
 import {
+  addWalletNavigatorPreset,
   androidRecievePreset,
   bottomSheetPreset,
   emojiPreset,
   exchangePreset,
   expandedPreset,
   expandedPresetWithSmallGestureResponseDistance,
-  overlayExpandedPreset,
   sheetPreset,
-  sheetPresetWithSmallGestureResponseDistance,
   speedUpAndCancelStyleInterpolator,
   wcPromptPreset,
 } from './effects';
@@ -73,10 +72,9 @@ import useExperimentalFlag, { PROFILES } from '@/config/experimentalHooks';
 import QRScannerScreen from '@/screens/QRScannerScreen';
 import { PairHardwareWalletNavigator } from './PairHardwareWalletNavigator';
 import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
-import {
-  TRANSACTION_DETAILS_SHEET_HEIGHT,
-  TransactionDetails,
-} from '@/screens/transaction-details/TransactionDetails';
+import { TransactionDetails } from '@/screens/transaction-details/TransactionDetails';
+import { AddWalletNavigator } from './AddWalletNavigator';
+import { RewardsSheet } from '@/screens/rewards/RewardsSheet';
 
 const Stack = createStackNavigator();
 const OuterStack = createStackNavigator();
@@ -215,7 +213,6 @@ function MainNavigator() {
       <Stack.Screen
         component={ImportSeedPhraseFlowNavigator}
         name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
-        options={sheetPresetWithSmallGestureResponseDistance}
       />
       <Stack.Screen
         component={WelcomeScreenCW}
@@ -299,6 +296,11 @@ function BSNavigator() {
         component={QRScannerScreen}
         name={Routes.QR_SCANNER_SCREEN}
       />
+      <BSStack.Screen
+        component={AddWalletNavigator}
+        name={Routes.ADD_WALLET_NAVIGATOR}
+        options={addWalletNavigatorPreset}
+      />
       {profilesEnabled && (
         <>
           <BSStack.Screen
@@ -343,6 +345,11 @@ function BSNavigator() {
       <BSStack.Screen
         component={SwapsPromoSheet}
         name={Routes.SWAPS_PROMO_SHEET}
+        options={bottomSheetPreset}
+      />
+      <BSStack.Screen
+        component={NotificationsPromoSheet}
+        name={Routes.NOTIFICATIONS_PROMO_SHEET}
         options={bottomSheetPreset}
       />
       <BSStack.Screen
@@ -391,10 +398,12 @@ function BSNavigator() {
       <BSStack.Screen
         name={Routes.TRANSACTION_DETAILS}
         component={TransactionDetails}
-        options={{
-          ...bottomSheetPreset,
-          height: TRANSACTION_DETAILS_SHEET_HEIGHT,
-        }}
+        options={{ ...bottomSheetPreset, scrollEnabled: false }}
+      />
+      <BSStack.Screen
+        name={Routes.OP_REWARDS_SHEET}
+        component={RewardsSheet}
+        options={{ ...bottomSheetPreset }}
       />
     </BSStack.Navigator>
   );

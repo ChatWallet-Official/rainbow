@@ -22,7 +22,6 @@ import WalletBackupStepTypes from '@/helpers/walletBackupStepTypes';
 import styled from '@/styled-thing';
 import { fonts } from '@/styles';
 import { deviceUtils, safeAreaInsetValues } from '@/utils';
-import { TRANSACTION_DETAILS_SHEET_HEIGHT } from '@/screens/transaction-details/TransactionDetails';
 
 export const sharedCoolModalTopOffset = safeAreaInsetValues.top;
 
@@ -113,13 +112,24 @@ export const swapDetailsSheetConfig = {
 };
 
 export const transactionDetailsConfig = {
-  options: ({ route: { params = {} } }) => ({
-    ...buildCoolModalConfig({
-      ...params,
+  options: ({ route }) => {
+    return buildCoolModalConfig({
+      longFormHeight: 0,
+      ...route.params,
       scrollEnabled: false,
-      longFormHeight: TRANSACTION_DETAILS_SHEET_HEIGHT,
-    }),
-  }),
+    });
+  },
+};
+
+export const opRewardsSheetConfig = {
+  options: ({ route }) => {
+    return buildCoolModalConfig({
+      ...route.params,
+      scrollEnabled: true,
+      springDamping: 1,
+      transitionDuration: 0.3,
+    });
+  },
 };
 
 export const customGasSheetConfig = {
@@ -212,6 +222,17 @@ export const registerENSNavigatorConfig = {
   }),
 };
 
+export const addWalletNavigatorConfig = {
+  options: ({ route: { params } }) => ({
+    ...buildCoolModalConfig({
+      ...params,
+      backgroundOpacity: 1,
+      springDamping: 1,
+      transitionDuration: 0.3,
+    }),
+  }),
+};
+
 export const learnWebViewScreenConfig = {
   options: ({ route: { params = {} } }) => ({
     ...buildCoolModalConfig({
@@ -224,7 +245,7 @@ export const learnWebViewScreenConfig = {
   }),
 };
 
-export const swapsPromoSheetConfig = {
+export const promoSheetConfig = {
   options: ({ route: { params = {} } }) => ({
     ...buildCoolModalConfig({
       ...params,
@@ -324,41 +345,13 @@ export const expandedAssetSheetConfigWithLimit = {
   }),
 };
 
-const restoreSheetSizes = {
-  ...backupSheetSizes,
-  medium: 505,
-  short: 363,
-};
-
 export const restoreSheetConfig = {
-  options: ({ navigation, route }) => {
-    const {
-      params: {
-        enableCloudRestore,
-        longFormHeight,
-        step = WalletBackupStepTypes.first,
-        ...params
-      } = {},
-    } = route;
-
-    let heightForStep = restoreSheetSizes.short;
-    if (enableCloudRestore && step === WalletBackupStepTypes.first) {
-      heightForStep = restoreSheetSizes.medium;
-    } else if (step === WalletBackupStepTypes.cloud) {
-      heightForStep = restoreSheetSizes.long;
-    }
-
-    if (longFormHeight !== heightForStep) {
-      navigation.setParams({
-        longFormHeight: heightForStep,
-      });
-    }
-
-    return buildCoolModalConfig({
+  options: ({ route: { params: { longFormHeight, ...params } = {} } }) => ({
+    ...buildCoolModalConfig({
       ...params,
-      longFormHeight: heightForStep,
-    });
-  },
+      longFormHeight,
+    }),
+  }),
 };
 
 export const basicSheetConfig = {

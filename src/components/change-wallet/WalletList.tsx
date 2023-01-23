@@ -29,6 +29,7 @@ import styled from '@/styled-thing';
 import { position, colors } from '@/styles';
 import { EditWalletContextMenuActions } from '@/screens/ChangeWalletSheet';
 import { HARDWARE_WALLETS, useExperimentalFlag } from '@/config';
+import { Inset, Stack } from '@/design-system';
 
 const listTopPadding = 7.5;
 const rowHeight = 65 + 12;
@@ -110,7 +111,7 @@ interface Props {
     walletId: string,
     address: EthereumAddress | undefined
   ) => void;
-  onPressAddAccount: () => void;
+  onPressAddAnotherWallet: () => void;
   onPressImportSeedPhrase: () => void;
   onPressPairHardwareWallet: () => void;
   scrollEnabled: boolean;
@@ -126,7 +127,7 @@ export default function WalletList({
   editMode,
   height,
   onChangeAccount,
-  onPressAddAccount,
+  onPressAddAnotherWallet,
   onPressImportSeedPhrase,
   onPressPairHardwareWallet,
   scrollEnabled,
@@ -281,7 +282,7 @@ export default function WalletList({
             <WalletOption
               editMode={editMode}
               label={`􀅼 ${lang.t('wallet.action.create_new')}`}
-              onPress={onPressAddAccount}
+              onPress={onPressAddAnotherWallet}
             />
             {hardwareWalletsEnabled && (
               <WalletOption

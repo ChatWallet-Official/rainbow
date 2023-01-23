@@ -141,13 +141,15 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Used to scan QR codes</string>
+	<string>Accesses the Camera to scan QR codes for connecting to dApps and discovering wallets</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Used to sign transactions and access wallet keys</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This allows Rainbow to save images to your Camera Roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This allows Rainbow to display selected photos as avatars across each of your wallet addresses</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+ 	<string>This allows Rainbow to find and pair a Ledger Nano X</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.me.rainbow</key>
