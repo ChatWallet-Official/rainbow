@@ -88,7 +88,7 @@ const SheetContainer = styled(Column).attrs({
 
 export default function SendSheet(props) {
   const dispatch = useDispatch();
-  const { goBack, navigate } = useNavigation();
+  const { goBack, navigate, replace } = useNavigation();
   const { dataAddNewTransaction } = useTransactionConfirmation();
   const updateAssetOnchainBalanceIfNeeded = useUpdateAssetOnchainBalance();
   const { sortedAssets } = useSortedAccountAssets();
@@ -258,6 +258,19 @@ export default function SendSheet(props) {
     onPressContact,
   ]);
 
+  const onPressDoneOnResult = useCallback(() => {
+    goBack();
+    navigate(Routes.WALLET_SCREEN);
+  }, [goBack, navigate]);
+
+  const onPressHistoryOnResult = useCallback(() => {
+    goBack();
+    navigate(Routes.WALLET_SCREEN);
+    InteractionManager.runAfterInteractions(() => {
+      navigate(Routes.PROFILE_SCREEN);
+    });
+  }, [goBack, navigate]);
+
   const onPressContact = useCallback(
     (recipient, nickname) => {
       setIsValidAddress(true);
@@ -283,9 +296,11 @@ export default function SendSheet(props) {
           selected: assets[0],
           setLastFocusedInputHandle: setLastFocusedInputHandle,
           recipient: recipient,
+          onPressDoneOnResult: onPressDoneOnResult,
+          onPressHistoryOnResult: onPressHistoryOnResult,
         };
 
-        navigate(Routes.SEND_ASSET_FORM, paramsForForm);
+        replace(Routes.SEND_ASSET_FORM, paramsForForm);
       } else {
         setShowToast(true);
       }
@@ -295,11 +310,13 @@ export default function SendSheet(props) {
       hiddenCoinsObj,
       nativeCurrency,
       nativeCurrencyInputRef,
-      navigate,
       network,
+      onPressDoneOnResult,
+      onPressHistoryOnResult,
       params,
       pinnedCoinsObj,
       props,
+      replace,
       savings,
       sendableUniqueTokens,
       setLastFocusedInputHandle,

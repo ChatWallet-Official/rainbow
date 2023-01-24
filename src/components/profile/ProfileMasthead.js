@@ -209,14 +209,7 @@ export default function ProfileMasthead({
         }, 50);
       });
     },
-    [
-      wallets,
-      goBack,
-      navigate,
-      dispatch,
-      currentSelectedWallet.id,
-      updateWebProfile,
-    ]
+    [wallets, navigate, dispatch, currentSelectedWallet.id, updateWebProfile]
   );
 
   return (

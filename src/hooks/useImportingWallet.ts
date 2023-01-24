@@ -40,6 +40,7 @@ export default function useImportingWallet({ showImportModal = false } = {}) {
   const { selectedWallet, setIsWalletLoading, wallets } = useWallets();
 
   const {
+    goBack,
     dangerouslyGetParent,
     navigate,
     // @ts-expect-error ts-migrate(2339) FIXME: Property 'replace' does not exist on type '{ dispa... Remove this comment to see the full error message
@@ -372,6 +373,7 @@ export default function useImportingWallet({ showImportModal = false } = {}) {
     profilesEnabled,
     setIsWalletLoading,
     dangerouslyGetParent,
+    goBack,
   ]);
 
   useEffect(() => {

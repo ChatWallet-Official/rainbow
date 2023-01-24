@@ -14,7 +14,6 @@ import Routes from '@/navigation/routesNames';
 export default function SendResult() {
   const [activityListInitialized, setActivityListInitialized] = useState(false);
   const isFocused = useIsFocused();
-  const { reset } = useNavigation();
   const { params } = useRoute();
   const accountTransactions = useAccountTransactions(
     activityListInitialized,
@@ -30,18 +29,11 @@ export default function SendResult() {
   }, []);
 
   const onPressDone = () => {
-    reset({
-      index: 0,
-      routes: [{ name: Routes.STACK }],
-    });
+    params.onPressDoneOnResult();
   };
 
   const onPressHistory = () => {
-    reset({
-      index: 0,
-      routes: [{ name: Routes.WALLET_SCREEN }],
-    });
-    params.onPressHistoryOnSendResult();
+    params.onPressHistoryOnResult();
   };
 
   return (

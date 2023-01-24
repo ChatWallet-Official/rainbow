@@ -218,25 +218,17 @@ function SendButton() {
   const { isReadOnlyWallet } = useWallets();
 
   const { navigate } = useNavigation();
-  const state = useNavigationState(state => state);
-
-  const onPressHistoryOnSendResult = React.useCallback(() => {
-    navigate(Routes.PROFILE_SCREEN);
-  }, [navigate]);
 
   const handlePress = React.useCallback(() => {
     if (!isReadOnlyWallet || enableActionsOnReadOnlyWallet) {
       analytics.track('Tapped "Send"', {
         category: 'home screen',
       });
-      navigate(Routes.SEND_FLOW, {
-        screen: Routes.SEND_SHEET,
-        params: { state, onPressHistoryOnSendResult },
-      });
+      navigate(Routes.SEND_FLOW);
     } else {
       watchingAlert();
     }
-  }, [isReadOnlyWallet, navigate, onPressHistoryOnSendResult, state]);
+  }, [isReadOnlyWallet, navigate]);
 
   return (
     <ActionButton icon="sendCW" onPress={handlePress} testID="send-button">

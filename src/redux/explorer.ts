@@ -878,7 +878,7 @@ export const fetchAssetsFromRefraction = () => (
 ) => {
   const { accountAddress, nativeCurrency } = getState().settings;
   const { addressSocket } = getState().explorer;
-  addressSocket!.emit(...addressAssetsRequest(accountAddress, nativeCurrency));
+  addressSocket?.emit(...addressAssetsRequest(accountAddress, nativeCurrency));
 };
 
 /**

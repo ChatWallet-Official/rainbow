@@ -129,8 +129,8 @@ export default function SendAssetForm() {
     recipient,
     nativeAmount: nativeAmountOverride,
     asset: assetOverride,
-    state,
-    onPressHistoryOnSendResult,
+    onPressDoneOnResult,
+    onPressHistoryOnResult,
     ...props
   } = params;
 
@@ -139,7 +139,7 @@ export default function SendAssetForm() {
   const { isTinyPhone, width: deviceWidth } = useDimensions();
   const keyboardHeight = useKeyboardHeight();
   const [showNativeValue, setShowNativeValue] = useState(true);
-  const { goBack, navigate } = useNavigation();
+  const { goBack, navigate, replace } = useNavigation();
   const isNft = selected.type === AssetTypes.nft;
   const isSavings = selected.type === AssetTypes.compound;
   const { maxInputBalance, updateMaxInputBalance } = useMaxInputBalance();
@@ -581,16 +581,19 @@ export default function SendAssetForm() {
 
       if (submitSuccessful) {
         goBack();
-        navigate(Routes.SEND_RESULT, { state, onPressHistoryOnSendResult });
+        replace(Routes.SEND_RESULT, {
+          onPressDoneOnResult,
+          onPressHistoryOnResult,
+        });
       }
     },
     [
       amountDetails.assetAmount,
       goBack,
-      navigate,
-      onPressHistoryOnSendResult,
+      onPressDoneOnResult,
+      onPressHistoryOnResult,
       onSubmit,
-      state,
+      replace,
     ]
   );
 
@@ -860,7 +863,7 @@ export default function SendAssetForm() {
   }, [currentNetwork, network, prevNetwork, selected.type, sendUpdateSelected]);
 
   const onPressAddress = () => {
-    goBack();
+    replace(Routes.SEND_FLOW);
   };
 
   return (
