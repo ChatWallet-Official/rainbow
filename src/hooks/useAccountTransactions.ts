@@ -9,7 +9,7 @@ import { useNavigation } from '@/navigation';
 import { AppState } from '@/redux/store';
 import { useTheme } from '@/theme';
 
-export const NOE_PAGE = 30;
+export const NOE_PAGE = 100;
 
 export default function useAccountTransactions(
   initialized: boolean,

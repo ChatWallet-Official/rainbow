@@ -84,4 +84,5 @@ declare module 'react-native-dotenv' {
   export const QUIET_OLD_LOGGER: string;
   export const SQUARE_APP_ID: string;
   export const SQUARE_LOCATION_ID: string;
+  export const ZERION_TOKEN: string;
 }
