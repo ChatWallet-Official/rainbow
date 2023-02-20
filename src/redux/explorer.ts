@@ -56,6 +56,13 @@ import {
 } from '@/references';
 import { ethereumUtils, TokensListenedCache } from '@/utils';
 import logger from '@/utils/logger';
+import { RainbowFetchClient } from '@/rainbow-fetch';
+import {
+  toPortfolioReceivedMessage,
+  toPositionsReceivedMessage,
+  toTransactionsReceivedMessage,
+} from './helpers/zerionDataTransformer';
+import { ZERION_TOKEN } from 'react-native-dotenv';
 
 // -- Constants --------------------------------------- //
 const EXPLORER_UPDATE_SOCKETS = 'explorer/EXPLORER_UPDATE_SOCKETS';
@@ -641,6 +648,59 @@ export const explorerInit = () => async (
     );
     return;
   }
+
+  const zerionAPI = new RainbowFetchClient({
+    baseURL: 'https://api.zerion.io',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': ZERION_TOKEN,
+    },
+    timeout: 30000, // 30 secs
+  });
+
+  const portfolioRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/portfolio`
+  );
+  dispatch(
+    portfolioReceived(
+      toPortfolioReceivedMessage(
+        portfolioRes?.data?.data,
+        accountAddress,
+        nativeCurrency,
+        network
+      )
+    )
+  );
+
+  const transactionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/transactions/?currency=${nativeCurrency}&page[size]=100`
+  );
+  dispatch(
+    transactionsReceived(
+      toTransactionsReceivedMessage(
+        transactionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        network
+      ),
+      true
+    )
+  );
+
+  const positionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency}&sort=value`
+  );
+  dispatch(
+    addressAssetsReceived(
+      toPositionsReceivedMessage(
+        positionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        network
+      )
+    )
+  );
 
   const newAddressSocket = createSocket('address');
   const newAssetsSocket = createSocket('assets');
