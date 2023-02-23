@@ -61,8 +61,9 @@ import logger from '@/utils/logger';
 import { RainbowFetchClient } from '@/rainbow-fetch';
 import {
   toPortfolioReceivedMessage,
-  toPositionsReceivedMessage,
+  toAddressAssetsReceivedMessage,
   toTransactionsReceivedMessage,
+  toL2AddressAssetsReceivedMessage,
 } from './helpers/zerionDataTransformer';
 import { ZERION_TOKEN } from 'react-native-dotenv';
 
@@ -146,7 +147,7 @@ type ZerionAsseWithL2Fields = ZerionAsset & {
  * Note, unlike a `AddressAssetsReceivedMessage`, the `payload.assets` field is
  * an array, not an object.
  */
-interface L2AddressAssetsReceivedMessage {
+export interface L2AddressAssetsReceivedMessage {
   payload?: {
     assets?: {
       asset: ZerionAsseWithL2Fields;
@@ -698,6 +699,31 @@ export const explorerInit = () => async (
   const portfolioRes = await zerionAPI.get(
     `/v1/wallets/${accountAddress}/portfolio`
   );
+
+  const transactionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/transactions/?currency=${nativeCurrency.toLowerCase()}&page[size]=100`
+  );
+
+  const ethereumPositionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=ethereum&sort=value`
+  );
+
+  const arbitrumPositionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=arbitrum&sort=value`
+  );
+
+  const optimismPositionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=optimism&sort=value`
+  );
+
+  const polygonPositionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=polygon&sort=value`
+  );
+
+  const bscPositionsRes = await zerionAPI.get(
+    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=binance-smart-chain&sort=value`
+  );
+
   dispatch(
     portfolioReceived(
       toPortfolioReceivedMessage(
@@ -709,9 +735,6 @@ export const explorerInit = () => async (
     )
   );
 
-  const transactionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/transactions/?currency=${nativeCurrency}&page[size]=100`
-  );
   dispatch(
     transactionsReceived(
       toTransactionsReceivedMessage(
@@ -724,17 +747,62 @@ export const explorerInit = () => async (
     )
   );
 
-  const positionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency}&sort=value`
-  );
   dispatch(
     addressAssetsReceived(
-      toPositionsReceivedMessage(
-        positionsRes?.data,
+      toAddressAssetsReceivedMessage(
+        ethereumPositionsRes?.data,
         accountAddress,
         nativeCurrency,
         network
       )
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        arbitrumPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.arbitrum
+      ),
+      Network.arbitrum
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        optimismPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.optimism
+      ),
+      Network.optimism
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        polygonPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.polygon
+      ),
+      Network.polygon
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        bscPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.bsc
+      ),
+      Network.bsc
     )
   );
 
