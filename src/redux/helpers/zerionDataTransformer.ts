@@ -7,6 +7,7 @@ import {
   ZerionAssetPrice,
   ZerionTransactionStatus,
 } from '@/entities';
+import { nativeAssetsPerNetwork } from '@/handlers/assets';
 import { Network } from '@/helpers';
 import { supportedNativeCurrencies } from '@/references';
 import {
@@ -14,6 +15,7 @@ import {
   PortfolioReceivedMessage,
   TransactionsReceivedMessage,
 } from '../data';
+import { L2AddressAssetsReceivedMessage } from '../explorer';
 
 // Portfolio
 export interface PositionsDistributionByType {
@@ -359,7 +361,7 @@ export interface ZerionAssetsData {
   data: Position[];
 }
 
-export function toPositionsReceivedMessage(
+export function toAddressAssetsReceivedMessage(
   data: ZerionAssetsData,
   accountAddress: string,
   nativeCurrency: keyof typeof supportedNativeCurrencies,
@@ -367,41 +369,11 @@ export function toPositionsReceivedMessage(
 ): AddressAssetsReceivedMessage {
   const assets: { [id: string]: { asset: ZerionAsset; quantity: string } } = {};
   data.data.map(position => {
-    const attributes = position.attributes;
-    let icon_url = '';
-    if (attributes.fungible_info && attributes.fungible_info.icon) {
-      icon_url = attributes.fungible_info.icon.url;
-    }
-
-    let changedDate = new Date();
-    if (attributes.updated_at) {
-      changedDate = attributes.updated_at;
-    }
-    let assetType = position.relationships.chain.data.id;
-    if (assetType == 'ethereum') {
-      assetType = 'eth';
-    }
-    let type = assetType as AssetType;
-    if (Object.values(AssetType).indexOf(type) < 0) {
-      type = AssetType.token;
-    }
-    const zerionAsset = {
-      asset_code: position.relationships.fungible.data.id,
-      name: attributes.fungible_info.name,
-      symbol: attributes.fungible_info.symbol,
-      decimals: attributes.quantity.decimals,
-      type: type,
-      icon_url: icon_url,
-      price: {
-        value: attributes.price,
-        relative_change_24h: attributes.changes.percent_1d,
-        changed_at: Math.round(new Date(changedDate).getTime() / 1000),
-      },
-    };
+    const zerionAsset = positionToZerionAsset(position);
 
     assets[position.relationships.fungible.data.id] = {
       asset: zerionAsset,
-      quantity: attributes.quantity.int,
+      quantity: position.attributes.quantity.int,
     };
   });
 
@@ -414,6 +386,72 @@ export function toPositionsReceivedMessage(
       currency: nativeCurrency,
       status: 'ok',
       chain_id: network,
+    },
+  };
+}
+
+export function toL2AddressAssetsReceivedMessage(
+  data: ZerionAssetsData,
+  accountAddress: string,
+  nativeCurrency: keyof typeof supportedNativeCurrencies,
+  network: Network
+): L2AddressAssetsReceivedMessage {
+  const assets = data.data.map(position => {
+    const zerionAsset = positionToZerionAsset(position);
+    const zerionAsseWithL2Fields = {
+      ...zerionAsset,
+      mainnet_address: nativeAssetsPerNetwork[network],
+      network: network,
+    };
+    return {
+      asset: zerionAsseWithL2Fields,
+      quantity: position.attributes.quantity.int,
+    };
+  });
+
+  return {
+    payload: {
+      assets: assets,
+    },
+    meta: {
+      address: accountAddress,
+      currency: nativeCurrency,
+      status: 'ok',
+      chain_id: network,
+    },
+  };
+}
+
+function positionToZerionAsset(position: Position): ZerionAsset {
+  const attributes = position.attributes;
+  let icon_url = '';
+  if (attributes.fungible_info && attributes.fungible_info.icon) {
+    icon_url = attributes.fungible_info.icon.url;
+  }
+
+  let changedDate = new Date();
+  if (attributes.updated_at) {
+    changedDate = attributes.updated_at;
+  }
+  let assetType = position.relationships.chain.data.id;
+  if (assetType == 'ethereum') {
+    assetType = 'eth';
+  }
+  let type = assetType as AssetType;
+  if (Object.values(AssetType).indexOf(type) < 0) {
+    type = AssetType.token;
+  }
+  return {
+    asset_code: position.relationships.fungible.data.id,
+    name: attributes.fungible_info.name,
+    symbol: attributes.fungible_info.symbol,
+    decimals: attributes.quantity.decimals,
+    type: type,
+    icon_url: icon_url,
+    price: {
+      value: attributes.price,
+      relative_change_24h: attributes.changes.percent_1d,
+      changed_at: Math.round(new Date(changedDate).getTime() / 1000),
     },
   };
 }

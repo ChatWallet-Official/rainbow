@@ -14,7 +14,7 @@ import {
   convertRawAmountToDecimalFormat,
 } from '@/helpers/utilities';
 
-const nativeAssetsPerNetwork = {
+export const nativeAssetsPerNetwork = {
   [networkTypes.arbitrum]: ARBITRUM_ETH_ADDRESS,
   [networkTypes.goerli]: ETH_ADDRESS,
   [networkTypes.mainnet]: ETH_ADDRESS,
