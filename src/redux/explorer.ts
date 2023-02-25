@@ -660,33 +660,35 @@ export const explorerInit = () => async (
     timeout: 30000, // 30 secs
   });
 
-  const portfolioRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/portfolio`
-  );
-
-  const transactionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/transactions/?currency=${nativeCurrency.toLowerCase()}&page[size]=100`
-  );
-
-  const ethereumPositionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=ethereum&sort=value`
-  );
-
-  const arbitrumPositionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=arbitrum&sort=value`
-  );
-
-  const optimismPositionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=optimism&sort=value`
-  );
-
-  const polygonPositionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=polygon&sort=value`
-  );
-
-  const bscPositionsRes = await zerionAPI.get(
-    `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=binance-smart-chain&sort=value`
-  );
+  const [
+    portfolioRes,
+    transactionsRes,
+    ethereumPositionsRes,
+    arbitrumPositionsRes,
+    optimismPositionsRes,
+    polygonPositionsRes,
+    bscPositionsRes,
+  ] = await Promise.all([
+    zerionAPI.get(`/v1/wallets/${accountAddress}/portfolio`),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/transactions/?currency=${nativeCurrency.toLowerCase()}&page[size]=100`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=ethereum&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=arbitrum&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=optimism&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=polygon&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=binance-smart-chain&sort=value`
+    ),
+  ]);
 
   dispatch(
     portfolioReceived(
