@@ -4,6 +4,7 @@ import { ImgixImage } from '@/components/images';
 import styled from '@/styled-thing';
 import { borders } from '@/styles';
 import ShadowStack from '@/react-native-shadow-stack';
+import { IS_ANDROID } from '@/env';
 
 const buildSmallShadows = (color, colors) => [
   [0, 3, 5, colors.shadow, 0.14],
@@ -47,7 +48,17 @@ const sizeConfigs = (colors, isDarkMode) => ({
   },
   smedium: {
     dimensions: 36,
-    shadow: [[0, 4, android ? 5 : 12, colors.shadow, 0.4]],
+    shadow: [[0, 4, IS_ANDROID ? 5 : 12, colors.shadow, 0.4]],
+    textSize: 'large',
+  },
+  rewards: {
+    dimensions: 36,
+    shadow: IS_ANDROID
+      ? [[0, 4, 5, colors.shadow, 0.16]]
+      : [
+          [0, 4, 12, colors.shadow, 0.16],
+          [0, 2, 6, colors.shadow, 0.02],
+        ],
     textSize: 'large',
   },
   smedium_shadowless: {
@@ -96,6 +107,7 @@ const ImageAvatar = ({
           source={{
             uri: image,
           }}
+          size={100}
         />
       </Centered>
     </ShadowStack>

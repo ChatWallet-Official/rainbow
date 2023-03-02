@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext, useMemo } from 'react';
 import { StatusBar } from 'react-native';
-import AddCashSheet from '../screens/AddCashSheet';
+import { AddCashSheet } from '../screens/AddCash';
 import AddTokenSheet from '../screens/AddTokenSheet';
 import AvatarBuilder from '../screens/AvatarBuilder';
 import BackupSheet from '../screens/BackupSheet';
@@ -25,9 +25,6 @@ import SelectENSSheet from '../screens/SelectENSSheet';
 import SelectUniqueTokenSheet from '../screens/SelectUniqueTokenSheet';
 import SendConfirmationSheet from '../screens/SendConfirmationSheet';
 import SendSheet from '../screens/SendSheet';
-import SettingsSheet, {
-  CUSTOM_MARGIN_TOP_ANDROID,
-} from '../screens/SettingsSheet';
 import ShowcaseSheet from '../screens/ShowcaseSheet';
 import SpeedUpAndCancelSheet from '../screens/SpeedUpAndCancelSheet';
 import SwapsPromoSheet from '../screens/SwapsPromoSheet';
@@ -55,6 +52,7 @@ import {
   addWalletNavigatorPreset,
   androidRecievePreset,
   bottomSheetPreset,
+  hardwareWalletTxNavigatorPreset,
   emojiPreset,
   exchangePreset,
   expandedPreset,
@@ -74,7 +72,10 @@ import { PairHardwareWalletNavigator } from './PairHardwareWalletNavigator';
 import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
 import { TransactionDetails } from '@/screens/transaction-details/TransactionDetails';
 import { AddWalletNavigator } from './AddWalletNavigator';
+import { HardwareWalletTxNavigator } from './HardwareWalletTxNavigator';
 import { RewardsSheet } from '@/screens/rewards/RewardsSheet';
+import { SettingsSheet } from '@/screens/SettingsSheet';
+import { CUSTOM_MARGIN_TOP_ANDROID } from '@/screens/SettingsSheet/constants';
 
 const Stack = createStackNavigator();
 const OuterStack = createStackNavigator();
@@ -87,11 +88,7 @@ function ImportSeedPhraseFlowNavigator() {
       {...stackNavigationConfig}
       initialRouteName={Routes.IMPORT_SEED_PHRASE_SHEET}
     >
-      <Stack.Screen
-        component={ModalScreen}
-        name={Routes.MODAL_SCREEN}
-        options={overlayExpandedPreset}
-      />
+      <Stack.Screen component={ModalScreen} name={Routes.MODAL_SCREEN} />
       <Stack.Screen
         component={ImportSeedPhraseSheetCW}
         name={Routes.IMPORT_SEED_PHRASE_SHEET}
@@ -301,6 +298,18 @@ function BSNavigator() {
         name={Routes.ADD_WALLET_NAVIGATOR}
         options={addWalletNavigatorPreset}
       />
+      <BSStack.Screen
+        component={PairHardwareWalletNavigator}
+        name={Routes.PAIR_HARDWARE_WALLET_NAVIGATOR}
+        options={{
+          backdropOpacity: 1,
+        }}
+      />
+      <BSStack.Screen
+        component={HardwareWalletTxNavigator}
+        name={Routes.HARDWARE_WALLET_TX_NAVIGATOR}
+        options={hardwareWalletTxNavigatorPreset}
+      />
       {profilesEnabled && (
         <>
           <BSStack.Screen
@@ -314,10 +323,6 @@ function BSNavigator() {
           <BSStack.Screen
             component={RegisterENSNavigator}
             name={Routes.REGISTER_ENS_NAVIGATOR}
-          />
-          <BSStack.Screen
-            component={PairHardwareWalletNavigator}
-            name={Routes.PAIR_HARDWARE_WALLET_NAVIGATOR}
           />
           <BSStack.Screen
             component={ENSAdditionalRecordsSheet}

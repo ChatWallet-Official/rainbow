@@ -53,7 +53,6 @@ import {
   estimateGas,
   estimateGasWithPadding,
   getFlashbotsProvider,
-  getHasMerged,
   getProviderForNetwork,
   isL2Network,
   isTestnetNetwork,
@@ -195,7 +194,12 @@ export default function TransactionConfirmationScreen() {
   const [isSufficientGasChecked, setIsSufficientGasChecked] = useState(false);
   const [nativeAsset, setNativeAsset] = useState(null);
   const { height: deviceHeight } = useDimensions();
-  const { wallets, walletNames, switchToWalletWithAddress } = useWallets();
+  const {
+    wallets,
+    walletNames,
+    switchToWalletWithAddress,
+    isHardwareWallet,
+  } = useWallets();
   const balances = useWalletBalances(wallets);
   const { accountAddress, nativeCurrency } = useAccountSettings();
   const keyboardHeight = useKeyboardHeight();
@@ -262,8 +266,7 @@ export default function TransactionConfirmationScreen() {
 
   const isTestnet = isTestnetNetwork(currentNetwork);
   const isL2 = isL2Network(currentNetwork);
-  const disableFlashbotsPostMerge =
-    getHasMerged(currentNetwork) && !config.flashbots_enabled;
+  const disableFlashbotsPostMerge = !config.flashbots_enabled;
   const flashbotsEnabled =
     useExperimentalFlag(FLASHBOTS_WC) && !disableFlashbotsPostMerge;
 
@@ -800,6 +803,7 @@ export default function TransactionConfirmationScreen() {
         formattedDappUrl,
         isAuthenticated,
         rpcMethod: method,
+        network: currentNetwork,
       });
 
       await onCancel(error);
@@ -926,6 +930,14 @@ export default function TransactionConfirmationScreen() {
     }
   }, [isAuthorizing, onConfirm]);
 
+  const submitFn = useCallback(async () => {
+    if (isHardwareWallet) {
+      navigate(Routes.HARDWARE_WALLET_TX_NAVIGATOR, { submit: onPressSend });
+    } else {
+      await onPressSend();
+    }
+  }, [isHardwareWallet, navigate, onPressSend]);
+
   const renderTransactionButtons = useCallback(() => {
     let ready = true;
     const isMessage = isMessageRequest;
@@ -967,7 +979,7 @@ export default function TransactionConfirmationScreen() {
         <SheetActionButton
           color={colors.appleBlue}
           label={`􀎽 ${lang.t('button.confirm')}`}
-          onPress={ready ? onPressSend : NOOP}
+          onPress={ready ? submitFn : NOOP}
           size="big"
           testID="wc-confirm"
           weight="heavy"
@@ -983,7 +995,7 @@ export default function TransactionConfirmationScreen() {
     nativeAsset?.symbol,
     onCancel,
     onPressCancel,
-    onPressSend,
+    submitFn,
   ]);
 
   const renderTransactionSection = useCallback(() => {
@@ -997,7 +1009,8 @@ export default function TransactionConfirmationScreen() {
 
     if (isTransactionDisplayType(method) && request?.asset) {
       const amount = request?.value ?? '0.00';
-      const nativeAssetPrice = genericNativeAsset?.price?.value;
+      const nativeAssetPrice =
+        genericNativeAsset?.price?.value || nativeAsset?.price?.value;
       const nativeAmount = multiply(nativeAssetPrice, amount);
       const nativeAmountDisplay = convertAmountToNativeDisplay(
         nativeAmount,
@@ -1031,6 +1044,7 @@ export default function TransactionConfirmationScreen() {
     request?.data,
     request?.value,
     request.message,
+    nativeAsset,
     genericNativeAsset?.price?.value,
     nativeCurrency,
   ]);

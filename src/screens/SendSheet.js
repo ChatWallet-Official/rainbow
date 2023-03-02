@@ -52,7 +52,8 @@ import {
 } from '@/hooks';
 
 import { useNavigation } from '@/navigation/Navigation';
-
+import { parseGasParamsForTransaction } from '@/parsers';
+import { rainbowTokenList } from '@/references';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
 import { borders, fonts } from '@/styles';
@@ -85,6 +86,14 @@ const SheetContainer = styled(Column).attrs({
   height: sheetHeight,
   width: '100%',
 });
+
+const validateRecipient = toAddress => {
+  // Don't allow send to known ERC20 contracts on mainnet
+  if (rainbowTokenList.RAINBOW_TOKEN_LIST[toAddress.toLowerCase()]) {
+    return false;
+  }
+  return true;
+};
 
 export default function SendSheet(props) {
   const dispatch = useDispatch();

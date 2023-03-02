@@ -11,19 +11,32 @@ import { LayoutChangeEvent } from 'react-native';
 type Props = {
   // Between 0 and 1
   progress: number;
+  color: string;
 };
 
-export const RewardsProgressBar: React.FC<Props> = ({ progress }) => {
-  const { colors } = useTheme();
+const COMBINED_HORIZONTAL_PADDING = 4;
+const MIN_PROGRESS_WIDTH = 12;
 
-  const widthValue = useSharedValue(10);
+export const RewardsProgressBar: React.FC<Props> = ({ progress, color }) => {
+  const { colors } = useTheme();
+  const widthValue = useSharedValue(MIN_PROGRESS_WIDTH);
 
   const animatedStyle = useAnimatedStyle(() => ({
     width: widthValue.value,
   }));
 
   const onLayout = (event: LayoutChangeEvent) => {
-    widthValue.value = withTiming(event.nativeEvent.layout.width * progress, {
+    const maxWidth =
+      event.nativeEvent.layout.width - COMBINED_HORIZONTAL_PADDING;
+    const destinationWidth = Math.min(
+      Math.max(
+        event.nativeEvent.layout.width * progress - COMBINED_HORIZONTAL_PADDING,
+        MIN_PROGRESS_WIDTH
+      ),
+      maxWidth
+    );
+
+    widthValue.value = withTiming(destinationWidth, {
       duration: 1000,
     });
   };
@@ -36,7 +49,7 @@ export const RewardsProgressBar: React.FC<Props> = ({ progress }) => {
       padding="2px"
       onLayout={onLayout}
       style={{
-        backgroundColor: colors.alpha(colors.networkColors.optimism, 0.16),
+        backgroundColor: colors.alpha(color, 0.16),
       }}
     >
       <Box
@@ -45,7 +58,7 @@ export const RewardsProgressBar: React.FC<Props> = ({ progress }) => {
         borderRadius={6}
         style={[
           {
-            backgroundColor: colors.networkColors.optimism,
+            backgroundColor: color,
           },
           animatedStyle,
         ]}

@@ -163,6 +163,20 @@
         "please_keep_safe": "Please keep %{typeName} somewhere safe to access your wallet in the future!"
       }
     },
+    "bluetooth": {
+      "powered_off_alert": {
+        "title": "Bluetooth is off",
+        "message": "Please turn on Bluetooth to use this feature",
+        "open_settings": "Open Settings",
+        "cancel": "Cancel"
+      },
+      "permissions_alert": {
+        "title": "Bluetooth Permissions",
+        "message": "Please enable Bluetooth permissions in your settings to use this feature",
+        "open_settings": "Open Settings",
+        "cancel": "Cancel"
+      }
+    },
     "button": {
       "add": "Add",
       "add_cash": "Add Cash",
@@ -334,6 +348,10 @@
           "navigating_your_wallet": "Navigating your Wallet"
         }
       },
+      "ledger": {
+        "title": "Pair a Hardware Wallet",
+        "body": "Connect your Ledger Nano X to Rainbow through Bluetooth."
+      },
       "receive": {
         "receive_assets": "Receive assets",
         "copy_address": "Copy Address",
@@ -384,6 +402,7 @@
       "crash_app_render_error": "Crash app (render error)",
       "enable_testnets": "Enable Testnets",
       "installing_update": "Installing update",
+      "navigation_entry_point": "Navigation entry point",
       "no_update": "No update",
       "not_applied": "NOT APPLIED",
       "notifications_debug": "Notifications Debug",
@@ -664,11 +683,13 @@
     },
     "explain": {
       "icon_unlock": {
-        "smol_text": "You found Treasure! Because you hold a Smolverse NFT, you’ve unlocked a Custom Icon!",
+        "smol_text": "You found Treasure! Because you hold a Smolverse NFT, you've unlocked a Custom Icon!",
         "optimism_text": "To celebrate NFTs on Optimism, Rainbow and Optimism teamed up to drop a limited edition App Icon for the Optimistic Explorers like you!",
-        "zora_text": "A special edition Rainbow Zorb icon that’s made for magical pondering.",
+        "zora_text": "A special edition Rainbow Zorb icon that's made for magical pondering.",
         "golddoge_text": "A limited edition golden Rainbow app icon in celebration of Kabosu's 17th birthday.",
-        "raindoge_text": "A limited edition Rainbow app icon in celebration of Kabosu’s 17th birthday.",
+        "raindoge_text": "A limited edition Rainbow app icon in celebration of Kabosu's 17th birthday.",
+        "pooly_text": "A special edition Rainbow Pooly icon for supporters of freedom.",
+        "pooly_title": "You've unlocked a\nRainbow Pooly",
         "title": "You've unlocked\nRainbow 􀆄 %{partner}",
         "button": "Snag the icon"
       },
@@ -1297,8 +1318,56 @@
     },
     "rewards": {
       "total_earnings": "Total Earnings",
-      "multiplier": "Multiplier",
-      "you_earned": "You've earned "
+      "you_earned": "You've earned ",
+      "pending_earnings": "Pending Earnings",
+      "next_airdrop": "Next Airdrop",
+      "last_airdrop": "Last Airdrop",
+      "my_stats": "My Stats",
+      "swapped": "Swapped",
+      "bridged": "Bridged",
+      "position": "Position",
+      "leaderboard": "Leaderboard",
+      "leaderboard_data_refresh_notice": "Updates periodically throughout the day. Check back soon if your recent activity isn’t reflected.",
+      "program_paused": "\uDBC0\uDE97 Paused",
+      "program_paused_description": "The contest is currently paused and will resume again soon. Check back later for updates.",
+      "program_finished": "\uDBC1\uDF2A Ended",
+      "program_finished_description": "The first contest has ended. The final leaderboard and bonus rewards are shown below.",
+      "days_left": "%{days} days left",
+      "data_powered_by": "Data powered by",
+      "current_value": "Current Value",
+      "rewards_claimed": "Weekly Rewards Claimed",
+      "refreshes_next_week": "Refreshes next week",
+      "all_rewards_claimed": "All rewards have been claimed this week",
+      "rainbow_users_claimed": "Rainbow users claimed %{amount}",
+      "refreshes_in_with_days": "Refreshes in %{days} days %{hours} hours",
+      "refreshes_in_without_days": "Refreshes in %{hours} hours",
+      "percent": "%{percent}% reward",
+      "error_title": "Something went wrong",
+      "error_text": "Please check your internet connection and check back later.",
+      "ended_title": "Program ended",
+      "ended_text": "Stay tuned for what we have in store for you next!",
+      "op": {
+        "airdrop_timing": {
+          "title": "Airdrops Every Week",
+          "text": "Swap on Optimism or bridge to Optimism to earn OP rewards. At the end of each week, the rewards you’ve earned will be airdropped to your wallet."
+        },
+        "amount_distributed": {
+          "title": "67,850 OP Every Week",
+          "text": "Up to 67,850 OP in rewards will be distributed every week. If weekly rewards run out, rewards will temporarily pause and resume the following week."
+        },
+        "bridge": {
+          "title": "Earn 0.125% on Bridging",
+          "text": "While rewards are live, bridging verified tokens to Optimism will earn you approximately 0.125% back in OP.\n\nStats update periodically throughout the day. Check back soon if you don’t see your recent bridging reflected here."
+        },
+        "swap": {
+          "title": "Earn 0.425% on Swaps",
+          "text": "While rewards are live, swapping verified tokens on Optimism will earn you approximately 0.425% back in OP.\n\nStats update periodically throughout the day. Check back soon if you don’t see your recent swaps reflected here."
+        },
+        "position": {
+          "title": "Leaderboard Position",
+          "text": "The more OP you earn by swapping and bridging, the higher you’ll climb on the leaderboard. If you’re in the top 100 at the end of the contest, you’ll get bonus rewards of up to 8,000 OP."
+        }
+      }
     },
     "savings": {
       "deposit": "Deposit",
@@ -1548,12 +1617,12 @@
       "pair_a_new_ledger": "Pair a new Ledger",
       "looking_for_devices": "Looking for devices",
       "make_sure_bluetooth_enabled": "Make sure you have Bluetooth enabled and your Ledger Nano X is unlocked.",
-      "pair_successful": "Pair successful",
+      "device_connected": "Device connected",
       "almost_done": "Almost done. Before you finish you need to enable blind signing on your Ledger device.",
       "enable_blind_signing": "Enable blind signing",
       "blind_signing_description": "Blind signing enables your device to approve signing a smart contract transactions.",
       "learn_more": "Learn More",
-      "blind_signing_enabled": "Blind signing is enabled",
+      "finish_importing": "Finish importing",
       "blind_signing_instructions": {
         "step_1": {
           "title": "On Ledger, open the ETH app",
@@ -1567,6 +1636,15 @@
           "title": "Enable blind signing",
           "description": "Press both buttons to enable blind signing for transactions. If the device displays Enabled, you're good to go."
         }
+      },
+      "unlock_ledger": "Unlock Ledger",
+      "open_eth_app": "Open the ETH app",
+      "open_eth_app_description": "The Ethereum app needs to be open on your Ledger to proceed with the transaction.",
+      "enter_passcode": "Enter your passcode to unlock your Ledger. Once unlocked, open the Ethereum app by pressing both buttons at once.",
+      "errors": {
+        "off_or_locked": "Make sure your device is unlocked",
+        "no_eth_app": "Open the Eth App on your device",
+        "unknown": "Unknown Error, close and reopen this sheet"
       }
     },
     "wallet": {
@@ -1658,7 +1736,8 @@
       "buy": "Buy",
       "change_wallet": {
         "balance_eth": "%{balanceEth} ETH",
-        "watching": "Watching"
+        "watching": "Watching",
+        "ledger": "Ledger"
       },
       "connected_apps": "Connected Apps",
       "copy": "Copy",
@@ -1900,7 +1979,9 @@
       "requesting_network": "Requesting %{num} network",
       "requesting_networks": "Requesting %{num} networks",
       "unknown_dapp": "Unknown Dapp",
-      "unknown_url": "Unknown URL"
+      "unknown_url": "Unknown URL",
+      "approval_sheet_network": "Network",
+      "approval_sheet_networks": "%{length} Networks"
     },
     "warning": {
       "user_is_offline": "Connection offline, please check your internet connection",

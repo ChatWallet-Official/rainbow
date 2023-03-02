@@ -11,12 +11,10 @@ import { ButtonPressAnimation } from '@/components/animations';
 import { ImgixImage } from '@/components/images';
 import Skeleton from '@/components/skeleton/Skeleton';
 import { AccentColorProvider, Box, Cover, useColorMode } from '@/design-system';
-import { maybeSignUri } from '@/handlers/imgix';
 import {
   useAccountProfile,
   useLatestCallback,
   useOnAvatarPress,
-  usePersistentDominantColorFromImage,
 } from '@/hooks';
 import { useTheme } from '@/theme';
 import { getFirstGrapheme } from '@/utils';
@@ -26,6 +24,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { navbarHeight } from '@/components/navbar/Navbar';
 import { IS_ANDROID } from '@/env';
 import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
+import { usePersistentDominantColorFromImage } from '@/hooks/usePersistentDominantColorFromImage';
 
 export const ProfileAvatarRowHeight = 80;
 export const ProfileAvatarRowTopInset = 24;
@@ -39,36 +38,13 @@ export function ProfileAvatarRow({
   // ////////////////////////////////////////////////////
   // Account
 
-  const { accountSymbol, accountColor, accountImage } = useAccountProfile();
+  const { accountSymbol, accountImage } = useAccountProfile();
 
-  const {
-    avatarContextMenuConfig,
-    onAvatarPressProfile,
-    onSelectionCallback,
-  } = useOnAvatarPress({ screenType: 'wallet' });
-
-  const { result: dominantColor } = usePersistentDominantColorFromImage(
-    maybeSignUri(accountImage ?? '') ?? ''
-  );
-
-  // ////////////////////////////////////////////////////
-  // Context Menu
-
-  const ContextMenuButton = onAvatarPressProfile ? React.Fragment : ContextMenu;
-
-  const handlePressMenuItem = useLatestCallback((e: any) => {
-    const index = avatarContextMenuConfig.menuItems?.findIndex(
-      item => item.actionKey === e.nativeEvent.actionKey
-    );
-    onSelectionCallback(index);
-  });
+  const { onAvatarPressProfile } = useOnAvatarPress({ screenType: 'wallet' });
 
   // ////////////////////////////////////////////////////
   // Colors
 
-  const { colors } = useTheme();
-
-  const { colorMode } = useColorMode();
   const { accentColor } = useAccountAccentColor();
 
   // ////////////////////////////////////////////////////
@@ -179,17 +155,7 @@ export function ProfileAvatarRow({
                   </Cover>
                 )}
                 <Animated.View style={[fadeInStyle]}>
-                  {accountImage ? (
-                    <Box
-                      as={ImgixImage}
-                      borderRadius={size / 2}
-                      height={{ custom: size }}
-                      source={{ uri: accountImage }}
-                      width={{ custom: size }}
-                    />
-                  ) : (
-                    <EmojiAvatar size={size} />
-                  )}
+                  <EmojiAvatar size={size} />
                 </Animated.View>
               </>
             </Box>

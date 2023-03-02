@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React, { useContext } from 'react';
-import AddCashSheet from '../screens/AddCashSheet';
+import { AddCashSheet } from '../screens/AddCash';
 import AddTokenSheet from '../screens/AddTokenSheet';
 import AvatarBuilder from '../screens/AvatarBuilder';
 import BackupSheet from '../screens/BackupSheet';
@@ -23,7 +23,7 @@ import SelectENSSheet from '../screens/SelectENSSheet';
 import SelectUniqueTokenSheet from '../screens/SelectUniqueTokenSheet';
 import SendConfirmationSheet from '../screens/SendConfirmationSheet';
 import SendSheet from '../screens/SendSheet';
-import SettingsSheet from '../screens/SettingsSheet';
+import { SettingsSheet } from '../screens/SettingsSheet';
 import ShowcaseScreen from '../screens/ShowcaseSheet';
 import SpeedUpAndCancelSheet from '../screens/SpeedUpAndCancelSheet';
 import SwapsPromoSheet from '../screens/SwapsPromoSheet';
@@ -41,6 +41,7 @@ import {
   addTokenSheetConfig,
   backupSheetConfig,
   basicSheetConfig,
+  hardwareWalletTxNavigatorConfig,
   customGasSheetConfig,
   defaultScreenStackOptions,
   ensAdditionalRecordsSheetConfig,
@@ -68,6 +69,7 @@ import {
   opRewardsSheetConfig,
 } from './config';
 import {
+  addCashSheet,
   emojiPreset,
   emojiPresetWallet,
   overlayExpandedPreset,
@@ -89,6 +91,7 @@ import SendResult from '@/screens/SendResult';
 import SelectTokenSheet from '@/screens/SelectTokenSheet';
 import ProfileScreen from '@/screens/ProfileScreen';
 import { AddWalletNavigator } from './AddWalletNavigator';
+import { HardwareWalletTxNavigator } from './HardwareWalletTxNavigator';
 import { RewardsSheet } from '@/screens/rewards/RewardsSheet';
 
 const Stack = createStackNavigator();
@@ -140,25 +143,6 @@ function ImportSeedPhraseFlowNavigator() {
   );
 }
 
-function AddCashFlowNavigator() {
-  return (
-    <Stack.Navigator
-      {...stackNavigationConfig}
-      initialRouteName={Routes.ADD_CASH_SCREEN_NAVIGATOR}
-    >
-      <Stack.Screen
-        component={ModalScreen}
-        name={Routes.SUPPORTED_COUNTRIES_MODAL_SCREEN}
-        options={overlayExpandedPreset}
-      />
-      <Stack.Screen
-        component={AddCashSheet}
-        name={Routes.ADD_CASH_SCREEN_NAVIGATOR}
-      />
-    </Stack.Navigator>
-  );
-}
-
 function MainNavigator() {
   const initialRoute = useContext(InitialRouteContext);
 
@@ -185,7 +169,11 @@ function MainNavigator() {
         name={Routes.AVATAR_BUILDER_WALLET}
         options={emojiPresetWallet}
       />
-      <Stack.Screen component={AddCashSheet} name={Routes.ADD_CASH_SHEET} />
+      <Stack.Screen
+        component={AddCashSheet}
+        name={Routes.ADD_CASH_SHEET}
+        options={addCashSheet}
+      />
     </Stack.Navigator>
   );
 }
@@ -404,6 +392,11 @@ function NativeStackNavigator() {
         {...pairHardwareWalletNavigatorConfig}
       />
       <NativeStack.Screen
+        component={HardwareWalletTxNavigator}
+        name={Routes.HARDWARE_WALLET_TX_NAVIGATOR}
+        {...hardwareWalletTxNavigatorConfig}
+      />
+      <NativeStack.Screen
         component={AddWalletNavigator}
         name={Routes.ADD_WALLET_NAVIGATOR}
         {...addWalletNavigatorConfig}
@@ -455,10 +448,6 @@ function NativeStackNavigator() {
       <NativeStack.Screen
         component={ImportSeedPhraseFlowNavigator}
         name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
-      />
-      <NativeStack.Screen
-        component={AddCashFlowNavigator}
-        name={Routes.ADD_CASH_SCREEN_NAVIGATOR}
       />
       <NativeStack.Screen
         component={WalletConnectApprovalSheet}

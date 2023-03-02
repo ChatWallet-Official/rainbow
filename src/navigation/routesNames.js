@@ -12,6 +12,7 @@ const Routes = {
   BACKUP_SHEET: 'BackupSheet',
   CHANGE_WALLET_SHEET: 'ChangeWalletSheet',
   CHANGE_WALLET_SHEET_NAVIGATOR: 'ChangeWalletSheetNavigator',
+  HARDWARE_WALLET_TX_NAVIGATOR: 'HardwareWalletTxNavigator',
   CONFIRM_REQUEST: 'ConfirmRequest',
   CONNECTED_DAPPS: 'ConnectedDapps',
   CURRENCY_SELECT_SCREEN: 'CurrencySelectScreen',
@@ -22,7 +23,6 @@ const Routes = {
   ENS_CONFIRM_REGISTER_SHEET: 'ENSConfirmRegisterSheet',
   ENS_INTRO_SHEET: 'ENSIntroSheet',
   ENS_SEARCH_SHEET: 'ENSSearchSheet',
-  EXAMPLE_SCREEN: 'ExampleScreen',
   EXCHANGE_MODAL: 'ExchangeModal',
   EXPANDED_ASSET_SCREEN: 'ExpandedAssetScreen',
   EXPANDED_ASSET_SHEET: 'ExpandedAssetSheet',
@@ -44,6 +44,8 @@ const Routes = {
   NETWORK_SWITCHER: 'NetworkSection',
   NOTIFICATIONS_PROMO_SHEET: 'NotificationsPromoSheet',
   OP_REWARDS_SHEET: 'OpRewardsSheet',
+  PAIR_HARDWARE_WALLET_AGAIN_SHEET: 'PairHardwareWalletAgainSheet',
+  PAIR_HARDWARE_WALLET_ERROR_SHEET: 'PairHardwareWalletErrorSheet',
   PAIR_HARDWARE_WALLET_INTRO_SHEET: 'PairHardwareWalletIntroSheet',
   PAIR_HARDWARE_WALLET_NAVIGATOR: 'PairHardwareWalletNavigator',
   PAIR_HARDWARE_WALLET_SEARCH_SHEET: 'PairHardwareWalletSearchSheet',
@@ -113,9 +115,6 @@ export const NATIVE_ROUTES = [
 
 const RoutesWithPlatformDifferences = {
   ...Routes,
-  ADD_CASH_FLOW: IS_IOS
-    ? Routes.ADD_CASH_SCREEN_NAVIGATOR
-    : Routes.ADD_CASH_SHEET,
   IMPORT_SEED_PHRASE_FLOW: IS_IOS
     ? Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR
     : Routes.IMPORT_SEED_PHRASE_SHEET,

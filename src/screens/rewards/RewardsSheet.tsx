@@ -1,31 +1,47 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SlackSheet } from '@/components/sheet';
 import { useDimensions } from '@/hooks';
 import { BackgroundProvider, Box } from '@/design-system';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
-import { getMockData } from '@/screens/rewards/mocks/getMockData';
-import { RewardsResponseType } from '@/screens/rewards/types/RewardsResponseType';
 import { RewardsContent } from '@/screens/rewards/components/RewardsContent';
-import { RewardsFakeContent } from '@/screens/rewards/components/RewardsFakeContent';
-import { IS_ANDROID } from '@/env';
+import { IS_ANDROID, IS_IOS } from '@/env';
 import { StatusBar } from 'react-native';
+import { useRewards } from '@/resources/rewards/rewardsQuery';
+import { useSelector } from 'react-redux';
+import { AppState } from '@/redux/store';
+import { useFocusEffect } from '@react-navigation/native';
+import { analyticsV2 } from '@/analytics';
 
 export const RewardsSheet: React.FC = () => {
   const { height } = useDimensions();
   const { top } = useSafeAreaInsets();
-  const [rewardsData, setRewardsData] = useState<RewardsResponseType | null>(
-    null
+  const accountAddress = useSelector(
+    (state: AppState) => state.settings.accountAddress
   );
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading: queryIsLoading, isLoadingError } = useRewards({
+    address: accountAddress,
+  });
+
+  // TODO: For now we are disabling using the asset price in native currency
+  //  we will use the fallback which is price in USD provided by backend
+  // const assetPriceInNativeCurrency = useMemo(() => {
+  //   const assetCode = data?.rewards?.meta.token.asset.assetCode;
+  //
+  //   if (!assetCode) {
+  //     return undefined;
+  //   }
+  //
+  //   return ethereumUtils.getAssetPrice(assetCode);
+  // }, [data?.rewards?.meta.token.asset]);
+
+  useEffect(() => {
+    setIsLoading(queryIsLoading);
+  }, [queryIsLoading]);
 
   useFocusEffect(
     useCallback(() => {
-      setLoading(true);
-      getMockData().then(data => {
-        setRewardsData(data);
-        setLoading(false);
-      });
+      analyticsV2.track(analyticsV2.event.rewardsViewedSheet);
     }, [])
   );
 
@@ -35,17 +51,19 @@ export const RewardsSheet: React.FC = () => {
         // @ts-expect-error JS component
         <SlackSheet
           backgroundColor={backgroundColor}
-          height="100%"
-          contentHeight={height - top}
           additionalTopPadding={IS_ANDROID ? StatusBar.currentHeight : false}
+          {...(IS_IOS && { height: '100%' })}
+          contentHeight={height - top}
           scrollEnabled
         >
           <Box padding="20px">
-            {loading || rewardsData === null ? (
-              <RewardsFakeContent />
-            ) : (
-              <RewardsContent data={rewardsData} />
-            )}
+            <RewardsContent
+              data={data}
+              // TODO: For now we are disabling using the asset price in native currency
+              assetPrice={undefined}
+              isLoadingError={isLoadingError}
+              isLoading={isLoading}
+            />
           </Box>
         </SlackSheet>
       )}

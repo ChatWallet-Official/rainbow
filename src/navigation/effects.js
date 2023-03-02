@@ -11,6 +11,7 @@ import {
   EmojiAvatar,
   ProfileAvatarSize,
 } from '@/components/asset-list/RecyclerAssetList2/profile-header/ProfileAvatarRow';
+import { HARDWARE_WALLET_TX_NAVIGATOR_SHEET_HEIGHT } from './HardwareWalletTxNavigator';
 
 const statusBarHeight = getStatusBarHeight(true);
 export const sheetVerticalOffset = statusBarHeight;
@@ -463,6 +464,11 @@ export const addWalletNavigatorPreset = ({ route }) => ({
   height: route.params?.sheetHeight,
 });
 
+export const hardwareWalletTxNavigatorPreset = {
+  height: HARDWARE_WALLET_TX_NAVIGATOR_SHEET_HEIGHT,
+  backdropOpacity: 1,
+};
+
 export const sheetPreset = ({ route }) => {
   const shouldUseNonTransparentOverlay =
     route.params?.type === 'token' ||
@@ -485,6 +491,20 @@ export const sheetPreset = ({ route }) => {
     transitionSpec: { close: closeSpec, open: sheetOpenSpec },
   };
 };
+
+export const addCashSheet = () => {
+  return {
+    cardOverlayEnabled: true,
+    cardShadowEnabled: true,
+    cardStyle: { backgroundColor: 'transparent' },
+    cardStyleInterpolator: sheetStyleInterpolator(1),
+    cardTransparent: true,
+    gestureDirection: 'vertical',
+    gestureResponseDistance: gestureResponseDistance,
+    transitionSpec: { close: closeSpec, open: sheetOpenSpec },
+  };
+};
+
 export const selectUniquePreset = () => {
   return {
     cardOverlayEnabled: true,
