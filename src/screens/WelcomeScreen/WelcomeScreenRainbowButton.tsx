@@ -101,8 +101,6 @@ export const WelcomeScreenRainbowButton = ({
       scaleTo={0.9}
       {...props}
     >
-      {ios && <DarkShadow style={darkShadowStyle} />}
-      <Shadow style={shadowStyle} />
       <ButtonContainer height={height} style={style}>
         <ButtonContent>
           <ButtonEmoji name={emoji} />

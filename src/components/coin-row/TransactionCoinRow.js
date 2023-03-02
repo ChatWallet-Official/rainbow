@@ -212,8 +212,14 @@ export default function TransactionCoinRow({ item, ...props }) {
         ?.mainnet_address
   );
 
+  const onPress = useCallback(() => {
+    navigate(Routes.TRANSACTION_DETAILS, {
+      transaction: item,
+    });
+  }, [item, navigate]);
+
   return (
-    <ButtonPressAnimation onPress={onPressTransaction} scaleTo={0.96}>
+    <ButtonPressAnimation onPress={onPress} scaleTo={0.96}>
       <CoinRow
         {...item}
         {...props}
