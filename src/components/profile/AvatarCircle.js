@@ -11,25 +11,25 @@ import {
   useOnAvatarPress,
 } from '@/hooks';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { position, colors } from '@/styles';
 import ShadowStack from '@/react-native-shadow-stack';
+import { StyleSheet } from 'react-native';
 
-const AvatarCircleSize = 60;
+const AvatarCircleSize = 96;
 
 const AvatarCircleView = styled(Flex)({
   ...position.sizeAsObject(AvatarCircleSize),
-  alignItems: ios ? 'flex-start' : 'center',
-  justifyContent: ios ? 'flex-start' : 'center',
-  marginBottom: 16,
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 const FirstLetter = styled(Text).attrs(({ theme: { colors } }) => ({
   align: 'center',
   color: colors.whiteLabel,
   letterSpacing: 2,
-  size: ios ? 38 : 30,
+  size: ios ? 58 : 30,
   weight: 'semibold',
-  ...(ios && { lineHeight: 60 }),
+  ...(ios && { lineHeight: 96 }),
 }))({
   ...(android && { left: -1 }),
   ...(ios && { width: 62 }),
@@ -96,41 +96,39 @@ export default function AvatarCircle({
 
   return (
     <Wrapper
-      menuConfig={avatarContextMenuConfig}
-      onPressMenuItem={handlePressMenuItem}
+    // menuConfig={avatarContextMenuConfig}
+    // onPressMenuItem={handlePressMenuItem}
     >
       <ButtonPressAnimation
         disabled={!isAvatarPickerAvailable}
         enableHapticFeedback={isAvatarPickerAvailable}
-        marginTop={2}
         onPress={onAvatarPressProfile}
         onLongPress={() => null}
         overflowMargin={30}
         pressOutDuration={200}
-        scaleTo={isAvatarPickerAvailable ? 0.9 : 1}
+        // scaleTo={isAvatarPickerAvailable ? 0.9 : 1}
         {...props}
       >
-        <ShadowStack
-          {...position.sizeAsObject(AvatarCircleSize)}
-          backgroundColor={overlayStyles ? 'rgb(51, 54, 59)' : colors.white}
-          borderRadius={AvatarCircleSize}
-          marginBottom={12}
-          shadows={shadows[overlayStyles ? 'overlay' : 'default']}
-          {...(android && {
-            height: 60,
-            width: 60,
-          })}
-        >
-          {image ? (
-            <ImageAvatar image={image} size="large" />
-          ) : (
-            <AvatarCircleView backgroundColor={resolvedColor}>
-              <FirstLetter>{accountSymbol}</FirstLetter>
-              {!overlayStyles && <InnerBorder opacity={0.02} radius={60} />}
-            </AvatarCircleView>
-          )}
-        </ShadowStack>
+        {image ? (
+          <ImageAvatar image={image} size="large" style={styles.avatar} />
+        ) : (
+          <AvatarCircleView
+            backgroundColor={resolvedColor}
+            style={styles.avatar}
+          >
+            <FirstLetter>{accountSymbol}</FirstLetter>
+            {!overlayStyles && <InnerBorder opacity={0.02} radius={60} />}
+          </AvatarCircleView>
+        )}
       </ButtonPressAnimation>
     </Wrapper>
   );
 }
+
+const styles = StyleSheet.create({
+  avatar: {
+    borderRadius: AvatarCircleSize,
+    borderWidth: 1,
+    borderColor: colors.alpha(colors.white, 0.8),
+  },
+});

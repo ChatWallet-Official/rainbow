@@ -2,14 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>RCTAsyncStorageExcludeFromBackup</key>
-	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Rainbow</string>
+	<string>ChatWallet</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIcons</key>
@@ -54,39 +52,66 @@
 			</dict>
 			<key>pixel</key>
 			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
 				<key>CFBundleIconFiles</key>
 				<array>
-					<string>pixel</string>
+					<string>golddoge</string>
 				</array>
-			</dict>
-			<key>optimism</key>
-			<dict>
 				<key>UIPrerenderedIcon</key>
 				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>optimism</string>
-				</array>
-			</dict>
-			<key>zora</key>
-			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>zora</string>
-				</array>
 			</dict>
 			<key>og</key>
 			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>og</string>
 				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>optimism</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>optimism</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>pixel</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>pixel</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>raindoge</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>raindoge</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>smol</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>smol</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>zora</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>zora</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
 			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
@@ -127,7 +152,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>24</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(CODE_PUSH_DEPLOYMENT_KEY_IOS)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -177,6 +202,8 @@
 	<array>
 		<string>SelectTokenIntent</string>
 	</array>
+	<key>RCTAsyncStorageExcludeFromBackup</key>
+	<false/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SFMono-Medium.otf</string>

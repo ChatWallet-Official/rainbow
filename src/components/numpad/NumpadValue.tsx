@@ -6,6 +6,7 @@ import { Text } from '../text';
 import { useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
 import { ThemeContextProps } from '@/theme';
+import LinearGradient from 'react-native-linear-gradient';
 
 const FontSizeMultiple = 0.24;
 const HeightMultiple = 0.288;
@@ -14,15 +15,14 @@ interface WidthParams {
   width: number;
 }
 
-const GradientBackground = styled(RadialGradient).attrs(
+const GradientBackground = styled(LinearGradient).attrs(
   ({ width }: WidthParams) => {
     const radius = width - 48;
 
     return {
-      center: [radius, 53.5],
-      colors: ['#FFB114', '#FF54BB', '#00F0FF', '#34F3FF'],
-      radius,
-      stops: [0.2049, 0.6354, 0.8318, 0.9541],
+      start: { x: 0, y: 0.5 },
+      end: { x: 1, y: 0.5 },
+      colors: ['#000000'],
     };
   }
 )({

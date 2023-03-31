@@ -9,6 +9,9 @@ import { Text } from '../text';
 import { analytics } from '@/analytics';
 import { useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
+import { colors } from '@/styles';
+import { Icon } from '../icons';
+import { TouchableOpacity } from 'react-native';
 
 const GradientBackground = styled(RadialGradient).attrs(
   ({ colorForAsset, theme: { colors }, width }) => {
@@ -33,12 +36,9 @@ const GradientBackground = styled(RadialGradient).attrs(
   width: ({ width }) => width - 38,
 });
 
-const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
-  scaleTo: 1.05,
-})({
-  borderRadius: 29.5,
-  height: ({ isSmallPhone, isTinyPhone }) =>
-    isTinyPhone ? 40 : isSmallPhone ? 46 : 59,
+const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs()({
+  borderRadius: 16,
+  height: ({ height }) => height,
   overflow: 'hidden',
   paddingBottom: ({ isSmallPhone, isTinyPhone }) =>
     isTinyPhone ? 7 : isSmallPhone ? 8 : 11,
@@ -47,13 +47,14 @@ const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
   paddingTop: ({ isSmallPhone, isTinyPhone }) =>
     isTinyPhone ? 6 : isSmallPhone ? 7 : 10,
   position: 'relative',
-  width: ({ width }) => (android ? width - 38 : '100%'),
+  width: ({ width }) => width - 64,
 });
 
 const SendAssetFormField = (
   {
     autoFocus,
     colorForAsset,
+    size,
     format,
     label,
     labelMaxLength = 6,
@@ -62,9 +63,11 @@ const SendAssetFormField = (
     onChange,
     onFocus,
     onPressButton,
+    onPressLabel,
     placeholder,
     value,
     testID,
+    height,
     ...props
   },
   ref
@@ -85,13 +88,9 @@ const SendAssetFormField = (
       isTinyPhone={isTinyPhone}
       onPress={() => !android && ref?.current.focus()}
       width={width}
+      height={height}
+      backgroundColor={colors.lighterGrey}
     >
-      <GradientBackground
-        colorForAsset={colorForAsset}
-        isSmallPhone={android || isSmallPhone}
-        isTinyPhone={isTinyPhone}
-        width={width}
-      />
       <RowWithMargins
         align="center"
         flex={1}
@@ -101,8 +100,9 @@ const SendAssetFormField = (
       >
         <BubbleField
           autoFocus={autoFocus}
-          buttonText={lang.t('wallet.transaction.max')}
+          // buttonText={lang.t('wallet.transaction.max')}
           colorForAsset={colorForAsset || colors.dark}
+          size={size}
           format={format}
           keyboardType="decimal-pad"
           mask={mask}
@@ -115,26 +115,33 @@ const SendAssetFormField = (
           testID={testID}
           value={value}
         />
-        <Text
-          align="right"
-          color={colorForAsset || colors.dark}
-          letterSpacing="roundedTight"
-          lineHeight={
-            android
-              ? isTinyPhone
-                ? 27
-                : android || isSmallPhone
-                ? 31
-                : 38
-              : null
-          }
-          size={isTinyPhone ? 'big' : android || isSmallPhone ? 'bigger' : 'h3'}
-          weight="medium"
+        <TouchableOpacity
+          onPress={onPressLabel}
+          style={{ flexDirection: 'row', alignItems: 'center' }}
         >
-          {label.length > labelMaxLength
-            ? label.substring(0, labelMaxLength)
-            : label}
-        </Text>
+          <Text
+            align="right"
+            color={colorForAsset || colors.dark}
+            letterSpacing="roundedTight"
+            lineHeight={
+              android
+                ? isTinyPhone
+                  ? 27
+                  : android || isSmallPhone
+                  ? 31
+                  : 38
+                : null
+            }
+            size={'big'}
+            weight="medium"
+            style={{ marginRight: 8 }}
+          >
+            {label.length > labelMaxLength
+              ? label.substring(0, labelMaxLength)
+              : label}
+          </Text>
+          {onPressLabel && <Icon name="arrowRight" />}
+        </TouchableOpacity>
       </RowWithMargins>
     </Wrapper>
   );

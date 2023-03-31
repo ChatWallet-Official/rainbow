@@ -1,7 +1,7 @@
 import React from 'react';
 import { Source } from 'react-native-fast-image';
+import CheckMarkIconBlackCW from '@/components/icons/svg/CheckMarkIconBlackCW';
 import { ButtonPressAnimation } from '../../../components/animations';
-import CheckmarkCircledIcon from '../../../components/icons/svg/CheckmarkCircledIcon';
 import WarningIcon from '../../../components/icons/svg/WarningIcon';
 import Chevron from '@/assets/chevronUpDown.png';
 import Caret from '@/assets/family-dropdown-arrow.png';
@@ -19,9 +19,7 @@ const ImageIcon = ({ size = 60, source }: ImageIconProps) => (
     as={ImgixImage}
     borderRadius={size / 2}
     height={{ custom: size }}
-    marginLeft={{ custom: -12 }}
-    marginRight={{ custom: -12 }}
-    marginTop={{ custom: 8 }}
+    marginLeft={{ custom: 8 }}
     source={source as Source}
     width={{ custom: size }}
     size={size}
@@ -55,8 +53,7 @@ const TextIcon = ({
           : 'primary (Deprecated)'
       }
       containsEmoji
-      size="18px / 27px (Deprecated)"
-      weight="semibold"
+      size="23px / 27px (Deprecated)"
     >
       {icon}
     </Text>
@@ -68,11 +65,7 @@ interface SelectionProps {
 }
 
 const Selection = ({ children }: SelectionProps) => (
-  <Text
-    color="secondary60 (Deprecated)"
-    size="18px / 27px (Deprecated)"
-    weight="semibold"
-  >
+  <Text color="secondary60 (Deprecated)" size="18px / 27px (Deprecated)">
     {children}
   </Text>
 );
@@ -88,25 +81,16 @@ const StatusIcon = ({ status }: StatusIconProps) => {
   const statusColors: { [key in StatusType]: string } = {
     complete: colors.green,
     incomplete: colors.alpha(colors.blueGreyDark, 0.5),
-    selected: colors.appleBlue,
+    selected: colors.black,
     warning: colors.orangeLight,
   };
   return (
     <Box
-      as={status === 'warning' ? WarningIcon : CheckmarkCircledIcon}
+      as={status === 'warning' ? WarningIcon : CheckMarkIconBlackCW}
       backgroundColor={statusColors[status]}
       color={statusColors[status]}
       colors={colors}
       borderRadius={status !== 'warning' ? 6 : undefined}
-      fillColor={colors.white}
-      shadowColor={isDarkMode ? colors.shadow : statusColors[status]}
-      shadowOffset={{
-        height: 4,
-        width: 0,
-      }}
-      elevation={12}
-      shadowOpacity={ios ? 0.4 : 1}
-      shadowRadius={6}
     />
   );
 };
@@ -118,7 +102,7 @@ interface TitleProps {
   isLink?: boolean;
 }
 
-const Title = ({ text, weight = 'semibold', disabled, isLink }: TitleProps) => (
+const Title = ({ text, weight = 'medium', disabled, isLink }: TitleProps) => (
   <Text
     color={
       disabled
@@ -157,7 +141,7 @@ const Label = ({ text, warn }: LabelProps) => {
 interface MenuItemProps {
   rightComponent?: React.ReactNode;
   leftComponent?: React.ReactNode;
-  size: 52 | 60;
+  size: 52 | 56 | 60;
   hasRightArrow?: boolean;
   onPress?: () => void;
   titleComponent: React.ReactNode;

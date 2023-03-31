@@ -7,8 +7,15 @@ import DevSection from './components/DevSection';
 import NetworkSection from './components/NetworkSection';
 import PrivacySection from './components/PrivacySection';
 import NotificationsSection from './components/NotificationsSection';
+import AboutSection from './components/AboutSection';
+import SecuritySection from './components/SecuritySection';
 
 export const SettingsPages = {
+  about: {
+    component: AboutSection,
+    getTitle: () => lang.t('settings.about'),
+    key: 'AboutSection',
+  },
   appIcon: {
     component: AppIconSection,
     getTitle: () => lang.t('settings.app_icon'),
@@ -53,5 +60,10 @@ export const SettingsPages = {
     component: PrivacySection,
     getTitle: () => lang.t('settings.privacy'),
     key: 'PrivacySection',
+  },
+  security: {
+    component: SecuritySection,
+    getTitle: () => lang.t('settings.app_security'),
+    key: 'SecuritySection',
   },
 };

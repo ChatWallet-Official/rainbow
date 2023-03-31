@@ -77,4 +77,41 @@ platform :ios do
     )
 
   end
+
+  desc "Add new devices"
+  lane :add_devices do
+    register_devices(
+      devices: {        
+        "" => ""
+      },
+      team_id: "4RP36V48P3",
+    )
+    match(type: "development", force_for_new_devices: true)
+  end
+
+  desc "Distribute a build to firebase"
+  lane :distribute do
+    latest_release = firebase_app_distribution_get_latest_release(
+      app: "1:779229053551:ios:2a55f1739556587dfb439a",
+      service_credentials_file: "fastlane/chatwallet-21f22-151cb16b9125.json",
+    )
+    increment_build_number({ build_number: latest_release[:buildVersion].to_i + 1 })
+
+    sync_code_signing(type: "adhoc", readonly: true)
+
+    build_app(
+      workspace: "Rainbow.xcworkspace",
+      scheme: "Rainbow",
+      configuration: "Release",
+      export_method: "ad-hoc",
+      export_options: ({iCloudContainerEnvironment: 'Development'})
+    )
+
+    firebase_app_distribution(
+        app: "1:779229053551:ios:2a55f1739556587dfb439a",
+        service_credentials_file: "fastlane/chatwallet-21f22-151cb16b9125.json",
+        groups: "inGroup",
+        release_notes: ""
+    )
+  end
 end

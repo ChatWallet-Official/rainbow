@@ -291,7 +291,7 @@ const DevSection = () => {
       </Menu>
       {(IS_DEV || isTestFlight) && (
         <>
-          <Menu header="Rainbow Developer Settings">
+          <Menu header="ChatWallet Developer Settings">
             <MenuItem
               leftComponent={<MenuItem.TextIcon icon="💥" isEmoji />}
               onPress={clearAsyncStorage}

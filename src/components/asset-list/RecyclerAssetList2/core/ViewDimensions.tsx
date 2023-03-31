@@ -50,7 +50,7 @@ const ViewDimensions: Record<CellType, Dim> = {
   },
   [CellType.PROFILE_AVATAR_ROW_SPACE_AFTER]: { height: 15 },
   [CellType.PROFILE_NAME_ROW]: { height: ProfileNameRowHeight },
-  [CellType.PROFILE_NAME_ROW_SPACE_AFTER]: { height: 19 },
+  [CellType.PROFILE_NAME_ROW_SPACE_AFTER]: { height: 5 },
   [CellType.PROFILE_BALANCE_ROW]: { height: ProfileBalanceRowHeight },
   [CellType.PROFILE_BALANCE_ROW_SPACE_AFTER]: { height: 24 },
   [CellType.UNISWAP_POOL]: { height: CoinRowHeight },

@@ -13,6 +13,7 @@ import ENSConfirmRegisterSheet from '../screens/ENSConfirmRegisterSheet';
 import ExpandedAssetSheet from '../screens/ExpandedAssetSheet';
 import ExplainSheet from '../screens/ExplainSheet';
 import ExternalLinkWarningSheet from '../screens/ExternalLinkWarningSheet';
+import ImportSeedPhraseSheetCW from '../screens/ImportSeedPhraseSheetCW';
 import ModalScreen from '../screens/ModalScreen';
 import ProfileSheet from '../screens/ProfileSheet';
 import ReceiveModal from '../screens/ReceiveModal';
@@ -57,6 +58,7 @@ import {
   promoSheetConfig,
   registerENSNavigatorConfig,
   restoreSheetConfig,
+  selectTokenSheetConfig,
   sendConfirmationSheetConfig,
   settingsSheetConfig,
   stackNavigationConfig,
@@ -84,6 +86,10 @@ import QRScannerScreen from '@/screens/QRScannerScreen';
 import { PairHardwareWalletNavigator } from './PairHardwareWalletNavigator';
 import LearnWebViewScreen from '@/screens/LearnWebViewScreen';
 import { TransactionDetails } from '@/screens/transaction-details/TransactionDetails';
+import { SendAssetForm } from '@/components/send';
+import SendResult from '@/screens/SendResult';
+import SelectTokenSheet from '@/screens/SelectTokenSheet';
+import ProfileScreen from '@/screens/ProfileScreen';
 import { AddWalletNavigator } from './AddWalletNavigator';
 import { HardwareWalletTxNavigator } from './HardwareWalletTxNavigator';
 import { RewardsSheet } from '@/screens/rewards/RewardsSheet';
@@ -107,6 +113,32 @@ function SendFlowNavigator() {
         name={Routes.SEND_SHEET}
         options={sheetPreset}
       />
+      <Stack.Screen component={SendAssetForm} name={Routes.SEND_ASSET_FORM} />
+      <Stack.Screen
+        component={SelectTokenSheet}
+        name={Routes.SELECT_TOKEN_SHEET}
+        {...selectTokenSheetConfig}
+      />
+      <Stack.Screen component={SendResult} name={Routes.SEND_RESULT} />
+    </Stack.Navigator>
+  );
+}
+
+function ImportSeedPhraseFlowNavigator() {
+  return (
+    <Stack.Navigator
+      {...stackNavigationConfig}
+      initialRouteName={Routes.IMPORT_SEED_PHRASE_SHEET}
+    >
+      <Stack.Screen
+        component={ModalScreen}
+        name={Routes.MODAL_SCREEN}
+        options={overlayExpandedPreset}
+      />
+      <Stack.Screen
+        component={ImportSeedPhraseSheetCW}
+        name={Routes.IMPORT_SEED_PHRASE_SHEET}
+      />
     </Stack.Navigator>
   );
 }
@@ -126,10 +158,11 @@ function MainNavigator() {
         name={Routes.WELCOME_SCREEN}
         options={{ animationEnabled: false, gestureEnabled: false }}
       />
+      <Stack.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} />
       <Stack.Screen
         component={AvatarBuilder}
         name={Routes.AVATAR_BUILDER}
-        options={emojiPreset}
+        // options={emojiPreset}
       />
       <Stack.Screen
         component={AvatarBuilder}
@@ -167,11 +200,11 @@ function NativeStackNavigator() {
   return (
     <NativeStack.Navigator {...nativeStackConfig}>
       <NativeStack.Screen component={MainStack} name={Routes.STACK} />
-      <NativeStack.Screen
+      {/* <NativeStack.Screen
         component={LearnWebViewScreen}
         name={Routes.LEARN_WEB_VIEW_SCREEN}
         {...learnWebViewScreenConfig}
-      />
+      /> */}
       <NativeStack.Screen
         component={ReceiveModal}
         name={Routes.RECEIVE_MODAL}
@@ -411,6 +444,10 @@ function NativeStackNavigator() {
       <NativeStack.Screen
         component={SendFlowNavigator}
         name={Routes.SEND_SHEET_NAVIGATOR}
+      />
+      <NativeStack.Screen
+        component={ImportSeedPhraseFlowNavigator}
+        name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
       />
       <NativeStack.Screen
         component={WalletConnectApprovalSheet}

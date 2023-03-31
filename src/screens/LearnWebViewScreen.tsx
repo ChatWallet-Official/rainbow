@@ -14,6 +14,13 @@ import { ButtonPressAnimation } from '@/components/animations';
 import { IS_ANDROID } from '@/env';
 import { analyticsV2 } from '@/analytics';
 import * as i18n from '@/languages';
+import { Page } from '@/components/layout';
+import { Navbar } from '@/components/navbar/Navbar';
+import CaretLeftIcon from '@/components/icons/svg/CaretLeftIcon';
+import Routes from '@/navigation/routesNames';
+import { useNavigation } from '@/navigation';
+import { Icon } from '@/components/icons';
+import styled from '@/styled-thing';
 
 const HEADER_HEIGHT = 60;
 
@@ -26,6 +33,7 @@ export default function LearnWebViewScreen() {
   const { height: deviceHeight, isSmallPhone } = useDimensions();
   const [webViewHeight, setWebViewHeight] = useState(0);
   const startTime = useRef(Date.now());
+  const { navigate } = useNavigation();
 
   useEffect(
     () => () => {
@@ -87,56 +95,73 @@ export default function LearnWebViewScreen() {
     ? globalColors.white10
     : globalColors.white100;
 
+  const handlePressWallet = React.useCallback(() => {
+    navigate(Routes.WALLET_SCREEN);
+  }, [navigate]);
+
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore - JS component
-    <SlackSheet
-      renderHeader={renderHeader}
-      backgroundColor={surfacePrimaryElevated}
-      contentContainerStyle={{ flexGrow: 1 }}
-      contentHeight={contentHeight}
-      height="100%"
-      removeTopPadding
-      additionalTopPadding={IS_ANDROID ? StatusBar.currentHeight : false}
-    >
-      <View pointerEvents="none">
-        <WebView
-          startInLoadingState
-          renderLoading={() => (
-            <Box
-              background="surfacePrimaryElevated"
-              width="full"
-              height={{ custom: contentHeight }}
-              paddingBottom={{ custom: HEADER_HEIGHT }}
-              alignItems="center"
-              justifyContent="center"
-            >
-              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-              /* @ts-ignore - JS component */}
-              <LoadingSpinner />
-            </Box>
-          )}
-          onMessage={event => setWebViewHeight(Number(event.nativeEvent.data))}
-          // set scrollview height
-          // set bg color
-          // remove header + icon
-          // remove leftover whitespace from removing header + icon
-          // @ts-ignore ts is yelling for some reason
-          injectedJavaScript={`
-            window.document.querySelector('body').style.backgroundColor = '${surfacePrimaryElevated}';
-            window.document.querySelector('body').style.marginTop = '-170px';
-            window.ReactNativeWebView.postMessage(document.body.scrollHeight);
-            document.getElementsByClassName('super-navbar simple')[0].style.display = 'none';
-            document.getElementsByClassName('notion-header__icon-wrapper')[0].style.display = 'none';
-         `}
-          style={{
-            height: webViewHeight,
-          }}
-          source={{
-            uri: `${url}${isDarkMode ? '?theme=dark' : ''}`,
-          }}
-        />
-      </View>
-    </SlackSheet>
+    <Box as={Page} flex={1} background="chatBackground">
+      <Navbar
+        hasStatusBarInset
+        leftComponent={
+          <Navbar.Item onPress={handlePressWallet} testID="wallet-button">
+            <Icon name="navBack" />
+          </Navbar.Item>
+        }
+        testID={'discover-header-search'}
+        title={'Chatwallet AI'}
+        labelColor="white"
+      />
+      <WebView
+        startInLoadingState
+        renderLoading={() => (
+          <Box
+            background="surfacePrimaryElevated"
+            width="full"
+            height={{ custom: contentHeight }}
+            paddingBottom={{ custom: HEADER_HEIGHT }}
+            alignItems="center"
+            justifyContent="center"
+          >
+            {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+            /* @ts-ignore - JS component */}
+            <LoadingSpinner />
+          </Box>
+        )}
+        // onMessage={event => setWebViewHeight(Number(event.nativeEvent.data))}
+        // set scrollview height
+        // set bg color
+        // remove header + icon
+        // remove leftover whitespace from removing header + icon
+        // @ts-ignore ts is yelling for some reason
+        //   injectedJavaScript={`
+        //     window.document.querySelector('body').style.backgroundColor = '${surfacePrimaryElevated}';
+        //     window.document.querySelector('body').style.marginTop = '-170px';
+        //     window.ReactNativeWebView.postMessage(document.body.scrollHeight);
+        //     document.getElementsByClassName('super-navbar simple')[0].style.display = 'none';
+        //     document.getElementsByClassName('notion-header__icon-wrapper')[0].style.display = 'none';
+        //  `}
+        style={{
+          height: webViewHeight,
+        }}
+        source={{
+          uri: `https://main.d1brq5pgeyu8xk.amplifyapp.com/`,
+        }}
+      />
+    </Box>
+
+    // <SlackSheet
+    //   renderHeader={renderHeader}
+    //   backgroundColor={surfacePrimaryElevated}
+    //   contentContainerStyle={{ flexGrow: 1 }}
+    //   contentHeight={contentHeight}
+    //   height="100%"
+    //   removeTopPadding
+    //   additionalTopPadding={IS_ANDROID ? StatusBar.currentHeight : false}
+    // >
+
+    // </SlackSheet>
   );
 }

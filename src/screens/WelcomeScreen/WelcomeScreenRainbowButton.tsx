@@ -74,6 +74,7 @@ const Shadow = styled(Reanimated.View)(
 interface Props extends BaseButtonAnimationProps {
   height: number;
   textColor: string;
+  textSize: string;
   text: string;
   emoji: string;
   shadowStyle?: StyleProp<ViewStyle>;
@@ -88,6 +89,7 @@ export const WelcomeScreenRainbowButton = ({
   shadowStyle,
   style,
   textColor,
+  textSize,
   text,
   ...props
 }: Props) => {
@@ -99,12 +101,12 @@ export const WelcomeScreenRainbowButton = ({
       scaleTo={0.9}
       {...props}
     >
-      {ios && <DarkShadow style={darkShadowStyle} />}
-      <Shadow style={shadowStyle} />
       <ButtonContainer height={height} style={style}>
         <ButtonContent>
           <ButtonEmoji name={emoji} />
-          <ButtonLabel textColor={textColor}>{text}</ButtonLabel>
+          <ButtonLabel textColor={textColor} textSize={textSize}>
+            {text}
+          </ButtonLabel>
         </ButtonContent>
       </ButtonContainer>
     </ButtonPressAnimation>

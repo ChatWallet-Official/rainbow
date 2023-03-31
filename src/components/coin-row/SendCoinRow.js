@@ -152,7 +152,7 @@ const SendCoinRow = magicMemo(
           testID={testID}
           topRowRender={TopRow}
         >
-          {selected || !fiatValue ? (
+          {/* {selected || !fiatValue ? (
             children
           ) : (
             <NativeAmountBubble>
@@ -160,7 +160,7 @@ const SendCoinRow = magicMemo(
                 {fiatValueFormatted}
               </NativeAmountBubbleText>
             </NativeAmountBubble>
-          )}
+          )} */}
         </CoinRow>
       </Wrapper>
     );

@@ -21,6 +21,7 @@ const CopyFloatingEmojis = ({
       scaleTo={0}
       size={50}
       wiggleFactor={0}
+      disableRainbow={true}
       {...props}
     >
       {({ onNewEmoji }) => (

@@ -123,8 +123,8 @@ const MemoizedBalanceCoinRow = React.memo(
       percentChange && percentageChangeDisplay.charAt(0) !== '-';
 
     const changeColor = isPositive
-      ? theme.colors.green
-      : theme.colors.blueGreyDark50;
+      ? theme.colors.greenLabelCW
+      : theme.colors.redCW;
 
     const nativeDisplay = item?.balance?.display;
 
@@ -178,7 +178,6 @@ const MemoizedBalanceCoinRow = React.memo(
                     color={{ custom: theme.colors.blueGreyDark50 }}
                     numberOfLines={1}
                     size="14px / 19px (Deprecated)"
-                    weight="medium"
                   >
                     {nativeDisplay ?? ''}
                   </Text>

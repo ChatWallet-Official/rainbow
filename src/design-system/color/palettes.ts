@@ -178,6 +178,7 @@ export type BackgroundColor =
   | 'surfaceSecondaryElevated'
   | 'fill'
   | 'fillSecondary'
+  | 'fillTertiary'
   | 'blue'
   | 'green'
   | 'red'
@@ -189,7 +190,8 @@ export type BackgroundColor =
   | 'action (Deprecated)'
   | 'swap (Deprecated)'
   | 'card (Deprecated)'
-  | 'cardBackdrop (Deprecated)';
+  | 'cardBackdrop (Deprecated)'
+  | 'chatBackground';
 
 export type BackgroundColorValue = {
   color: string;
@@ -257,6 +259,16 @@ export const backgroundColors: Record<
     },
     dark: {
       color: globalColors.white20,
+      mode: 'dark',
+    },
+  },
+  'fillTertiary': {
+    light: {
+      color: globalColors.grey10,
+      mode: 'light',
+    },
+    dark: {
+      color: globalColors.white10,
       mode: 'dark',
     },
   },
@@ -382,6 +394,16 @@ export const backgroundColors: Record<
     color: deprecatedColors.swapPurple,
     mode: 'darkTinted',
   },
+  'chatBackground': {
+    light: {
+      color: '#0a6b69',
+      mode: 'light',
+    },
+    dark: {
+      color: '#225D5E',
+      mode: 'dark',
+    },
+  },
 };
 
 export type ForegroundColor =
@@ -408,6 +430,7 @@ export type ForegroundColor =
   | 'buttonStrokeSecondary'
   | 'shadowNear'
   | 'shadowFar'
+  | 'white'
   | 'action (Deprecated)'
   | 'divider20 (Deprecated)'
   | 'divider40 (Deprecated)'
@@ -507,6 +530,11 @@ export const foregroundColors: Record<
     light: globalColors.white20,
     dark: globalColors.grey20,
   },
+  'white': {
+    light: globalColors.white100,
+    dark: globalColors.white100,
+  },
+
   'action (Deprecated)': {
     dark: deprecatedColors.appleBlueLight,
     light: deprecatedColors.appleBlue,
@@ -694,6 +722,7 @@ export const textColors = selectForegroundColors(
   'pink',
   'orange',
   'yellow',
+  'white',
   'action (Deprecated)',
   'primary (Deprecated)',
   'secondary (Deprecated)',

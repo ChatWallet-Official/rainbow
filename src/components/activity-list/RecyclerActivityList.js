@@ -20,6 +20,7 @@ import { TransactionStatusTypes } from '@/entities';
 import { buildTransactionUniqueIdentifier } from '@/helpers/transactions';
 import styled from '@/styled-thing';
 import { deviceUtils, safeAreaInsetValues } from '@/utils';
+import { View } from 'react-native';
 
 const ViewTypes = {
   COMPONENT_HEADER: 0,
@@ -94,19 +95,19 @@ export default class RecyclerActivityList extends PureComponent {
         // This values has been hardcoded for omitting imports' cycle
         dim.width = deviceUtils.dimensions.width;
         if (type === ViewTypes.ROW) {
-          dim.height = 70;
+          dim.height = 72;
         } else if (type === ViewTypes.SWAPPED_ROW) {
           dim.height = 70;
         } else if (type === ViewTypes.SHOWCASE_HEADER) {
           dim.height = 400;
         } else if (type === ViewTypes.FOOTER) {
-          dim.height = 19;
+          dim.height = 27;
         } else if (type === ViewTypes.HEADER) {
-          dim.height = 39;
+          dim.height = 36;
         } else {
           dim.height = this.props.isLoading
             ? deviceUtils.dimensions.height
-            : (this.props.addCashAvailable ? 278 : 203) +
+            : (this.props.addCashAvailable ? 278 : 223) +
               (this.props.isEmpty ? 297 : 0);
         }
       }
@@ -159,7 +160,7 @@ export default class RecyclerActivityList extends PureComponent {
     this.rlv = ref;
   };
 
-  rowRenderer = (type, data) => {
+  rowRenderer = (type, data, index) => {
     if (type === ViewTypes.COMPONENT_HEADER) {
       const header = (
         <ProfileMasthead
@@ -186,27 +187,61 @@ export default class RecyclerActivityList extends PureComponent {
     if (!data.hash) return <RequestCoinRow item={data} />;
     if (!data.symbol && data.dappName)
       return <ContractInteractionCoinRow item={data} />;
-    return <TransactionCoinRow item={data} />;
+    const isTheFirstOne = this.state.headersIndices.includes(index - 1);
+    const isTheLastOne =
+      this.state.headersIndices.includes(index + 2) ||
+      index === this.state.dataProvider.getSize() - 1;
+    if (isTheFirstOne && isTheLastOne)
+      return (
+        <View marginHorizontal={24} backgroundColor="#F7F7F7" borderRadius={16}>
+          <TransactionCoinRow item={data} />
+        </View>
+      );
+    if (isTheFirstOne)
+      return (
+        <View
+          marginHorizontal={24}
+          backgroundColor="#F7F7F7"
+          borderTopLeftRadius={16}
+          borderTopRightRadius={16}
+        >
+          <TransactionCoinRow item={data} />
+        </View>
+      );
+    if (isTheLastOne)
+      return (
+        <View
+          marginHorizontal={24}
+          backgroundColor="#F7F7F7"
+          borderBottomLeftRadius={16}
+          borderBottomRightRadius={16}
+        >
+          <TransactionCoinRow item={data} />
+        </View>
+      );
+    return (
+      <View marginHorizontal={24} backgroundColor="#F7F7F7">
+        <TransactionCoinRow item={data} />
+      </View>
+    );
   };
 
-  render() {
-    return (
-      <Wrapper>
-        <StickyContainer stickyHeaderIndices={this.state.headersIndices}>
-          <RecyclerListView
-            dataProvider={this.state.dataProvider}
-            layoutProvider={this.layoutProvider}
-            ref={this.handleListRef}
-            renderAheadOffset={deviceUtils.dimensions.height}
-            rowRenderer={this.rowRenderer}
-            scrollEnabled={!(this.props.isEmpty || this.props.isLoading)}
-            scrollIndicatorInsets={{
-              bottom: safeAreaInsetValues.bottom,
-            }}
-            style={{ minHeight: 1 }}
-          />
-        </StickyContainer>
-      </Wrapper>
-    );
-  }
+  render = () => (
+    <Wrapper>
+      <StickyContainer>
+        <RecyclerListView
+          dataProvider={this.state.dataProvider}
+          layoutProvider={this.layoutProvider}
+          ref={this.handleListRef}
+          renderAheadOffset={deviceUtils.dimensions.height}
+          rowRenderer={this.rowRenderer}
+          scrollEnabled={!(this.props.isEmpty || this.props.isLoading)}
+          scrollIndicatorInsets={{
+            bottom: safeAreaInsetValues.bottom,
+          }}
+          style={{ minHeight: 1, backgroundColor: 'white' }}
+        />
+      </StickyContainer>
+    </Wrapper>
+  );
 }

@@ -2,12 +2,12 @@ import { TruncatedText } from '../text';
 import styled from '@/styled-thing';
 
 const CoinName = styled(TruncatedText).attrs(
-  ({ color, size, theme: { colors } }) => ({
+  ({ color, size, weight, theme: { colors } }) => ({
     color: color || colors.dark,
     letterSpacing: 'roundedMedium',
     lineHeight: 'normal',
     size: size || 'lmedium',
-    weight: 'semibold',
+    weight: weight || 'semibold',
   })
 )({
   marginTop: android ? 1.5 : 0,

@@ -31,8 +31,13 @@ const TabBar = ({ categoryKeys, activeCategory, onPress }: Props) => {
               onPress={() => onPress(category)}
               scaleTo={0.75}
               style={sx.button}
+              backgroundColor={
+                category === activeCategory
+                  ? colors.alpha(colors.white, 0.2)
+                  : colors.alpha(colors.white, 0.05)
+              }
             >
-              {category === activeCategory && (
+              {/* {category === activeCategory && (
                 <LinearGradient
                   colors={['#FFB114', '#FF54BB', '#00F0FF']}
                   end={{ x: 0, y: 0.5 }}
@@ -40,11 +45,11 @@ const TabBar = ({ categoryKeys, activeCategory, onPress }: Props) => {
                   start={{ x: 1, y: 0.5 }}
                   style={[sx.gradient]}
                 />
-              )}
+              )} */}
               <Icon
                 color={
                   category === activeCategory
-                    ? null
+                    ? colors.alpha(colors.blueGreyDark, 0.8)
                     : colors.alpha(colors.blueGreyDark, 0.4)
                 }
                 name={category.icon}
@@ -65,6 +70,7 @@ const sx = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     maxWidth: 30,
+    borderRadius: 15,
   },
   gradient: {
     borderRadius: 15,

@@ -6,17 +6,16 @@ import styled from '@/styled-thing';
 import { fonts, fontWithWidth } from '@/styles';
 
 const NameInput = styled(Input).attrs({
-  align: 'center',
+  align: 'left',
   autoCapitalize: 'words',
   autoFocus: true,
   color: 'dark',
   letterSpacing: 'roundedTight',
   returnKeyType: 'done',
-  size: 'big',
+  size: 'medium',
   spellCheck: false,
 })({
   ...(android ? { height: 70, marginBottom: -20, marginTop: -12 } : {}),
-  ...fontWithWidth(fonts.weight.heavy),
   width: '100%',
 });
 

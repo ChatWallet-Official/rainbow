@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, {
   Easing,
@@ -26,13 +26,13 @@ import WalletOption from './WalletOption';
 import { EthereumAddress } from '@rainbow-me/entities';
 import { useAccountSettings } from '@/hooks';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { position, colors } from '@/styles';
 import { EditWalletContextMenuActions } from '@/screens/ChangeWalletSheet';
 import { HARDWARE_WALLETS, useExperimentalFlag } from '@/config';
 import { Inset, Stack } from '@/design-system';
 
 const listTopPadding = 7.5;
-const rowHeight = 59;
+const rowHeight = 65 + 12;
 const transitionDuration = 75;
 
 const RowTypes = {
@@ -95,6 +95,11 @@ const WalletListDivider = styled(Divider).attrs(
   marginTop: -1,
 });
 
+const WalletListFooter = styled(Column)({
+  paddingBottom: 6,
+  paddingTop: 4,
+});
+
 interface Props {
   accountAddress: EthereumAddress;
   allWallets: any;
@@ -106,7 +111,9 @@ interface Props {
     walletId: string,
     address: EthereumAddress | undefined
   ) => void;
+  onPressAddAccount: () => void;
   onPressAddAnotherWallet: () => void;
+  onPressImportSeedPhrase: () => void;
   onPressPairHardwareWallet: () => void;
   scrollEnabled: boolean;
   showDividers: boolean;
@@ -121,7 +128,9 @@ export default function WalletList({
   editMode,
   height,
   onChangeAccount,
+  onPressAddAccount,
   onPressAddAnotherWallet,
+  onPressImportSeedPhrase,
   onPressPairHardwareWallet,
   scrollEnabled,
   showDividers,
@@ -242,6 +251,7 @@ export default function WalletList({
                 editMode={editMode}
                 onPress={item.onPress}
               />
+              <View style={{ height: 12 }} />
             </Column>
           );
         default:
@@ -267,24 +277,25 @@ export default function WalletList({
         />
         {showDividers && <WalletListDivider />}
         {!watchOnly && (
-          <Inset space="20px">
-            <Stack space="24px">
+          <WalletListFooter>
+            <WalletOption
+              editMode={editMode}
+              label={`􀅼 ${lang.t('wallet.action.add_existing')}`}
+              onPress={onPressImportSeedPhrase}
+            />
+            <WalletOption
+              editMode={editMode}
+              label={`􀅼 ${lang.t('wallet.action.create_new')}`}
+              onPress={onPressAddAccount}
+            />
+            {hardwareWalletsEnabled && (
               <WalletOption
                 editMode={editMode}
-                label={`􀁍 ${lang.t('wallet.action.add_another')}`}
-                onPress={onPressAddAnotherWallet}
-                testID="add-another-wallet-button"
+                label={`􀱝 ${lang.t('wallet.action.pair_hardware_wallet')}`}
+                onPress={onPressPairHardwareWallet}
               />
-              {hardwareWalletsEnabled && (
-                <WalletOption
-                  editMode={editMode}
-                  label={`􀱝 ${lang.t('wallet.action.pair_hardware_wallet')}`}
-                  onPress={onPressPairHardwareWallet}
-                  testID="pair-hardware-wallet-button"
-                />
-              )}
-            </Stack>
-          </Inset>
+            )}
+          </WalletListFooter>
         )}
       </WalletsContainer>
     </Container>

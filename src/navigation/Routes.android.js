@@ -14,6 +14,7 @@ import ENSConfirmRegisterSheet from '../screens/ENSConfirmRegisterSheet';
 import ExpandedAssetSheet from '../screens/ExpandedAssetSheet';
 import ExplainSheet from '../screens/ExplainSheet';
 import ExternalLinkWarningSheet from '../screens/ExternalLinkWarningSheet';
+import ImportSeedPhraseSheetCW from '../screens/ImportSeedPhraseSheetCW';
 import ModalScreen from '../screens/ModalScreen';
 import PinAuthenticationScreen from '../screens/PinAuthenticationScreen';
 import ProfileSheet from '../screens/ProfileSheet';
@@ -80,6 +81,22 @@ const Stack = createStackNavigator();
 const OuterStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const BSStack = createBottomSheetNavigator();
+
+function ImportSeedPhraseFlowNavigator() {
+  return (
+    <Stack.Navigator
+      {...stackNavigationConfig}
+      initialRouteName={Routes.IMPORT_SEED_PHRASE_SHEET}
+    >
+      <Stack.Screen component={ModalScreen} name={Routes.MODAL_SCREEN} />
+      <Stack.Screen
+        component={ImportSeedPhraseSheetCW}
+        name={Routes.IMPORT_SEED_PHRASE_SHEET}
+        options={sheetPreset}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function AddCashFlowNavigator() {
   const { colors } = useTheme();
@@ -160,6 +177,11 @@ function MainNavigator() {
         options={addTokenSheetConfig}
       />
       <Stack.Screen
+        component={ImportSeedPhraseSheetCW}
+        name={Routes.IMPORT_SEED_PHRASE_SHEET}
+        options={sheetPreset}
+      />
+      <Stack.Screen
         component={AddTokenSheet}
         name={Routes.ADD_TOKEN_SHEET}
         options={bottomSheetPreset}
@@ -184,6 +206,10 @@ function MainNavigator() {
         name={Routes.RESTORE_SHEET}
         {...restoreSheetConfig}
         options={bottomSheetPreset}
+      />
+      <Stack.Screen
+        component={ImportSeedPhraseFlowNavigator}
+        name={Routes.IMPORT_SEED_PHRASE_SHEET_NAVIGATOR}
       />
       <Stack.Screen
         component={WelcomeScreen}

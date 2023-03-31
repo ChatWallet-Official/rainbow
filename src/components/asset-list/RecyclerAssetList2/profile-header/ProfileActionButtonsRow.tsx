@@ -1,7 +1,7 @@
 import Clipboard from '@react-native-community/clipboard';
 import lang from 'i18n-js';
 import * as React from 'react';
-import { PressableProps } from 'react-native';
+import { Image, InteractionManager, PressableProps } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -36,6 +36,8 @@ import ContextMenuButton from '@/components/native-context-menu/contextMenu';
 import { useRecoilState } from 'recoil';
 import config from '@/model/config';
 import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
+import { Icon } from '@/components/icons';
+import { useNavigationState } from '@react-navigation/core';
 import { getAllActiveSessionsSync } from '@/utils/walletConnect';
 import { addressCopiedToastAtom } from '@/recoil/addressCopiedToastAtom';
 
@@ -65,7 +67,7 @@ export function ProfileActionButtonsRow() {
 
   return (
     <Box width="full">
-      <Inset horizontal={{ custom: 17 }}>
+      <Inset horizontal={{ custom: 30 }}>
         <AccentColorProvider color={accentColor}>
           <Columns>
             {addCashEnabled && (
@@ -120,42 +122,11 @@ function ActionButton({
           borderRadius={60}
           height={{ custom: 60 }}
           justifyContent="center"
-          shadow={{
-            custom: {
-              ios: [
-                {
-                  x: 0,
-                  y: 8,
-                  blur: 24,
-                  opacity: 0.3,
-                  color: colorMode === 'dark' ? 'shadowFar' : 'accent',
-                },
-                {
-                  x: 0,
-                  y: 2,
-                  blur: 6,
-                  opacity: 0.04,
-                  color: 'shadowFar',
-                },
-              ],
-              android: {
-                elevation: 21,
-                opacity: 1,
-                color: colorMode === 'dark' ? 'shadowFar' : 'accent',
-              },
-            },
-          }}
           width={{ custom: 60 }}
         >
-          <Text align="center" color="label" size="icon 23px" weight="bold">
-            {icon}
-          </Text>
+          <Icon name={icon} />
         </Box>
-        <Text
-          color="secondary80 (Deprecated)"
-          size="14px / 19px (Deprecated)"
-          weight="medium"
-        >
+        <Text color="label" size="14px / 19px (Deprecated)" weight="medium">
           {children}
         </Text>
       </Stack>
@@ -188,7 +159,7 @@ function BuyButton() {
 
   return (
     <Box>
-      <ActionButton icon="􀁌" onPress={handlePress} testID="buy-button">
+      <ActionButton icon="buyCW" onPress={handlePress} testID="buy-button">
         {lang.t('wallet.buy')}
       </ActionButton>
     </Box>
@@ -228,7 +199,7 @@ function SwapButton() {
   }, [isReadOnlyWallet, navigate, updateInputCurrency]);
 
   return (
-    <ActionButton icon="􀖅" onPress={handlePress} testID="swap-button">
+    <ActionButton icon="swapCW" onPress={handlePress} testID="swap-button">
       {lang.t('button.swap')}
     </ActionButton>
   );
@@ -244,15 +215,14 @@ function SendButton() {
       analytics.track('Tapped "Send"', {
         category: 'home screen',
       });
-
       navigate(Routes.SEND_FLOW);
     } else {
       watchingAlert();
     }
-  }, [navigate, isReadOnlyWallet]);
+  }, [isReadOnlyWallet, navigate]);
 
   return (
-    <ActionButton icon="􀈟" onPress={handlePress} testID="send-button">
+    <ActionButton icon="sendCW" onPress={handlePress} testID="send-button">
       {lang.t('button.send')}
     </ActionButton>
   );
@@ -298,26 +268,23 @@ function MoreButton() {
 
   const { mostRecentWalletConnectors } = useWalletConnectConnections();
 
+  const copyIcon = Image.resolveAssetSource(require('@/assets/copy.png'));
+
+  const qrIcon = Image.resolveAssetSource(require('@/assets/qrCode.png'));
+
   const menuConfig = {
     menuItems: [
       {
         actionKey: 'copy',
         actionTitle: lang.t('wallet.copy_address'),
-        icon: { iconType: 'SYSTEM', iconValue: 'doc.on.doc' },
+        icon: { iconType: 'REQUIRE', iconValue: copyIcon },
       },
       {
         actionKey: 'qrCode',
         actionTitle: lang.t('button.my_qr_code'),
-        icon: { iconType: 'SYSTEM', iconValue: 'qrcode' },
+        icon: { iconType: 'REQUIRE', iconValue: qrIcon },
       },
-      mostRecentWalletConnectors.length > 0 || activeWCV2Sessions.length > 0
-        ? {
-            actionKey: 'connectedApps',
-            actionTitle: lang.t('wallet.connected_apps'),
-            icon: { iconType: 'SYSTEM', iconValue: 'app.badge.checkmark' },
-          }
-        : null,
-    ].filter(Boolean),
+    ],
     ...(ios ? { menuTitle: '' } : {}),
   };
 
@@ -347,7 +314,7 @@ function MoreButton() {
       menuConfig={menuConfig}
       onPressMenuItem={handlePressMenuItem}
     >
-      <ActionButton icon="􀍡" testID="more-button">
+      <ActionButton icon="moreCW" testID="more-button">
         {lang.t('button.more')}
       </ActionButton>
     </ContextMenuButton>

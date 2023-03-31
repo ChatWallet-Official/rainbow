@@ -4,7 +4,7 @@ import { Text } from '@/design-system';
 
 const sx = StyleSheet.create({
   activityListHeader: {
-    paddingHorizontal: 19,
+    paddingHorizontal: 24,
   },
 });
 
@@ -12,9 +12,8 @@ const ActivityListHeader = ({ title }: { title: string }) => (
   <View style={sx.activityListHeader}>
     <Text
       numberOfLines={1}
-      color="primary (Deprecated)"
-      size="20px / 24px (Deprecated)"
-      weight="bold"
+      color="labelSecondary"
+      size="15px / 21px (Deprecated)"
     >
       {title}
     </Text>

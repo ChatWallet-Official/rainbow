@@ -6,19 +6,27 @@ import ApplePayIcon from './svg/ApplePayIcon';
 import ArrowBackIcon from './svg/ArrowBack';
 import ArrowCircledIcon from './svg/ArrowCircledIcon';
 import ArrowIcon from './svg/ArrowIcon';
+import ArrowRight from './svg/ArrowRight';
 import AvatarIcon from './svg/AvatarIcon';
 import BTCIcon from './svg/BTCIcon';
 import BackspaceIcon from './svg/BackspaceIcon';
+import BuyIconCW from './svg/BuyIconCW';
 import CameraIcon from './svg/CameraIcon';
 import CaretDownIcon from './svg/CaretDownIcon';
+import CaretDownIconCW from './svg/CaretDownIconCW';
 import CaretIcon from './svg/CaretIcon';
+import CaretLeftIcon from './svg/CaretLeftIcon';
 import CaretThinIcon from './svg/CaretThinIcon';
+import ChatIconCW from './svg/ChatIconCW';
 import CheckmarkCircledIcon from './svg/CheckmarkCircledIcon';
 import CheckmarkIcon from './svg/CheckmarkIcon';
+import CheckMarkIconCW from './svg/CheckMarkIconCW';
 import ClearInputIcon from './svg/ClearInputIcon';
+import ClockCW from './svg/ClockCW';
 import ClockIcon from './svg/ClockIcon';
 import CloseCircledIcon from './svg/CloseCircledIcon';
 import CloseIcon from './svg/CloseIcon';
+import CloseMarkIconCW from './svg/CloseMarkIconCW';
 import CompassIcon from './svg/CompassIcon';
 import CopyIcon from './svg/CopyIcon';
 import CrosshairIcon from './svg/CrosshairIcon';
@@ -48,6 +56,9 @@ import InstagramIcon from './svg/InstagramIcon';
 import LTCIcon from './svg/LTCIcon';
 import LockIcon from './svg/LockIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
+import MoreIconCW from './svg/MoreIconCW';
+import MoreProfileIcon from './svg/MoreProfileIcon';
+import NavBack from './svg/NavBack';
 import OfflineIcon from './svg/OfflineIcon';
 import PasscodeIcon from './svg/PasscodeIcon';
 import PinIcon from './svg/PinIcon';
@@ -56,21 +67,28 @@ import PlusIcon from './svg/PlusIcon';
 import ProgressIcon from './svg/ProgressIcon';
 import QRCodeIcon from './svg/QRCodeIcon';
 import RedditIcon from './svg/RedditIcon';
+import ScanCW from './svg/ScanCW';
 import ScanHeaderIcon from './svg/ScanHeaderIcon';
 import ScannerIcon from './svg/ScannerIcon';
 import SearchIcon from './svg/SearchIcon';
 import SendIcon from './svg/SendIcon';
+import SendIconCW from './svg/SendIconCW';
 import SendSmallIcon from './svg/SendSmallIcon';
+import SettingsIconCW from './svg/SettingsIconCW';
 import ShareIcon from './svg/ShareIcon';
 import SignatureIcon from './svg/SignatureIcon';
 import SnapchatIcon from './svg/SnapchatIcon';
 import SpinnerIcon from './svg/SpinnerIcon';
 import StarIcon from './svg/StarIcon';
 import SwapIcon from './svg/SwapIcon';
+import SwapIconCW from './svg/SwapIconCW';
 import TelegramIcon from './svg/TelegramIcon';
 import ThreeDotsIcon from './svg/ThreeDotsIcon';
+import TickGreenCW from './svg/TickGreenCW';
 import TouchIdIcon from './svg/TouchIdIcon';
+import TrashIconCW from './svg/TrashIconCW';
 import TwitterIcon from './svg/TwitterIcon';
+import UmbrellaIcon from './svg/UmbrellaIcon';
 import WalletConnectIcon from './svg/WalletConnectIcon';
 import WalletSwitcherCaret from './svg/WalletSwitcherCaret';
 import WarningCircledIcon from './svg/WarningCircledIcon';
@@ -82,20 +100,28 @@ const IconTypes = {
   arrow: ArrowIcon,
   arrowBack: ArrowBackIcon,
   arrowCircled: ArrowCircledIcon,
+  arrowRight: ArrowRight,
   avatar: AvatarIcon,
   backspace: BackspaceIcon,
   bridge: BridgeIcon,
   btcCoin: BTCIcon,
+  buyCW: BuyIconCW,
   camera: CameraIcon,
   caret: CaretIcon,
   caretDownIcon: CaretDownIcon,
+  caretDownIconCW: CaretDownIconCW,
+  caretLeftIcon: CaretLeftIcon,
   caretThin: CaretThinIcon,
+  chatCW: ChatIconCW,
   checkmark: CheckmarkIcon,
   checkmarkCircled: CheckmarkCircledIcon,
+  checkMarkIconCW: CheckMarkIconCW,
   clearInput: ClearInputIcon,
   clock: ClockIcon,
+  clockCW: ClockCW,
   close: CloseIcon,
   closeCircled: CloseCircledIcon,
+  closeMarkIconCW: CloseMarkIconCW,
   compass: CompassIcon,
   copy: CopyIcon,
   crosshair: CrosshairIcon,
@@ -126,7 +152,10 @@ const IconTypes = {
   instagram: InstagramIcon,
   lock: LockIcon,
   ltcCoin: LTCIcon,
+  navBack: NavBack,
   minusCircled: MinusCircledIcon,
+  moreProfile: MoreProfileIcon,
+  moreCW: MoreIconCW,
   offline: OfflineIcon,
   passcode: PasscodeIcon,
   pin: PinIcon,
@@ -137,10 +166,13 @@ const IconTypes = {
   reddit: RedditIcon,
   robot: Emoji,
   scan: ScanHeaderIcon,
+  scanCW: ScanCW,
   scanner: ScannerIcon,
   search: SearchIcon,
   send: SendIcon,
+  sendCW: SendIconCW,
   sendSmall: SendSmallIcon,
+  settingsCW: SettingsIconCW,
   share: ShareIcon,
   signature: SignatureIcon,
   snapchat: SnapchatIcon,
@@ -148,10 +180,14 @@ const IconTypes = {
   star: StarIcon,
   sunflower: Emoji,
   swap: SwapIcon,
+  swapCW: SwapIconCW,
   telegram: TelegramIcon,
   threeDots: ThreeDotsIcon,
+  tickGreenCW: TickGreenCW,
   touchid: TouchIdIcon,
+  trashCW: TrashIconCW,
   twitter: TwitterIcon,
+  umbrella: UmbrellaIcon,
   walletConnect: WalletConnectIcon,
   walletSwitcherCaret: WalletSwitcherCaret,
   warning: WarningIcon,

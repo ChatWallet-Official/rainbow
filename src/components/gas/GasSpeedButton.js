@@ -3,7 +3,7 @@ import lang from 'i18n-js';
 import { isEmpty, isNaN, isNil, upperFirst } from 'lodash';
 import makeColorMoreChill from 'make-color-more-chill';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { InteractionManager, Keyboard } from 'react-native';
+import { InteractionManager, Keyboard, View } from 'react-native';
 import { darkModeThemeColors } from '../../styles/colors';
 import { ButtonPressAnimation } from '../animations';
 import { ChainBadge, CoinIcon } from '../coin-icon';
@@ -262,13 +262,12 @@ const GasSpeedButton = ({
           color={
             theme === 'dark'
               ? colors.whiteLabel
-              : colors.alpha(colors.blueGreyDark, 0.8)
+              : colors.alpha(colors.black, 0.55)
           }
           lineHeight="normal"
-          size="lmedium"
-          weight="heavy"
+          size="medium"
         >
-          {priceText}
+          Estimated fee: {priceText}
         </Text>
       );
     },
@@ -516,130 +515,143 @@ const GasSpeedButton = ({
   ]);
 
   return (
-    <Container
-      horizontalPadding={horizontalPadding}
-      marginBottom={marginBottom}
-      marginTop={marginTop}
-      testID={testID}
-    >
-      <Row justify="space-between">
-        <ButtonPressAnimation
-          onPress={openGasHelper}
-          scaleTo={0.9}
-          testID="estimated-fee-label"
-        >
-          <Row>
-            <NativeCoinIconWrapper>
-              <CoinIcon
-                address={nativeFeeCurrency.address}
-                size={18}
-                symbol={nativeFeeCurrency.symbol}
-              />
-            </NativeCoinIconWrapper>
-            <TextContainer>
-              <Text>
-                <AnimateNumber
-                  formatter={formatGasPrice}
-                  interval={6}
-                  renderContent={renderGasPriceText}
-                  steps={6}
-                  timing="linear"
-                  value={price}
-                />
-                <Text letterSpacing="one" size="lmedium" weight="heavy">
-                  {' '}
-                </Text>
-                <TransactionTimeLabel
-                  formatter={formatTransactionTime}
-                  theme={theme}
-                  isLongWait={isLongWait}
-                />
-              </Text>
-            </TextContainer>
-          </Row>
-          <Row justify="space-between">
-            <Label
-              color={
-                theme === 'dark'
-                  ? colors.alpha(darkModeThemeColors.blueGreyDark, 0.6)
-                  : colors.alpha(colors.blueGreyDark, 0.6)
-              }
-              size="smedium"
-              weight="bold"
-            >
-              {lang.t('swap.gas.estimated_fee')}{' '}
-              <Label
-                color={
-                  theme === 'dark'
-                    ? colors.alpha(darkModeThemeColors.blueGreyDark, 0.25)
-                    : colors.alpha(colors.blueGreyDark, 0.25)
-                }
-                size="smedium"
-                weight="bold"
-              >
-                􀅵
-              </Label>
-            </Label>
-          </Row>
-        </ButtonPressAnimation>
-        <Centered>
-          <GasSpeedPagerCentered testID="gas-speed-pager">
-            {renderGasSpeedPager}
-          </GasSpeedPagerCentered>
-
-          <Centered>
-            {isL2 ? (
-              <ChainBadgeContainer>
-                <ChainBadge assetType={currentNetwork} position="relative" />
-              </ChainBadgeContainer>
-            ) : showGasOptions ? (
-              <CustomGasButton
-                borderColor={makeColorMoreChill(
-                  rawColorForAsset || colors.appleBlue,
-                  colors.shadowBlack
-                )}
-                onPress={onDonePress}
-                testID="gas-speed-done-button"
-              >
-                <DoneCustomGas
-                  color={
-                    theme !== 'light'
-                      ? colors.whiteLabel
-                      : makeColorMoreChill(
-                          rawColorForAsset || colors.appleBlue,
-                          colors.shadowBlack
-                        )
-                  }
-                >
-                  Done
-                </DoneCustomGas>
-              </CustomGasButton>
-            ) : (
-              <CustomGasButton
-                borderColor={
-                  theme === 'dark'
-                    ? colors.alpha(darkModeThemeColors.blueGreyDark, 0.12)
-                    : colors.alpha(colors.blueGreyDark, 0.06)
-                }
-                onPress={openCustomOptions}
-                testID="gas-speed-custom"
-              >
-                <Symbol
-                  color={
-                    theme === 'dark'
-                      ? colors.whiteLabel
-                      : colors.alpha(colors.blueGreyDark, 0.8)
-                  }
-                >
-                  􀌆
-                </Symbol>
-              </CustomGasButton>
-            )}
-          </Centered>
-        </Centered>
-      </Row>
-    </Container>
+    <View>
+      <AnimateNumber
+        formatter={formatGasPrice}
+        interval={6}
+        renderContent={renderGasPriceText}
+        steps={6}
+        timing="linear"
+        value={price}
+      />
+    </View>
   );
+
+  // return (
+  //   <Container
+  //     horizontalPadding={horizontalPadding}
+  //     marginBottom={marginBottom}
+  //     marginTop={marginTop}
+  //     testID={testID}
+  //   >
+  //     <Row justify="space-between">
+  //       <ButtonPressAnimation
+  //         onPress={openGasHelper}
+  //         scaleTo={0.9}
+  //         testID="estimated-fee-label"
+  //       >
+  //         <Row>
+  //           <NativeCoinIconWrapper>
+  //             <CoinIcon
+  //               address={nativeFeeCurrency.address}
+  //               size={18}
+  //               symbol={nativeFeeCurrency.symbol}
+  //             />
+  //           </NativeCoinIconWrapper>
+  //           <TextContainer>
+  //             <Text>
+  //               <AnimateNumber
+  //                 formatter={formatGasPrice}
+  //                 interval={6}
+  //                 renderContent={renderGasPriceText}
+  //                 steps={6}
+  //                 timing="linear"
+  //                 value={price}
+  //               />
+  //               <Text letterSpacing="one" size="lmedium" weight="heavy">
+  //                 {' '}
+  //               </Text>
+  //               <TransactionTimeLabel
+  //                 formatter={formatTransactionTime}
+  //                 theme={theme}
+  //                 isLongWait={isLongWait}
+  //               />
+  //             </Text>
+  //           </TextContainer>
+  //         </Row>
+  //         <Row justify="space-between">
+  //           <Label
+  //             color={
+  //               theme === 'dark'
+  //                 ? colors.alpha(darkModeThemeColors.blueGreyDark, 0.6)
+  //                 : colors.alpha(colors.blueGreyDark, 0.6)
+  //             }
+  //             size="smedium"
+  //             weight="bold"
+  //           >
+  //             {lang.t('swap.gas.estimated_fee')}{' '}
+  //             <Label
+  //               color={
+  //                 theme === 'dark'
+  //                   ? colors.alpha(darkModeThemeColors.blueGreyDark, 0.25)
+  //                   : colors.alpha(colors.blueGreyDark, 0.25)
+  //               }
+  //               size="smedium"
+  //               weight="bold"
+  //             >
+  //               􀅵
+  //             </Label>
+  //           </Label>
+  //         </Row>
+  //       </ButtonPressAnimation>
+  //       <Centered>
+  //         <GasSpeedPagerCentered testID="gas-speed-pager">
+  //           {renderGasSpeedPager}
+  //         </GasSpeedPagerCentered>
+
+  //         <Centered>
+  //           {isL2 ? (
+  //             <ChainBadgeContainer>
+  //               <ChainBadge assetType={currentNetwork} position="relative" />
+  //             </ChainBadgeContainer>
+  //           ) : showGasOptions ? (
+  //             <CustomGasButton
+  //               borderColor={makeColorMoreChill(
+  //                 rawColorForAsset || colors.appleBlue,
+  //                 colors.shadowBlack
+  //               )}
+  //               onPress={onDonePress}
+  //               testID="gas-speed-done-button"
+  //             >
+  //               <DoneCustomGas
+  //                 color={
+  //                   theme !== 'light'
+  //                     ? colors.whiteLabel
+  //                     : makeColorMoreChill(
+  //                         rawColorForAsset || colors.appleBlue,
+  //                         colors.shadowBlack
+  //                       )
+  //                 }
+  //               >
+  //                 Done
+  //               </DoneCustomGas>
+  //             </CustomGasButton>
+  //           ) : (
+  //             <CustomGasButton
+  //               borderColor={
+  //                 theme === 'dark'
+  //                   ? colors.alpha(darkModeThemeColors.blueGreyDark, 0.12)
+  //                   : colors.alpha(colors.blueGreyDark, 0.06)
+  //               }
+  //               onPress={openCustomOptions}
+  //               testID="gas-speed-custom"
+  //             >
+  //               <Symbol
+  //                 color={
+  //                   theme === 'dark'
+  //                     ? colors.whiteLabel
+  //                     : colors.alpha(colors.blueGreyDark, 0.8)
+  //                 }
+  //               >
+  //                 􀌆
+  //               </Symbol>
+  //             </CustomGasButton>
+  //           )}
+  //         </Centered>
+  //       </Centered>
+  //     </Row>
+  //   </Container>
+  // );
 };
 
 export default GasSpeedButton;

@@ -92,12 +92,12 @@ const TransactionStatusBadge = ({ pending, status, style, title }) => {
   const { colors } = useTheme();
   const isSwapping = status === TransactionStatusTypes.swapping;
 
-  let statusColor = colors.alpha(colors.blueGreyDark, 0.7);
+  let statusColor = colors.alpha(colors.black, 0.9);
   if (pending) {
     if (isSwapping) {
       statusColor = colors.swapPurple;
     } else {
-      statusColor = colors.appleBlue;
+      statusColor = colors.blueCW;
     }
   } else if (status === TransactionStatusTypes.swapped) {
     statusColor = colors.swapPurple;

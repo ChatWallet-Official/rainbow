@@ -23,6 +23,7 @@ import { useRecyclerAssetListPosition } from '../core/Contexts';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { navbarHeight } from '@/components/navbar/Navbar';
 import { IS_ANDROID } from '@/env';
+import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
 import { usePersistentDominantColorFromImage } from '@/hooks/usePersistentDominantColorFromImage';
 
 export const ProfileAvatarRowHeight = 80;
@@ -37,41 +38,14 @@ export function ProfileAvatarRow({
   // ////////////////////////////////////////////////////
   // Account
 
-  const { accountSymbol, accountColor, accountImage } = useAccountProfile();
+  const { accountSymbol, accountImage } = useAccountProfile();
 
-  const {
-    avatarContextMenuConfig,
-    onAvatarPressProfile,
-    onSelectionCallback,
-  } = useOnAvatarPress({ screenType: 'wallet' });
-
-  const dominantColor = usePersistentDominantColorFromImage(accountImage);
-
-  // ////////////////////////////////////////////////////
-  // Context Menu
-
-  const ContextMenuButton = onAvatarPressProfile ? React.Fragment : ContextMenu;
-
-  const handlePressMenuItem = useLatestCallback((e: any) => {
-    const index = avatarContextMenuConfig.menuItems?.findIndex(
-      item => item.actionKey === e.nativeEvent.actionKey
-    );
-    onSelectionCallback(index);
-  });
+  const { onAvatarPressProfile } = useOnAvatarPress({ screenType: 'wallet' });
 
   // ////////////////////////////////////////////////////
   // Colors
 
-  const { colors } = useTheme();
-
-  const { colorMode } = useColorMode();
-
-  let accentColor = colors.skeleton;
-  if (accountImage) {
-    accentColor = dominantColor || colors.appleBlue;
-  } else if (typeof accountColor === 'number') {
-    accentColor = colors.avatarBackgrounds[accountColor];
-  }
+  const { accentColor } = useAccountAccentColor();
 
   // ////////////////////////////////////////////////////
   // Animations
@@ -148,92 +122,44 @@ export function ProfileAvatarRow({
     <AccentColorProvider color={accentColor}>
       <RNAnimated.View style={animatedStyle}>
         <Animated.View style={[expandStyle]}>
-          <ContextMenuButton
-            // @ts-expect-error - JS component
-            menuConfig={avatarContextMenuConfig}
-            onPressMenuItem={handlePressMenuItem}
+          <ButtonPressAnimation
+            onPress={onAvatarPressProfile}
+            scale={0.8}
+            testID="avatar-button"
+            overflowMargin={20}
           >
-            <ButtonPressAnimation
-              onPress={onAvatarPressProfile}
-              scale={0.8}
-              testID="avatar-button"
-              overflowMargin={20}
+            <Box
+              alignItems="center"
+              background="accent"
+              borderRadius={size / 2}
+              height={{ custom: size }}
+              justifyContent="center"
+              style={{
+                backgroundColor: accentColor,
+              }}
+              width={{ custom: size }}
             >
-              <Box
-                alignItems="center"
-                background="accent"
-                borderRadius={size / 2}
-                height={{ custom: size }}
-                justifyContent="center"
-                shadow={
-                  hasLoaded
-                    ? {
-                        custom: {
-                          ios: [
-                            {
-                              x: 0,
-                              y: 2,
-                              blur: 8,
-                              opacity: 0.08,
-                              color: 'shadowFar',
-                            },
-                            {
-                              x: 0,
-                              y: 8,
-                              blur: 24,
-                              opacity: 0.3,
-                              color:
-                                colorMode === 'dark' ? 'shadowFar' : 'accent',
-                            },
-                          ],
-                          android: {
-                            elevation: 30,
-                            opacity: 0.8,
-                            color:
-                              colorMode === 'dark' ? 'shadowFar' : 'accent',
-                          },
-                        },
-                      }
-                    : undefined
-                }
-                style={{
-                  backgroundColor: accountImage ? colors.skeleton : accentColor,
-                }}
-                width={{ custom: size }}
-              >
-                <>
-                  {!hasLoaded && (
-                    <Cover alignHorizontal="center">
-                      <Box height={{ custom: size }} width="full">
-                        <Skeleton animated>
-                          <Box
-                            background="body (Deprecated)"
-                            borderRadius={size / 2}
-                            height={{ custom: size }}
-                            width={{ custom: size }}
-                          />
-                        </Skeleton>
-                      </Box>
-                    </Cover>
-                  )}
-                  <Animated.View style={[fadeInStyle]}>
-                    {accountImage ? (
-                      <Box
-                        as={ImgixImage}
-                        borderRadius={size / 2}
-                        height={{ custom: size }}
-                        source={{ uri: accountImage }}
-                        width={{ custom: size }}
-                        size={100}
-                      />
-                    ) : (
-                      <EmojiAvatar size={size} />
-                    )}
-                  </Animated.View>
-                </>
-              </Box>
-            </ButtonPressAnimation>
-          </ContextMenuButton>
+              <>
+                {!hasLoaded && (
+                  <Cover alignHorizontal="center">
+                    <Box height={{ custom: size }} width="full">
+                      <Skeleton animated>
+                        <Box
+                          background="body (Deprecated)"
+                          borderRadius={size / 2}
+                          height={{ custom: size }}
+                          width={{ custom: size }}
+                        />
+                      </Skeleton>
+                    </Box>
+                  </Cover>
+                )}
+                <Animated.View style={[fadeInStyle]}>
+                  <EmojiAvatar size={size} />
+                </Animated.View>
+              </>
+            </Box>
+          </ButtonPressAnimation>
         </Animated.View>
       </RNAnimated.View>
     </AccentColorProvider>

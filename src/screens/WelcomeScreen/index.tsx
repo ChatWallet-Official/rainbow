@@ -1,12 +1,9 @@
-import MaskedView from '@react-native-masked-view/masked-view';
 import lang from 'i18n-js';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Linking, StyleSheet } from 'react-native';
 import Reanimated, {
   Easing,
-  interpolateColor,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withDelay,
   withRepeat,
@@ -31,7 +28,7 @@ import { useHideSplashScreen } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import Routes from '@rainbow-me/routes';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { fonts, position } from '@/styles';
 import { ThemeContextProps, useTheme } from '@/theme';
 import logger from 'logger';
 import { IS_ANDROID, IS_TEST } from '@/env';
@@ -48,7 +45,7 @@ const Container = styled.View({
 
 const ContentWrapper = styled(Reanimated.View)({
   alignItems: 'center',
-  height: 192,
+  height: 122,
   justifyContent: 'space-between',
   marginBottom: 20,
   zIndex: 10,
@@ -62,25 +59,8 @@ const ButtonWrapper = styled(Reanimated.View)({
 const TermsOfUse = styled.View(({ bottomInset }) => ({
   bottom: bottomInset / 2 + 32,
   position: 'absolute',
-  width: 200,
+  width: 300,
 }));
-
-const RAINBOW_TEXT_HEIGHT = 32;
-const RAINBOW_TEXT_WIDTH = 125;
-
-const RainbowTextMask = styled(Reanimated.View)({
-  height: RAINBOW_TEXT_HEIGHT,
-  width: RAINBOW_TEXT_WIDTH,
-});
-
-const animationColors = [
-  'rgb(255,73,74)',
-  'rgb(255,170,0)',
-  'rgb(0,163,217)',
-  'rgb(0,163,217)',
-  'rgb(115,92,255)',
-  'rgb(255,73,74)',
-];
 
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
@@ -93,15 +73,6 @@ export default function WelcomeScreen() {
   const contentAnimation = useSharedValue(1);
   const colorAnimation = useSharedValue(0);
   const shouldAnimateRainbows = useSharedValue(false);
-  const calculatedColor = useDerivedValue(
-    () =>
-      interpolateColor(
-        colorAnimation.value,
-        [0, 1, 2, 3, 4, 5],
-        animationColors
-      ),
-    [colorAnimation]
-  );
   const createWalletButtonAnimation = useSharedValue(1);
 
   useEffect(() => {
@@ -197,20 +168,9 @@ export default function WelcomeScreen() {
     ],
   }));
 
-  const textStyle = useAnimatedStyle(() => ({
-    backgroundColor: calculatedColor.value,
-  }));
-
   const createWalletButtonAnimatedStyle = useAnimatedStyle(() => ({
-    backgroundColor: isDarkMode ? colors.blueGreyDarkLight : colors.dark,
-    borderColor: calculatedColor.value,
-    borderWidth: ios ? 0 : 3,
-    width: 230 + (ios ? 0 : 6),
-  }));
-
-  const createWalletButtonAnimatedShadowStyle = useAnimatedStyle(() => ({
-    backgroundColor: calculatedColor.value,
-    shadowColor: calculatedColor.value,
+    backgroundColor: isDarkMode ? colors.blueGreyDarkLight : colors.greenCW,
+    width: 270 + (ios ? 0 : 6),
   }));
 
   const onCreateWallet = useCallback(async () => {
@@ -228,11 +188,8 @@ export default function WelcomeScreen() {
 
   const showRestoreSheet = useCallback(() => {
     analytics.track('Tapped "I already have one"');
-    navigate(Routes.ADD_WALLET_NAVIGATOR, {
-      userData,
-      isFirstWallet: true,
-    });
-  }, [navigate, userData]);
+    navigate(Routes.IMPORT_SEED_PHRASE_FLOW);
+  }, [navigate]);
 
   useAndroidBackHandler(() => {
     return true;
@@ -240,44 +197,34 @@ export default function WelcomeScreen() {
 
   return (
     <Container testID="welcome-screen">
-      <RainbowsBackground shouldAnimate={shouldAnimateRainbows} />
+      <Text style={sx.branding}>{lang.t('wallet.new.brand_name')}</Text>
       <ContentWrapper style={contentStyle}>
-        {IS_ANDROID && IS_TEST ? (
-          // @ts-expect-error JS component
-          <RainbowText colors={colors} />
-        ) : (
-          // @ts-expect-error JS component
-          <MaskedView maskElement={<RainbowText colors={colors} />}>
-            <RainbowTextMask style={textStyle} />
-          </MaskedView>
-        )}
-
         <ButtonWrapper style={buttonStyle}>
           <WelcomeScreenRainbowButton
-            emoji="castle"
+            emoji=""
             height={54 + (ios ? 0 : 6)}
             onPress={onCreateWallet}
-            shadowStyle={createWalletButtonAnimatedShadowStyle}
-            style={createWalletButtonAnimatedStyle}
+            style={[
+              createWalletButtonAnimatedStyle,
+              { backgroundColor: colors.greenCW, width: 270 },
+            ]}
             testID="new-wallet-button"
             text={lang.t('wallet.new.get_new_wallet')}
             textColor={isDarkMode ? colors.dark : colors.white}
+            textSize={'larger'}
           />
         </ButtonWrapper>
         <ButtonWrapper>
           <WelcomeScreenRainbowButton
+            emoji=""
             darkShadowStyle={sx.existingWalletShadow}
-            emoji="old_key"
             height={56}
             onPress={showRestoreSheet}
-            shadowStyle={sx.existingWalletShadow}
-            style={[
-              sx.existingWallet,
-              { backgroundColor: colors.blueGreyDarkLight },
-            ]}
+            style={[sx.existingWallet]}
             testID="already-have-wallet-button"
-            text={lang.t('wallet.new.already_have_wallet')}
-            textColor={colors.alpha(colors.blueGreyDark, 0.8)}
+            text={lang.t('wallet.new.add_existing_wallet')}
+            textColor={colors.greenCW}
+            textSize={'medium'}
           />
         </ButtonWrapper>
       </ContentWrapper>
@@ -291,7 +238,7 @@ export default function WelcomeScreen() {
         >
           {lang.t('wallet.new.terms')}
           <Text
-            color={colors.paleBlue}
+            color={colors.greenCW}
             lineHeight="loose"
             onPress={handlePressTerms}
             size="smedium"
@@ -312,5 +259,11 @@ const sx = StyleSheet.create({
   },
   existingWalletShadow: {
     opacity: 0,
+  },
+  branding: {
+    fontSize: fonts.size.h2,
+    fontWeight: fonts.weight.bold,
+    position: 'relative',
+    bottom: 150,
   },
 });

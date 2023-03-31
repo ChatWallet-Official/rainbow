@@ -325,7 +325,7 @@ interface DataClearStateAction {
  * Data loaded from the Zerion API for a portfolio. See
  * https://docs.zerion.io/websockets/models#portfolio for details.
  */
-interface ZerionPortfolio {
+export interface ZerionPortfolio {
   arbitrum_assets_value: number;
   aurora_assets_value: number;
   avalanche_assets_value: number;

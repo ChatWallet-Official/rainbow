@@ -7,11 +7,11 @@ import { useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
 
 const BubbleInput = styled(ExchangeInput).attrs(
-  ({ isSmallPhone, isTinyPhone, theme: { isDarkMode } }) => ({
+  ({ isSmallPhone, isTinyPhone, theme: { isDarkMode }, size }) => ({
     disableTabularNums: true,
     keyboardAppearance: isDarkMode ? 'dark' : 'light',
     letterSpacing: 'roundedTightest',
-    size: isTinyPhone ? 'big' : isSmallPhone ? 'bigger' : 'h3',
+    size: size || (isTinyPhone ? 'big' : isSmallPhone ? 'bigger' : 'h3'),
     weight: 'semibold',
   })
 )(({ isTinyPhone }) => ({
@@ -27,6 +27,7 @@ const BubbleField = (
     autoFocus,
     buttonText,
     colorForAsset,
+    size,
     format = defaultFormatter,
     keyboardType,
     mask,
@@ -110,6 +111,7 @@ const BubbleField = (
         <BubbleInput
           autoFocus={autoFocus}
           color={colorForAsset}
+          size={size}
           isDarkMode={isDarkMode}
           isSmallPhone={android || isSmallPhone}
           isTinyPhone={isTinyPhone}

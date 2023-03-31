@@ -58,29 +58,16 @@ const isRGB = memoFn(
 );
 
 const avatarBackgrounds = [
-  '#FC5C54',
-  '#FFD95A',
-  '#E95D72',
-  '#6A87C8',
-  '#5FD0F3',
-  '#75C06B',
-  '#FFDD86',
-  '#5FC6D4',
-  '#FF949A',
-  '#FF8024',
-  '#9BA1A4',
-  '#EC66FF',
-  '#FF8CBC',
-  '#FF9A23',
-  '#C5DADB',
-  '#A8CE63',
-  '#71ABFF',
-  '#FFE279',
-  '#B6B1B6',
-  '#FF6780',
-  '#A575FF',
-  '#4D82FF',
-  '#FFB35A',
+  '#FFFFFF',
+  '#000000',
+  '#FA5151',
+  '#FA9D3B',
+  '#FFC300',
+  '#91D300',
+  '#219653',
+  '#10AEFF',
+  '#1485EE',
+  '#6467F0',
 ];
 
 const getColorsByTheme = (darkMode?: boolean) => {
@@ -88,6 +75,10 @@ const getColorsByTheme = (darkMode?: boolean) => {
     appleBlue: '#0E76FD', // '14, 118, 253'
     appleBlue06: 'rgba(14, 118, 253, 0.06)',
     black: '#000000', // '0, 0, 0'
+    black10: 'rgba(0, 0, 0, 0.1)',
+    black30: 'rgba(0, 0, 0, 0.3)',
+    black50: 'rgba(0, 0, 0, 0.5)',
+    blueCW: '#2D9CDB',
     blueGreyDark: '#3C4252', // '60, 66, 82'
     blueGreyDark04: '#222326', // this color is blueGreyDark at 4% over white
     blueGreyDark20: '#3A3D45', // this color is blueGreyDark at 20% over white
@@ -103,6 +94,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     chartGreen: '#66D28F', // '102, 210, 143'
     dark: '#25292E', // '37, 41, 46'
     darkGrey: '#71778A', // '113, 119, 138'
+    darkGreyCW: '#545454',
     darkModeDark: '#404656',
     dogeGold: '#FCAC34', // '252, 172, 52'
     dogeGold06: 'rgba(252, 172, 52, 0.06)',
@@ -112,6 +104,8 @@ const getColorsByTheme = (darkMode?: boolean) => {
     exchangeFallback: '#F4F4F5', // '244, 244, 245'
     flamingo: '#E540F1', // '229, 64, 241'
     green: '#2CCC00', // '58, 166, 134'
+    greenCW: '#219653',
+    greenLabelCW: '#27AE60',
     grey: '#A9ADB9', // '169, 173, 185'
     grey20: '#333333', // '51, 51, 51'
     lighterGrey: '#F7F7F8', // '247, 247, 248'
@@ -126,6 +120,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     optimismRed: '#FF0420', // '255, 4, 32',
     optimismRed06: 'rgba(255, 4, 32, 0.06)', // '255, 4, 32, 0.06'
     orange: '#F46E38', // '244, 110, 56'
+    orangeCW: '#F2994A',
     orangeLight: '#FEBE44', // '254, 190, 68'
     paleBlue: '#579DFF', // 87, 157, 255
     pink: '#FF54BB', // 255, 84, 187
@@ -139,6 +134,7 @@ const getColorsByTheme = (darkMode?: boolean) => {
     rainbowBlue: '#001E59', // '0, 30, 89',
     rainbowBlue06: 'rgba(0, 30, 89, 0.06)', // '0, 30, 89, 0.06'
     red: '#FF494A', // '255, 73, 74'
+    redCW: '#EB5757',
     rowDivider: 'rgba(60, 66, 82, 0.03)', // '60, 66, 82, 0.03'
     rowDividerExtraLight: 'rgba(60, 66, 82, 0.015)', // '60, 66, 82, 0.015'
     rowDividerFaint: 'rgba(60, 66, 82, 0.01)', // '60, 66, 82, 0.01'

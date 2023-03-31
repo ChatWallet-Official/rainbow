@@ -8,17 +8,12 @@ export function useAccountAccentColor() {
   const dominantColor = usePersistentDominantColorFromImage(accountImage);
 
   const { colors } = useTheme();
-  let accentColor = colors.appleBlue;
-  if (accountImage) {
-    accentColor = dominantColor || colors.appleBlue;
-  } else if (typeof accountColor === 'number') {
-    accentColor = colors.avatarBackgrounds[accountColor];
-  }
+  let accentColor = colors.greenCW;
 
   const hasLoaded = accountImage || accountSymbol;
 
   return {
     accentColor,
-    loaded: hasLoaded,
+    loaded: true,
   };
 }

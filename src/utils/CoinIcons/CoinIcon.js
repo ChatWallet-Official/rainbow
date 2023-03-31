@@ -60,7 +60,7 @@ const CoinIcon = ({
 
   if (!forceFallback && CoinIconsImages[formattedSymbol]) {
     return (
-      <View {...circleProps} {...shadowProps} style={[sx.container, style]}>
+      <View {...circleProps} style={[sx.container, style]}>
         <Image
           resizeMode="contain"
           source={CoinIconsImages[formattedSymbol]}

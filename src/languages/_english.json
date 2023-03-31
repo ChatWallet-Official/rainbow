@@ -61,8 +61,8 @@
         "request_test_eth": "Request test ETH through the %{testnetName} faucet",
         "send_test_eth_from_another_source": "Send test ETH from another %{testnetName} wallet—or ask a friend!"
       },
-      "to_get_started_android": "To get started, buy some ETH",
-      "to_get_started_ios": "To get started, buy some ETH with Apple Pay",
+      "to_get_started_android": "For your first digital asset, get some ETH",
+      "to_get_started_ios": "For your first digital asset, get some ETH",
       "weekly_limit_reached": "Weekly limit reached",
       "yearly_limit_reached": "Yearly limit reached"
     },
@@ -159,7 +159,8 @@
         "show_recovery": "Show Recovery %{typeName}",
         "view_private_key": "View private key",
         "view_secret_phrase": "View secret phrase",
-        "you_need_to_authenticate": "You need to authenticate in order to access your recovery %{typeName}"
+        "you_need_to_authenticate": "You need to authenticate in order to access your recovery %{typeName}",
+        "please_keep_safe": "Please keep %{typeName} somewhere safe to access your wallet in the future!"
       }
     },
     "bluetooth": {
@@ -256,6 +257,7 @@
       "save": "Save",
       "send": "Send",
       "send_another": "Send Another",
+      "transaction_history": "Transaction History",
       "share": "Share",
       "swap": "Swap",
       "try_again": "Try again",
@@ -364,6 +366,8 @@
         "balance_eth": "%{balanceEth} ETH"
       },
       "contacts_title": "Contacts",
+      "recent": "Recent",
+      "more": "More",
       "input_placeholder": "Name",
       "my_wallets": "My wallets",
       "options": {
@@ -376,7 +380,9 @@
       "send_header": "Send",
       "suggestions": "Suggestions",
       "to_header": "To",
-      "watching": "Watching"
+      "send_to_header": "Send to",
+      "watching": "Watching",
+      "select_token": "Select a Token"
     },
     "deeplinks": {
       "couldnt_recognize_url": "Uh oh! We couldn’t recognize this URL!",
@@ -1091,7 +1097,9 @@
         "unwatch_ens": "Unwatch %{ensName}",
         "unwatch_ens_title": "Are you sure you want to unwatch %{ensName}?",
         "watch": "Watch",
-        "watching": "Watching"
+        "watching": "Watching",
+        "edit_emoji": "Edit Emoji",
+        "rename_wallet": "Rename Wallet"
       },
       "banner": {
         "register_name": "Create Your ENS Profile",
@@ -1395,6 +1403,13 @@
       "no_thanks": "No thanks"
     },
     "settings": {
+      "about": "About",
+      "about_section": {
+        "help": "Help",
+        "privacy_policy": "Privacy Policy",
+        "terms_of_use": "Terms of Use"
+      },
+      "app_security": "App Security",
       "backup": "Backup",
       "currency": "Currency",
       "app_icon": "App Icon",
@@ -1634,9 +1649,11 @@
     },
     "wallet": {
       "action": {
+        "add_existing": "Add an existing wallet",
         "add_another": "Add another wallet",
         "cancel": "Cancel",
         "copy_contract_address": "Copy Contract Address",
+        "create_new": "Create a new wallet",
         "delete": "Delete Wallet",
         "delete_confirm": "Are you sure you want to delete this wallet?",
         "edit": "Edit Wallet",
@@ -1654,6 +1671,7 @@
         "reject": "Reject",
         "remove": "Remove Wallet",
         "remove_confirm": "Are you sure you want to remove this wallet?",
+        "remove_message": "After removal, you will not be able to gain access to this wallet again unless you keep your private key!",
         "send": "Send",
         "to": "To",
         "unhide": "Unhide",
@@ -1664,7 +1682,8 @@
       "add_cash": {
         "card_notice": "Works with most debit cards",
         "interstitial": {
-          "other_amount": "Other amount"
+          "other_amount": "Other Amount",
+          "asset_amount": "You will get %{amount} ETH"
         },
         "need_help_button_email_subject": "support",
         "need_help_button_label": "Get Support",
@@ -1680,7 +1699,8 @@
         "running_checks": "Running checks...",
         "success_message": "It's here 🥳",
         "watching_mode_confirm_message": "The wallet you have open is read-only, so you can’t control what’s inside. Are you sure you want to add cash to %{truncatedAddress}?",
-        "watching_mode_confirm_title": "You’re in Watching Mode"
+        "watching_mode_confirm_title": "You’re in Watching Mode",
+        "pay_with_card": "Pay with Your Debit or Credit Card"
       },
       "alert": {
         "finish_importing": "Finish Importing",
@@ -1764,7 +1784,7 @@
       },
       "invalid_ens_name": "This is not a valid ENS name",
       "invalid_unstoppable_name": "This is not a valid Unstoppable name",
-      "label": "Wallets",
+      "label": "Wallet",
       "loading": {
         "error": "There has been an error loading the wallet. Please kill the app and retry.",
         "message": "Loading"
@@ -1837,13 +1857,16 @@
           "looks_like_already_imported": "Looks like you already imported this wallet!",
           "oops": "Oops!"
         },
+        "brand_name": "ChatWallet",
         "already_have_wallet": "I already have one",
         "create_wallet": "Create Wallet",
-        "enter_seeds_placeholder": "Secret phrase, private key, Ethereum address, or ENS name",
+        "add_existing_wallet": "Add an existing wallet",
+        "enter_seeds_placeholder": "Add wallet with private key, seed phrase, Ethereum address, or ENS name",
         "get_new_wallet": "Get a new wallet",
         "import_wallet": "Import Wallet",
+        "creating_wallet": "Creating Wallet",
         "name_wallet": "Name your wallet",
-        "terms": "By proceeding, you agree to Rainbow’s ",
+        "terms": "By proceeding, you agree to ChatWallet’s ",
         "terms_link": "Terms of Use"
       },
       "pin_authentication": {
@@ -1911,7 +1934,8 @@
         "placeholder_title": "Placeholder",
         "request": "Transaction Request",
         "send": "Send Transaction",
-        "sending_title": "Sending"
+        "sending_title": "Sending",
+        "sending_to_title": "Sending to"
       },
       "wallet_connect": {
         "error": "Error initializing with WalletConnect",

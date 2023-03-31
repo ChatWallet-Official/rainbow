@@ -1,6 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useRoute } from '@react-navigation/core';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { InteractionManager, Modal, StyleSheet } from 'react-native';
 import { isEmpty, keys } from 'lodash';
-import { InteractionManager, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { OpacityToggler } from '../../components/animations';
 import { AssetList } from '../../components/asset-list';
@@ -27,6 +28,7 @@ import {
   useTrackENSProfile,
   useUserAccounts,
   useWalletSectionsData,
+  useWallets,
 } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import { updateRefetchSavings } from '@/redux/data';
@@ -37,6 +39,10 @@ import { Toast, ToastPositionContainer } from '@/components/toasts';
 import { useRecoilValue } from 'recoil';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { analytics } from '@/analytics';
+import { LoadingScreen } from '@/components/modal/LoadingScreen';
+import ChatIconCW from '@/components/icons/svg/ChatIconCW';
+import SettingsIconCW from '@/components/icons/svg/SettingsIconCW';
+import { isL2Network, isTestnetNetwork } from '@/handlers/web3';
 import { AppState } from '@/redux/store';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { addressCopiedToastAtom } from '@/recoil/addressCopiedToastAtom';
@@ -74,6 +80,7 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
   const loadAccountData = useLoadAccountData();
   const initializeAccountData = useInitializeAccountData();
   const insets = useSafeAreaInsets();
+  const { isWalletLoading, wallets } = useWallets();
 
   const revertToMainnet = useCallback(async () => {
     await resetAccountState();
@@ -216,8 +223,8 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const { navigate } = useNavigation();
 
-  const handlePressActivity = useCallback(() => {
-    navigate(Routes.PROFILE_SCREEN);
+  const handlePressSettings = useCallback(() => {
+    navigate(Routes.SETTINGS_SHEET);
   }, [navigate]);
 
   const handlePressQRScanner = useCallback(() => {
@@ -225,7 +232,7 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
   }, [navigate]);
 
   const handlePressDiscover = useCallback(() => {
-    navigate(Routes.DISCOVER_SCREEN);
+    navigate(Routes.LEARN_WEB_VIEW_SCREEN);
   }, [navigate]);
 
   const isAddressCopiedToastActive = useRecoilValue(addressCopiedToastAtom);
@@ -245,20 +252,17 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
         <Navbar
           hasStatusBarInset
           leftComponent={
-            <Navbar.Item onPress={handlePressActivity} testID="activity-button">
-              <Navbar.TextIcon icon="􀐫" />
+            <Navbar.Item onPress={handlePressSettings} testID="activity-button">
+              <Navbar.SvgIcon icon={SettingsIconCW} />
             </Navbar.Item>
           }
           rightComponent={
             <Inline space={{ custom: 17 }}>
-              <Navbar.Item onPress={handlePressQRScanner}>
-                <Navbar.TextIcon icon="􀎹" />
-              </Navbar.Item>
               <Navbar.Item
                 onPress={handlePressDiscover}
                 testID="discover-button"
               >
-                <Navbar.TextIcon icon="􀎬" />
+                <Navbar.SvgIcon icon={ChatIconCW} />
               </Navbar.Item>
             </Inline>
           }
@@ -284,6 +288,9 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
           testID="address-copied-toast"
         />
       </ToastPositionContainer>
+      <Modal visible={isWalletLoading !== null}>
+        <LoadingScreen />
+      </Modal>
     </Page>
   );
 };

@@ -17,7 +17,7 @@ import {
 } from '@/utils';
 import { ChainBadgeType } from '@/components/coin-icon/ChainBadgeSizeConfigs';
 
-export const CoinIconSize = 40;
+export const CoinIconSize = 32;
 
 const ContractInteractionIcon = styled(ImgixImage)(
   ({ size }: { size: number }) => ({

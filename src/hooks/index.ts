@@ -147,6 +147,7 @@ export { default as useWalletsWithBalancesAndNames } from './useWalletsWithBalan
 export { default as useWatchWallet } from './useWatchWallet';
 export { default as useWebData } from './useWebData';
 export { default as useWyreApplePay } from './useWyreApplePay';
+export { default as useSquarePay } from './useSquarePay';
 export { default as useForceUpdate } from './useForceUpdate';
 export { default as useOnAvatarPress } from './useOnAvatarPress';
 export { default as usePoolDetails } from './usePoolDetails';

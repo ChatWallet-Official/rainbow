@@ -35,6 +35,7 @@ interface Props {
   onClearError: () => void;
   onLimitExceeded: (limit: 'weekly' | 'yearly') => void;
   onPurchase: (params: { address: string; value: string }) => void;
+  onPurchaseByCard: (params: { address: string; value: string }) => void;
   onShake: () => void;
   shakeAnim: Animated.SharedValue<number>;
 }
@@ -44,6 +45,7 @@ const AddCashForm = ({
   onClearError,
   onLimitExceeded,
   onPurchase,
+  onPurchaseByCard,
   onShake,
   shakeAnim,
 }: Props) => {
@@ -63,6 +65,10 @@ const AddCashForm = ({
 
   const { isReadOnlyWallet } = useWallets();
   const { accountAddress } = useAccountSettings();
+
+  const onPressPayWithCard = useCallback(async () => {
+    await onPurchaseByCard({ address: currency, value });
+  }, [currency, onPurchaseByCard, value]);
 
   const onSubmit = useCallback(async () => {
     if (paymentSheetVisible) return;
@@ -228,19 +234,20 @@ const AddCashForm = ({
         </ColumnWithMargins>
       </Centered>
       <ColumnWithMargins align="center" margin={isTallPhone ? 27 : 12}>
-        <Centered maxWidth={313}>
-          <Numpad
-            onPress={handleNumpadPress}
-            width={isNarrowPhone ? 275 : '100%'}
-          />
-        </Centered>
         <AddCashFooter
           disabled={
             isEmpty(value) || parseFloat(value) < minimumPurchaseAmountUSD
           }
           onDisabledPress={onShake}
           onSubmit={onSubmit}
+          onPurchaseByCard={onPressPayWithCard}
         />
+        <Centered maxWidth={313}>
+          <Numpad
+            onPress={handleNumpadPress}
+            width={isNarrowPhone ? 275 : '100%'}
+          />
+        </Centered>
       </ColumnWithMargins>
     </Animated.View>
   );

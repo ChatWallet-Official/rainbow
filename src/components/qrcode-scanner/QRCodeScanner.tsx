@@ -37,7 +37,7 @@ const CameraState = {
 
 const androidSoftMenuHeight = getSoftMenuBarHeight();
 
-export default function QRCodeScanner() {
+export default function QRCodeScanner({ onQRCodeRead }) {
   const [cameraState, setCameraState] = useState(CameraState.Waiting);
   const { goBack, setOptions } = useNavigation();
 
@@ -120,7 +120,7 @@ export default function QRCodeScanner() {
           <Box
             as={RNCamera}
             captureAudio={false}
-            onBarCodeRead={onScan}
+            onBarCodeRead={onQRCodeRead || onScan}
             onMountError={() => setCameraState(CameraState.Error)}
             pendingAuthorizationView={undefined}
             borderRadius={40}

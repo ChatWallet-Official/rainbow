@@ -6,7 +6,7 @@ import { Icon } from '../icons';
 import { Row } from '../layout';
 import { useCoinListFinishEditingOptions } from '@/hooks';
 import styled from '@/styled-thing';
-import { borders, padding, position, shadow } from '@/styles';
+import { borders, colors, padding, position, shadow } from '@/styles';
 
 const Container = styled.View({
   ...position.sizeAsObject(CoinIconSize),
@@ -62,14 +62,11 @@ const CoinCheckButton = ({
   return (
     <Container {...props}>
       <Content as={ButtonPressAnimation} onPress={onPress} opacityTouchable>
-        {isHidden || isPinned ? null : <CircleOutline />}
         {!toggle && (isHidden || isPinned) ? (
           <CoinIconIndicator isPinned={isPinned} />
         ) : null}
         <OpacityToggler friction={20} isVisible={!toggle} tension={1000}>
-          <CheckmarkBackground left={left}>
-            <Icon color="white" name="checkmark" />
-          </CheckmarkBackground>
+          <Icon color={colors.greenCW} name="checkMarkIconCW" />
         </OpacityToggler>
       </Content>
     </Container>

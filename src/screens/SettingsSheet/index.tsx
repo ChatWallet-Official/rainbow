@@ -3,7 +3,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import lang from 'i18n-js';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { InteractionManager } from 'react-native';
-import ModalHeaderButton from '../../components/modal/ModalHeaderButton';
 import { useTheme } from '@/theme';
 import { Box } from '@/design-system';
 import { useWallets } from '@/hooks';
@@ -76,18 +75,6 @@ export function SettingsSheet() {
     [getRealRoute, navigate]
   );
 
-  const renderHeaderRight = useCallback(
-    () =>
-      ios ? (
-        <ModalHeaderButton
-          label={lang.t('settings.done')}
-          onPress={goBack}
-          side="right"
-        />
-      ) : null,
-    [goBack]
-  );
-
   useEffect(() => {
     if (params?.initialRoute) {
       const { route, params: routeParams } = getRealRoute(params?.initialRoute);
@@ -112,7 +99,6 @@ export function SettingsSheet() {
         // @ts-ignore
         screenOptions={{
           ...memoSettingsOptions,
-          headerRight: renderHeaderRight,
           headerStyle: memoSettingsOptions.headerStyle,
         }}
       >
@@ -126,6 +112,7 @@ export function SettingsSheet() {
           {() => (
             <SettingsSection
               onCloseModal={goBack}
+              onPressAbout={onPressSection(SettingsPages.about)}
               onPressAppIcon={onPressSection(SettingsPages.appIcon)}
               onPressBackup={onPressSection(SettingsPages.backup)}
               onPressCurrency={onPressSection(SettingsPages.currency)}
@@ -134,6 +121,7 @@ export function SettingsSheet() {
               onPressNetwork={onPressSection(SettingsPages.network)}
               onPressNotifications={onPressSection(SettingsPages.notifications)}
               onPressPrivacy={onPressSection(SettingsPages.privacy)}
+              onPressSecurity={onPressSection(SettingsPages.security)}
             />
           )}
         </Stack.Screen>

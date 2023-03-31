@@ -1,6 +1,6 @@
 import lang from 'i18n-js';
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from '../../theme/ThemeContext';
 import { ButtonPressAnimation } from '../animations';
@@ -20,7 +20,7 @@ import {
   returnStringFirstEmoji,
 } from '@/helpers/emojiHandler';
 import styled from '@/styled-thing';
-import { fonts, fontWithWidth, getFontSize } from '@/styles';
+import { fonts, fontWithWidth, getFontSize, colors } from '@/styles';
 import { abbreviations, deviceUtils, profileUtils } from '@/utils';
 import { EditWalletContextMenuActions } from '@/screens/ChangeWalletSheet';
 import { toChecksumAddress } from '@/handlers/web3';
@@ -68,6 +68,18 @@ const sx = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     marginLeft: 48,
+  },
+  container: {
+    borderRadius: 16,
+    backgroundColor: colors.lighterGrey,
+    marginRight: 24,
+    paddingLeft: 16,
+  },
+  remove: {
+    width: 56,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -238,6 +250,10 @@ export default function AddressRow({
     [address, contextMenuActions, walletName, walletId]
   );
 
+  const onPressRemove = useCallback(() => {
+    contextMenuActions?.remove(walletId, address);
+  }, [address, contextMenuActions, walletId]);
+
   return (
     <View style={sx.accountRow}>
       <ConditionalWrap
@@ -248,8 +264,8 @@ export default function AddressRow({
           </ButtonPressAnimation>
         )}
       >
-        <Row align="center">
-          <Row align="center" flex={1} height={59}>
+        <Row align="center" style={sx.container}>
+          <Row align="center" flex={1} height={65}>
             {accountImage ? (
               <ImageAvatar
                 image={accountImage}
@@ -307,13 +323,9 @@ export default function AddressRow({
             )}
             {editMode &&
               (IS_IOS ? (
-                <ContextMenuButton
-                  isMenuPrimaryAction
-                  menuConfig={menuConfig}
-                  onPressMenuItem={handleSelectMenuItem}
-                >
-                  <OptionsIcon onPress={NOOP} />
-                </ContextMenuButton>
+                <TouchableOpacity style={sx.remove} onPress={onPressRemove}>
+                  <Icon name="trashCW" />
+                </TouchableOpacity>
               ) : (
                 // @ts-expect-error js component
                 <ContextMenuAndroid

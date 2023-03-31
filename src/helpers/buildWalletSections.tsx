@@ -221,7 +221,7 @@ const withBriefBalanceSection = (
             uid: 'profile-balance-space-after',
           },
         ]
-      : []),
+      : [{ type: 'EMPTY_WALLET_SPACER', uid: 'empty-wallet-spacer-3' }]),
     {
       type: 'PROFILE_ACTION_BUTTONS_ROW',
       uid: 'profile-action-buttons',
@@ -245,7 +245,7 @@ const withBriefBalanceSection = (
   } else if (hasNFTsOnly) {
     content = ONLY_NFTS_CONTENT;
   } else if (isEmpty) {
-    content = EMPTY_WALLET_CONTENT;
+    content = [];
   }
 
   return {

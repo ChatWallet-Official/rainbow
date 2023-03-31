@@ -108,11 +108,11 @@ export const buildCoinsList = (
   }
   const allAssets = assetsAboveDivider;
 
-  allAssets.push({
-    coinDivider: true,
-    defaultToEditButton: defaultToEditButton,
-    value: smallBalancesValue,
-  });
+  // allAssets.push({
+  //   coinDivider: true,
+  //   defaultToEditButton: defaultToEditButton,
+  //   value: smallBalancesValue,
+  // });
 
   if (assetsBelowDivider.length > 0) {
     allAssets.push({

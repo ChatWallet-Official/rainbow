@@ -5,11 +5,18 @@ import SendAssetFormField from './SendAssetFormField';
 import { useDimensions } from '@/hooks';
 import { supportedNativeCurrencies } from '@/references';
 import styled from '@/styled-thing';
-import { removeLeadingZeros } from '@/utils';
+import { removeLeadingZeros, deviceUtils } from '@/utils';
+import { GasSpeedButton } from '../gas';
+import { View, StyleSheet } from 'react-native';
+import { Text } from '../text';
+import { Button } from '../buttons';
+import { fonts } from '@/styles';
+import lang from 'i18n-js';
 
 const footerMargin = getSoftMenuBarHeight() / 2;
 const FooterContainer = styled(Column).attrs({
   justify: 'end',
+  align: 'center',
   marginBottom: android ? footerMargin : 0,
 })({
   width: '100%',
@@ -18,7 +25,6 @@ const FooterContainer = styled(Column).attrs({
 
 const FormContainer = styled(Column).attrs({
   align: 'center',
-  justify: 'center',
 })({
   flex: 1,
   minHeight: ({ isSmallPhone, isTinyPhone }) =>
@@ -47,6 +53,10 @@ export default function SendAssetFormToken({
   selected,
   sendMaxBalance,
   txSpeedRenderer,
+  network,
+  buttonDisabled,
+  onPressTokenSelection,
+  onPressSendButton,
   ...props
 }) {
   const { isSmallPhone, isTinyPhone } = useDimensions();
@@ -55,6 +65,7 @@ export default function SendAssetFormToken({
   const {
     mask: nativeMask,
     placeholder: nativePlaceholder,
+    symbol: nativeSymbol,
   } = supportedNativeCurrencies[nativeCurrency];
 
   return (
@@ -66,36 +77,84 @@ export default function SendAssetFormToken({
       >
         <SendAssetFormField
           colorForAsset={colorForAsset}
+          size={32}
           format={removeLeadingZeros}
           label={selected.symbol}
           onChange={onChangeAssetAmount}
           onFocus={onFocusAssetInput}
           onPressButton={sendMaxBalance}
+          onPressLabel={onPressTokenSelection}
           placeholder="0"
           ref={assetInputRef}
           testID="selected-asset-field"
           value={assetAmount}
+          height={109}
         />
         <Spacer isSmallPhone={isSmallPhone} isTinyPhone={isTinyPhone} />
         <SendAssetFormField
           autoFocus
           colorForAsset={colors.alpha(colors.blueGreyDark, 0.8)}
+          size={fonts.size.big}
           label={nativeCurrency}
           mask={nativeMask}
           maxLabelColor={colors.alpha(colors.blueGreyDark, 0.6)}
           onChange={onChangeNativeAmount}
           onFocus={onFocusNativeInput}
           onPressButton={sendMaxBalance}
-          placeholder={nativePlaceholder}
+          placeholder={nativeSymbol + nativePlaceholder}
           ref={nativeCurrencyInputRef}
           testID="selected-asset-quantity-field"
           value={nativeAmount}
+          height={66}
         />
       </FormContainer>
       <FooterContainer>
-        {buttonRenderer}
-        {txSpeedRenderer}
+        <View style={styles.gasButtonContainer}>
+          <GasSpeedButton
+            asset={selected}
+            currentNetwork={network}
+            horizontalPadding={0}
+            marginBottom={17}
+            theme={'light'}
+          />
+        </View>
+
+        <View
+          backgroundColor={buttonDisabled ? colors.black10 : colors.black}
+          style={styles.buttonContainer}
+        >
+          <Button
+            backgroundColor="clear"
+            disabled={buttonDisabled}
+            onPress={onPressSendButton}
+          >
+            <Text
+              align="center"
+              color={buttonDisabled ? colors.black30 : colors.white}
+              style={styles.buttonText}
+            >
+              {lang.t('button.send')}
+            </Text>
+          </Button>
+        </View>
       </FooterContainer>
     </Fragment>
   );
 }
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    borderRadius: 16,
+    marginTop: 10,
+    marginBottom: 64,
+    width: deviceUtils.dimensions.width - 64,
+  },
+  buttonText: {
+    weight: fonts.weight.medium,
+  },
+  gasButtonContainer: {
+    width: '100%',
+    alignItems: 'flex-start',
+    paddingLeft: 15,
+  },
+});

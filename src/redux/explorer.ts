@@ -56,6 +56,14 @@ import {
 } from '@/references';
 import { ethereumUtils, TokensListenedCache } from '@/utils';
 import logger from '@/utils/logger';
+import { RainbowFetchClient } from '@/rainbow-fetch';
+import {
+  toPortfolioReceivedMessage,
+  toAddressAssetsReceivedMessage,
+  toTransactionsReceivedMessage,
+  toL2AddressAssetsReceivedMessage,
+} from './helpers/zerionDataTransformer';
+import { ZERION_TOKEN } from 'react-native-dotenv';
 
 // -- Constants --------------------------------------- //
 const EXPLORER_UPDATE_SOCKETS = 'explorer/EXPLORER_UPDATE_SOCKETS';
@@ -125,7 +133,7 @@ type ZerionAsseWithL2Fields = ZerionAsset & {
  * Note, unlike a `AddressAssetsReceivedMessage`, the `payload.assets` field is
  * an array, not an object.
  */
-interface L2AddressAssetsReceivedMessage {
+export interface L2AddressAssetsReceivedMessage {
   payload?: {
     assets?: {
       asset: ZerionAsseWithL2Fields;
@@ -642,6 +650,128 @@ export const explorerInit = () => async (
     return;
   }
 
+  const zerionAPI = new RainbowFetchClient({
+    baseURL: 'https://api.zerion.io',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': ZERION_TOKEN,
+    },
+    timeout: 30000, // 30 secs
+  });
+
+  const [
+    portfolioRes,
+    transactionsRes,
+    ethereumPositionsRes,
+    arbitrumPositionsRes,
+    optimismPositionsRes,
+    polygonPositionsRes,
+    bscPositionsRes,
+  ] = await Promise.all([
+    zerionAPI.get(`/v1/wallets/${accountAddress}/portfolio`),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/transactions/?currency=${nativeCurrency.toLowerCase()}&page[size]=100`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=ethereum&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=arbitrum&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=optimism&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=polygon&sort=value`
+    ),
+    zerionAPI.get(
+      `/v1/wallets/${accountAddress}/positions/?currency=${nativeCurrency.toLowerCase()}&filter[chain_ids]=binance-smart-chain&sort=value`
+    ),
+  ]);
+
+  dispatch(
+    portfolioReceived(
+      toPortfolioReceivedMessage(
+        portfolioRes?.data?.data,
+        accountAddress,
+        nativeCurrency,
+        network
+      )
+    )
+  );
+
+  dispatch(
+    transactionsReceived(
+      toTransactionsReceivedMessage(
+        transactionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        network
+      ),
+      true
+    )
+  );
+
+  dispatch(
+    addressAssetsReceived(
+      toAddressAssetsReceivedMessage(
+        ethereumPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        network
+      )
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        arbitrumPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.arbitrum
+      ),
+      Network.arbitrum
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        optimismPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.optimism
+      ),
+      Network.optimism
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        polygonPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.polygon
+      ),
+      Network.polygon
+    )
+  );
+
+  dispatch(
+    l2AddressAssetsReceived(
+      toL2AddressAssetsReceivedMessage(
+        bscPositionsRes?.data,
+        accountAddress,
+        nativeCurrency,
+        Network.bsc
+      ),
+      Network.bsc
+    )
+  );
+
   const newAddressSocket = createSocket('address');
   const newAssetsSocket = createSocket('assets');
   dispatch({
@@ -821,9 +951,7 @@ export const fetchAssetsFromRefraction = () => (
 ) => {
   const { accountAddress, nativeCurrency } = getState().settings;
   const { addressSocket } = getState().explorer;
-  if (addressSocket) {
-    addressSocket.emit(...addressAssetsRequest(accountAddress, nativeCurrency));
-  }
+  addressSocket?.emit(...addressAssetsRequest(accountAddress, nativeCurrency));
 };
 
 /**

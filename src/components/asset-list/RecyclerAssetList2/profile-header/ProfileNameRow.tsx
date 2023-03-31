@@ -49,16 +49,16 @@ export function ProfileNameRow({
     navigate(Routes.CHANGE_WALLET_SHEET);
   };
   const onLongPressName = React.useCallback(() => {
-    if (disableOnPress) return;
-    if (!isToastActive) {
-      setToastActive(true);
-      setTimeout(() => {
-        setToastActive(false);
-      }, 2000);
-    }
-    haptics.notificationSuccess();
-    onNewEmoji?.current && onNewEmoji.current();
-    Clipboard.setString(accountAddress);
+    // if (disableOnPress) return;
+    // if (!isToastActive) {
+    //   setToastActive(true);
+    //   setTimeout(() => {
+    //     setToastActive(false);
+    //   }, 2000);
+    // }
+    // haptics.notificationSuccess();
+    // onNewEmoji?.current && onNewEmoji.current();
+    // Clipboard.setString(accountAddress);
   }, [accountAddress, disableOnPress, isToastActive, setToastActive]);
 
   const name = accountENS
@@ -97,21 +97,11 @@ export function ProfileNameRow({
             <Inset space={hitSlop}>
               <Inline alignVertical="center" space="4px" wrap={false}>
                 <Box style={{ maxWidth }}>
-                  <Text
-                    color="label"
-                    numberOfLines={1}
-                    size="23px / 27px (Deprecated)"
-                    weight="bold"
-                  >
+                  <Text color="label" numberOfLines={1} size="17pt">
                     {name}
                   </Text>
                 </Box>
-                <Icon
-                  color={iconColor}
-                  height={9}
-                  name="caretDownIcon"
-                  width={caretIconWidth}
-                />
+                <Icon color={iconColor} name="caretDownIconCW" />
               </Inline>
             </Inset>
           </ButtonPressAnimation>

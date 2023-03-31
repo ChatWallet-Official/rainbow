@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { captureException } from '@sentry/react-native';
 import lang from 'i18n-js';
 import { upperFirst } from 'lodash';
@@ -18,9 +18,15 @@ import { Box, Inline, Stack, Text } from '@/design-system';
 import WalletTypes, { EthereumWalletType } from '@/helpers/walletTypes';
 import { useWallets } from '@/hooks';
 import styled from '@/styled-thing';
-import { margin, position, shadow } from '@/styles';
+import { margin, position, shadow, colors, fonts } from '@/styles';
 import { useTheme } from '@/theme';
 import logger from '@/utils/logger';
+import {
+  StyleSheet,
+  View,
+  Text as RNText,
+  TouchableOpacity,
+} from 'react-native';
 
 const CopyButtonIcon = styled(Icon).attrs(({ theme: { colors } }: any) => ({
   color: colors.appleBlue,
@@ -48,6 +54,7 @@ export default function SecretDisplaySection({
   onWalletTypeIdentified,
 }: SecretDisplaySectionProps) {
   const { params } = useRoute();
+  const { goBack } = useNavigation();
   const { selectedWallet, wallets } = useWallets();
   const walletId = (params as any)?.walletId || selectedWallet.id;
   const currentWallet = wallets?.[walletId];
@@ -90,7 +97,8 @@ export default function SecretDisplaySection({
       : loadSeed();
   }, [loadSeed]);
 
-  const typeLabel = type === WalletTypes.privateKey ? 'key' : 'phrase';
+  const typeLabel =
+    type === WalletTypes.privateKey ? 'private key' : 'secret phrase';
 
   const { colors } = useTheme();
 
@@ -144,6 +152,7 @@ export default function SecretDisplaySection({
       );
     }
   }, [isRecoveryPhraseVisible, typeLabel, loadSeed, colors.white, seed]);
+
   return (
     <>
       {visible ? (
@@ -155,41 +164,34 @@ export default function SecretDisplaySection({
         >
           {seed ? (
             <>
-              <Box paddingBottom="19px (Deprecated)">
-                {/* @ts-ignore */}
-                <CopyFloatingEmojis textToCopy={seed}>
-                  <Inline alignVertical="center" space="6px">
-                    <CopyButtonIcon />
-                    <Text
-                      color="action (Deprecated)"
-                      size="16px / 22px (Deprecated)"
-                      weight="bold"
-                    >
-                      {lang.t('back_up.secret.copy_to_clipboard')}
-                    </Text>
-                  </Inline>
-                </CopyFloatingEmojis>
-              </Box>
-              <Stack alignHorizontal="center" space="19px (Deprecated)">
-                {/* @ts-ignore */}
-                <SecretDisplayCard seed={seed} type={type} />
-                <Text
-                  containsEmoji
-                  color="primary (Deprecated)"
-                  size="16px / 22px (Deprecated)"
-                  weight="bold"
-                >
-                  👆{lang.t('back_up.secret.for_your_eyes_only')} 👆
-                </Text>
+              <View style={styles.container}>
                 <Text
                   align="center"
                   color="secondary60 (Deprecated)"
                   size="16px / 22px (Deprecated)"
-                  weight="semibold"
                 >
-                  {lang.t('back_up.secret.anyone_who_has_these')}
+                  {lang.t('back_up.secret.please_keep_safe', {
+                    typeName: typeLabel,
+                  })}
                 </Text>
-              </Stack>
+                <View style={styles.keyContainer}>
+                  {/* @ts-ignore */}
+                  <SecretDisplayCard seed={seed} type={type} />
+                  <Box paddingBottom="19px (Deprecated)">
+                    {/* @ts-ignore */}
+                    <CopyFloatingEmojis textToCopy={seed}>
+                      <Inline alignVertical="center" space="6px">
+                        <RNText style={styles.copy}>
+                          {lang.t('wallet.copy')}
+                        </RNText>
+                      </Inline>
+                    </CopyFloatingEmojis>
+                  </Box>
+                </View>
+                <TouchableOpacity style={styles.ok} onPress={goBack}>
+                  <RNText style={styles.okText}>{lang.t('button.ok')}</RNText>
+                </TouchableOpacity>
+              </View>
             </>
           ) : (
             <LoadingSpinner color={colors.blueGreyDark50} />
@@ -201,3 +203,35 @@ export default function SecretDisplaySection({
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
+  keyContainer: {
+    backgroundColor: colors.lighterGrey,
+    borderRadius: 16,
+    alignItems: 'center',
+    marginTop: 42,
+    marginBottom: 69,
+    paddingHorizontal: 24,
+  },
+  copy: {
+    color: colors.greenCW,
+    fontSize: fonts.size.medium,
+    fontWeight: fonts.weight.bold,
+  },
+  ok: {
+    backgroundColor: colors.greenCW,
+    borderRadius: 16,
+    width: 238,
+    height: 49,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  okText: {
+    color: colors.white,
+    fontSize: fonts.size.bmedium,
+    fontWeight: fonts.weight.medium,
+  },
+});
