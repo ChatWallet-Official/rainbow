@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>RCTAsyncStorageExcludeFromBackup</key>
-	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -16,68 +14,14 @@
 	<dict>
 		<key>CFBundleAlternateIcons</key>
 		<dict>
-			<key>pooly</key>
-			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>pooly</string>
-				</array>
-			</dict>
-			<key>smol</key>
-			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>smol</string>
-				</array>
-			</dict>
-			<key>raindoge</key>
-			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>raindoge</string>
-				</array>
-			</dict>
 			<key>golddoge</key>
 			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>golddoge</string>
 				</array>
-			</dict>
-			<key>pixel</key>
-			<dict>
 				<key>UIPrerenderedIcon</key>
 				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>pixel</string>
-				</array>
-			</dict>
-			<key>optimism</key>
-			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>optimism</string>
-				</array>
-			</dict>
-			<key>zora</key>
-			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
-				<key>CFBundleIconFiles</key>
-				<array>
-					<string>zora</string>
-				</array>
 			</dict>
 			<key>finiliar</key>
 			<dict>
@@ -90,12 +34,66 @@
 			</dict>
 			<key>og</key>
 			<dict>
-				<key>UIPrerenderedIcon</key>
-				<false/>
 				<key>CFBundleIconFiles</key>
 				<array>
 					<string>og</string>
 				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>optimism</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>optimism</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>pixel</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>pixel</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>pooly</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>pooly</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>raindoge</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>raindoge</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>smol</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>smol</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
+			</dict>
+			<key>zora</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>zora</string>
+				</array>
+				<key>UIPrerenderedIcon</key>
+				<false/>
 			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
@@ -136,7 +134,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>33</string>
 	<key>CodePushDeploymentKey</key>
 	<string>$(CODE_PUSH_DEPLOYMENT_KEY_IOS)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -160,6 +158,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>This allows Rainbow to find and pair a Ledger Nano X</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Accesses the Camera to scan QR codes for connecting to dApps and discovering wallets</string>
 	<key>NSFaceIDUsageDescription</key>
@@ -168,8 +168,6 @@
 	<string>This allows Rainbow to save images to your Camera Roll</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This allows Rainbow to display selected photos as avatars across each of your wallet addresses</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This allows Rainbow to find and pair a Ledger Nano X</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
 		<key>iCloud.me.rainbow</key>
@@ -186,6 +184,8 @@
 	<array>
 		<string>SelectTokenIntent</string>
 	</array>
+	<key>RCTAsyncStorageExcludeFromBackup</key>
+	<false/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SF-Pro-Rounded-Bold.otf</string>
