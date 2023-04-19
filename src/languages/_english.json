@@ -1886,6 +1886,7 @@
         "already_have_wallet": "I already have one",
         "create_wallet": "Create Wallet",
         "enter_seeds_placeholder": "Secret phrase, private key, Ethereum address, or ENS name",
+        "get_a_web3_account": "Get a web3 account",
         "get_new_wallet": "Get a new wallet",
         "import_wallet": "Import Wallet",
         "name_wallet": "Name your wallet",

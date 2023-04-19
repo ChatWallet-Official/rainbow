@@ -1,7 +1,7 @@
 import MaskedView from '@react-native-masked-view/masked-view';
 import lang from 'i18n-js';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Linking, StyleSheet } from 'react-native';
+import { Linking, StyleSheet, TouchableOpacity } from 'react-native';
 import Reanimated, {
   Easing,
   interpolateColor,
@@ -31,7 +31,7 @@ import { useHideSplashScreen } from '@/hooks';
 import { useNavigation } from '@/navigation';
 import Routes from '@rainbow-me/routes';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { colors, fonts, position } from '@/styles';
 import { ThemeContextProps, useTheme } from '@/theme';
 import logger from 'logger';
 import { IS_ANDROID, IS_TEST } from '@/env';
@@ -240,77 +240,29 @@ export default function WelcomeScreen() {
 
   return (
     <Container testID="welcome-screen">
-      <RainbowsBackground shouldAnimate={shouldAnimateRainbows} />
       <ContentWrapper style={contentStyle}>
-        {IS_ANDROID && IS_TEST ? (
-          // @ts-expect-error JS component
-          <RainbowText colors={colors} />
-        ) : (
-          // @ts-expect-error JS component
-          <MaskedView maskElement={<RainbowText colors={colors} />}>
-            <RainbowTextMask style={textStyle} />
-          </MaskedView>
-        )}
-
-        <ButtonWrapper style={buttonStyle}>
-          <WelcomeScreenRainbowButton
-            emoji="castle"
-            height={54 + (ios ? 0 : 6)}
-            onPress={onCreateWallet}
-            shadowStyle={createWalletButtonAnimatedShadowStyle}
-            style={createWalletButtonAnimatedStyle}
-            testID="new-wallet-button"
-            text={lang.t('wallet.new.get_new_wallet')}
-            textColor={isDarkMode ? colors.dark : colors.white}
-          />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <WelcomeScreenRainbowButton
-            darkShadowStyle={sx.existingWalletShadow}
-            emoji="old_key"
-            height={56}
-            onPress={showRestoreSheet}
-            shadowStyle={sx.existingWalletShadow}
-            style={[
-              sx.existingWallet,
-              { backgroundColor: colors.blueGreyDarkLight },
-            ]}
-            testID="already-have-wallet-button"
-            text={lang.t('wallet.new.already_have_wallet')}
-            textColor={colors.alpha(colors.blueGreyDark, 0.8)}
-          />
-        </ButtonWrapper>
-      </ContentWrapper>
-      <TermsOfUse bottomInset={insets.bottom}>
-        <Text
-          align="center"
-          color={colors.alpha(colors.blueGreyDark, 0.5)}
-          lineHeight="loose"
-          size="smedium"
-          weight="semibold"
-        >
-          {lang.t('wallet.new.terms')}
-          <Text
-            color={colors.paleBlue}
-            lineHeight="loose"
-            onPress={handlePressTerms}
-            size="smedium"
-            suppressHighlighting
-            weight="semibold"
-          >
-            {lang.t('wallet.new.terms_link')}
+        <TouchableOpacity style={styles.createButton} onPress={onCreateWallet}>
+          <Text style={styles.createButtonText}>
+            {lang.t('wallet.new.get_a_web3_account')}
           </Text>
-        </Text>
-      </TermsOfUse>
+        </TouchableOpacity>
+      </ContentWrapper>
     </Container>
   );
 }
 
-const sx = StyleSheet.create({
-  existingWallet: {
-    width: 248,
+const styles = StyleSheet.create({
+  createButton: {
+    backgroundColor: colors.mintGreen,
+    width: 220,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  existingWalletShadow: {
-    opacity: 0,
+  createButtonText: {
+    color: colors.mintLabel,
+    fontSize: fonts.size.large,
+    fontWeight: fonts.weight.bold,
   },
 });
