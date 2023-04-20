@@ -67,9 +67,9 @@ export const runWalletBackupStatusChecks = () => {
   if (selected && hasSelectedWallet && IS_TESTING !== 'true') {
     logger.debug('showing default BackupSheet');
     setTimeout(() => {
-      triggerOnSwipeLayout(() =>
-        Navigation.handleAction(Routes.BACKUP_SHEET, { single: true })
-      );
+      // triggerOnSwipeLayout(() =>
+      //   Navigation.handleAction(Routes.BACKUP_SHEET, { single: true })
+      // );
     }, BACKUP_SHEET_DELAY_MS);
     return;
   }
@@ -78,12 +78,12 @@ export const runWalletBackupStatusChecks = () => {
   IS_TESTING !== 'true' &&
     setTimeout(() => {
       logger.debug('showing BackupSheet with existing_user step');
-      triggerOnSwipeLayout(() =>
-        Navigation.handleAction(Routes.BACKUP_SHEET, {
-          single: true,
-          step: WalletBackupStepTypes.existing_user,
-        })
-      );
+      // triggerOnSwipeLayout(() =>
+      //   Navigation.handleAction(Routes.BACKUP_SHEET, {
+      //     single: true,
+      //     step: WalletBackupStepTypes.existing_user,
+      //   })
+      // );
     }, BACKUP_SHEET_DELAY_MS);
   return;
 };
