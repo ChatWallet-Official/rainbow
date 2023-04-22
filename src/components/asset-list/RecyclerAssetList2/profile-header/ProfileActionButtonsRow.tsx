@@ -287,6 +287,11 @@ function MoreButton() {
         actionTitle: lang.t('button.my_qr_code'),
         icon: { iconType: 'SYSTEM', iconValue: 'qrcode' },
       },
+      {
+        actionKey: 'activity',
+        actionTitle: lang.t('button.activity'),
+        icon: { iconType: 'SYSTEM', iconValue: 'doc.text.below.ecg' },
+      },
       mostRecentWalletConnectors.length > 0 || activeWCV2Sessions.length > 0
         ? {
             actionKey: 'connectedApps',
@@ -304,6 +309,9 @@ function MoreButton() {
         handlePressCopy();
       }
       if (e.nativeEvent.actionKey === 'qrCode') {
+        handlePressQRCode();
+      }
+      if (e.nativeEvent.actionKey === 'activity') {
         handlePressQRCode();
       }
       if (e.nativeEvent.actionKey === 'connectedApps') {

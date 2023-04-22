@@ -177,6 +177,7 @@
       }
     },
     "button": {
+      "activity": "Activity",
       "add": "Add",
       "add_cash": "Add Cash",
       "add_to_list": "Add to List",

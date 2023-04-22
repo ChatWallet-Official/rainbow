@@ -122,6 +122,12 @@ const getColorsByTheme = (darkMode?: boolean) => {
     lightOrange: '#FFA64D', // '255, 166, 77'
     mediumGrey: '#A1A5B3', // '161, 165, 179'
     mintBackground: '#F2F2F2',
+    mintBlack: 'rgba(0, 0, 0, 1.0)',
+    mintBlack06: 'rgba(0, 0, 0, 0.06)',
+    mintBlack10: 'rgba(0, 0, 0, 0.1)',
+    mintBlack30: 'rgba(0, 0, 0, 0.3)',
+    mintBlack60: 'rgba(0, 0, 0, 0.6)',
+    mintBlack80: 'rgba(0, 0, 0, 0.8)',
     mintDark: '#00E0A9', // '0, 224, 169'
     mintGreen: '#20EA7D',
     mintLabel: '#FAFAFA',

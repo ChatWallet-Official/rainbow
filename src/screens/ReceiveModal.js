@@ -15,16 +15,18 @@ import { useNavigation } from '../navigation/Navigation';
 import { abbreviations, deviceUtils } from '../utils';
 import { useAccountProfile } from '@/hooks';
 import styled from '@/styled-thing';
-import { padding, shadow } from '@/styles';
+import { padding, shadow, colors } from '@/styles';
+import { View, StyleSheet } from 'react-native';
+import { EmojiAvatar } from '@/components/asset-list/RecyclerAssetList2/profile-header/ProfileAvatarRow';
 
 const QRCodeSize = ios ? 250 : Math.min(230, deviceUtils.dimensions.width - 20);
 
 const AddressText = styled(TruncatedAddress).attrs(({ theme: { colors } }) => ({
   align: 'center',
-  color: colors.whiteLabel,
+  color: colors.mintBlack30,
   lineHeight: 'loosest',
   opacity: 0.6,
-  size: 'large',
+  size: 12,
   weight: 'semibold',
 }))({
   width: '100%',
@@ -54,9 +56,9 @@ const QRWrapper = styled(Column).attrs({ align: 'center' })(
 
 const NameText = styled(Text).attrs(({ theme: { colors } }) => ({
   align: 'center',
-  color: colors.whiteLabel,
+  color: colors.mintBlack80,
   letterSpacing: 'roundedMedium',
-  size: 'bigger',
+  size: 20,
   weight: 'bold',
 }))({});
 
@@ -85,21 +87,24 @@ export default function ReceiveModal() {
   return (
     <Container testID="receive-modal">
       <TouchableBackdrop onPress={goBack} />
-      <Handle />
       <ColumnWithMargins align="center" margin={24}>
+        <View style={styles.avatarContainer}>
+          <EmojiAvatar size={80} />
+        </View>
         <QRWrapper>
-          <QRCode size={QRCodeSize} value={checksummedAddress} />
+          <View style={styles.qrContainer}>
+            <QRCode size={QRCodeSize} value={checksummedAddress} />
+          </View>
+          <CopyFloatingEmojis
+            onPress={handleCopiedText}
+            textToCopy={checksummedAddress}
+          >
+            <ColumnWithMargins margin={2}>
+              <NameText>{accountName}</NameText>
+              <AddressText address={checksummedAddress} />
+            </ColumnWithMargins>
+          </CopyFloatingEmojis>
         </QRWrapper>
-        <CopyFloatingEmojis
-          onPress={handleCopiedText}
-          textToCopy={checksummedAddress}
-        >
-          <ColumnWithMargins margin={2}>
-            <NameText>{accountName}</NameText>
-            <AddressText address={checksummedAddress} />
-          </ColumnWithMargins>
-        </CopyFloatingEmojis>
-        <ShareButton accountAddress={checksummedAddress} />
       </ColumnWithMargins>
       <ToastPositionContainer>
         <CopyToast copiedText={copiedText} copyCount={copyCount} />
@@ -107,3 +112,21 @@ export default function ReceiveModal() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  avatarContainer: {
+    borderColor: colors.white,
+    borderWidth: 10,
+    borderRadius: 90 / 2.5,
+    width: 90,
+    height: 90,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    bottom: -60,
+    zIndex: 1,
+  },
+  qrContainer: {
+    marginVertical: 20,
+  },
+});
