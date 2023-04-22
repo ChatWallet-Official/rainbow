@@ -12,6 +12,13 @@ export const globalColors = {
   green90: '#005723',
   green100: '#003816',
 
+  black: 'rgba(0, 0, 0, 1.0)',
+  black06: 'rgba(0, 0, 0, 0.06)',
+  black10: 'rgba(0, 0, 0, 0.1)',
+  black30: 'rgba(0, 0, 0, 0.3)',
+  black60: 'rgba(0, 0, 0, 0.6)',
+  black80: 'rgba(0, 0, 0, 0.8)',
+
   blue10: '#EDF9FF',
   blue20: '#D1EDFF',
   blue30: '#A3D7FF',
@@ -172,6 +179,7 @@ export type ContextualColorValue<Value> = {
 };
 
 export type BackgroundColor =
+  | 'card'
   | 'surfacePrimary'
   | 'surfacePrimaryElevated'
   | 'surfaceSecondary'
@@ -200,6 +208,16 @@ export const backgroundColors: Record<
   BackgroundColor,
   BackgroundColorValue | ContextualColorValue<BackgroundColorValue>
 > = {
+  'card': {
+    light: {
+      color: '#FAFAFA',
+      mode: 'light',
+    },
+    dark: {
+      color: deprecatedColors.darker,
+      mode: 'dark',
+    },
+  },
   'surfacePrimary': {
     light: {
       color: globalColors.white100,
@@ -389,6 +407,12 @@ export type ForegroundColor =
   | 'labelSecondary'
   | 'labelTertiary'
   | 'labelQuaternary'
+  | 'black'
+  | 'black06'
+  | 'black10'
+  | 'black30'
+  | 'black60'
+  | 'black80'
   | 'blue'
   | 'green'
   | 'red'
@@ -465,6 +489,30 @@ export const foregroundColors: Record<
   'labelQuaternary': {
     light: globalColors.grey60,
     dark: globalColors.white60,
+  },
+  'black': {
+    light: globalColors.black,
+    dark: globalColors.black,
+  },
+  'black06': {
+    light: globalColors.black06,
+    dark: globalColors.black06,
+  },
+  'black10': {
+    light: globalColors.black10,
+    dark: globalColors.black10,
+  },
+  'black30': {
+    light: globalColors.black30,
+    dark: globalColors.black30,
+  },
+  'black60': {
+    light: globalColors.black60,
+    dark: globalColors.black60,
+  },
+  'black80': {
+    light: globalColors.black80,
+    dark: globalColors.black80,
   },
   'blue': selectBackgroundAsForeground('blue'),
   'green': selectBackgroundAsForeground('green'),
@@ -687,6 +735,10 @@ export const textColors = selectForegroundColors(
   'labelSecondary',
   'labelTertiary',
   'labelQuaternary',
+  'black',
+  'black30',
+  'black60',
+  'black80',
   'blue',
   'green',
   'red',

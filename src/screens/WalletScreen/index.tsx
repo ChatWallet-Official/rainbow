@@ -31,7 +31,7 @@ import { useNavigation } from '@/navigation';
 import { updateRefetchSavings } from '@/redux/data';
 import { emitPortfolioRequest } from '@/redux/explorer';
 import Routes from '@rainbow-me/routes';
-import { position } from '@/styles';
+import { colors, position } from '@/styles';
 import { Toast, ToastPositionContainer } from '@/components/toasts';
 import { useRecoilValue } from 'recoil';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -287,5 +287,6 @@ const styles = StyleSheet.create({
   page: {
     ...position.sizeAsObject('100%'),
     flex: 1,
+    backgroundColor: colors.mintBackground,
   },
 });

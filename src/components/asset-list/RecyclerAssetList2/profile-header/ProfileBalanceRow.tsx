@@ -27,14 +27,14 @@ export function ProfileBalanceRow({ totalValue }: { totalValue: string }) {
         </Box>
       ) : (
         <Heading
-          color="label"
+          color="black80"
           numberOfLines={1}
           size={
             totalValue?.length > 14
-              ? '26px / 30px (Deprecated)'
-              : '34px / 41px (Deprecated)'
+              ? '20px / 22px (Deprecated)'
+              : '23px / 27px (Deprecated)'
           }
-          weight="heavy"
+          weight="bold"
           testID="balance-text"
         >
           {totalValue}

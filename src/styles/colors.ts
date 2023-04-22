@@ -121,9 +121,11 @@ const getColorsByTheme = (darkMode?: boolean) => {
     lightGrey: '#CDCFD4', // '205, 207, 212'
     lightOrange: '#FFA64D', // '255, 166, 77'
     mediumGrey: '#A1A5B3', // '161, 165, 179'
+    mintBackground: '#F2F2F2',
     mintDark: '#00E0A9', // '0, 224, 169'
     mintGreen: '#20EA7D',
     mintLabel: '#FAFAFA',
+    mintRed: '#FF5E5E',
     neonSkyblue: '#34FFFF', // '52, 255, 255'
     offWhite: '#F8F9FA', // '248, 249, 250'
     offWhite80: '#1C1F27',

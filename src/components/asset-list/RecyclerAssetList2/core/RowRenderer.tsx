@@ -33,6 +33,7 @@ import { ReceiveAssetsCard } from '@/components/cards/ReceiveAssetsCard';
 import { CardRowWrapper } from '../cards/CardRowWrapper';
 import { DiscoverMoreButton } from './DiscoverMoreButton';
 import { RotatingLearnCard } from '@/components/cards/RotatingLearnCard';
+import { ProfileInfoRow } from '../profile-header/ProfileInfoRow';
 
 function rowRenderer(
   type: CellType,
@@ -50,6 +51,8 @@ function rowRenderer(
     case CellType.PROFILE_AVATAR_ROW_SPACE_AFTER:
     case CellType.PROFILE_AVATAR_ROW_SPACE_BEFORE:
     case CellType.PROFILE_BALANCE_ROW_SPACE_AFTER:
+    case CellType.PROFILE_INFO_ROW_SPACE_AFTER:
+    case CellType.PROFILE_INFO_ROW_SPACE_BEFORE:
     case CellType.PROFILE_NAME_ROW_SPACE_AFTER:
     case CellType.SAVINGS_HEADER_SPACE_BEFORE:
     case CellType.EMPTY_WALLET_SPACER:
@@ -129,6 +132,15 @@ function rowRenderer(
       return (
         <ProfileRowWrapper>
           <ProfileBalanceRow
+            totalValue={(data as AssetsHeaderExtraData).value}
+          />
+        </ProfileRowWrapper>
+      );
+    case CellType.PROFILE_INFO_ROW:
+      return (
+        <ProfileRowWrapper>
+          <ProfileInfoRow
+            testIDPrefix="profile-name"
             totalValue={(data as AssetsHeaderExtraData).value}
           />
         </ProfileRowWrapper>

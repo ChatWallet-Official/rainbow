@@ -59,6 +59,14 @@ export const fonts = {
       fontFamily: ios ? 'SF Mono' : 'SFMono-Medium',
       fontWeight: ios ? fontWeights.medium : 'normal',
     },
+    bold: {
+      fontFamily: ios ? 'SF Mono' : 'SFMono-Bold',
+      fontWeight: ios ? fontWeights.bold : 'normal',
+    },
+    heavy: {
+      fontFamily: ios ? 'SF Mono' : 'SFMono-Heavy',
+      fontWeight: ios ? fontWeights.heavy : 'normal',
+    },
   },
 } as const;
 

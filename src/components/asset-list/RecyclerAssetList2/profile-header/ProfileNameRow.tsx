@@ -77,7 +77,7 @@ export function ProfileNameRow({
 
   const horizontalInset = 19;
   const accountNameLeftOffset = 15;
-  const caretIconWidth = 22;
+  const caretIconWidth = 15;
   const maxWidth =
     deviceWidth -
     (caretIconWidth + accountNameLeftOffset) -
@@ -98,9 +98,9 @@ export function ProfileNameRow({
               <Inline alignVertical="center" space="4px" wrap={false}>
                 <Box style={{ maxWidth }}>
                   <Text
-                    color="label"
+                    color="black80"
                     numberOfLines={1}
-                    size="23px / 27px (Deprecated)"
+                    size="16px / 22px (Deprecated)"
                     weight="bold"
                   >
                     {name}
@@ -108,8 +108,8 @@ export function ProfileNameRow({
                 </Box>
                 <Icon
                   color={iconColor}
-                  height={9}
-                  name="caretDownIcon"
+                  height={15}
+                  name="mintCaretDownIcon"
                   width={caretIconWidth}
                 />
               </Inline>

@@ -190,38 +190,18 @@ const withBriefBalanceSection = (
       value: totalValue,
     },
     {
-      type: 'PROFILE_AVATAR_ROW_SPACE_BEFORE',
-      uid: 'profile-avatar-space-before',
+      type: 'PROFILE_INFO_ROW_SPACE_BEFORE',
+      uid: 'profile-info-space-before',
     },
     {
-      type: 'PROFILE_AVATAR_ROW',
-      uid: 'profile-avatar',
+      type: 'PROFILE_INFO_ROW',
+      uid: 'profile-info',
+      value: totalValue,
     },
     {
-      type: 'PROFILE_AVATAR_ROW_SPACE_AFTER',
-      uid: 'profile-avatar-space-after',
+      type: 'PROFILE_INFO_ROW_SPACE_AFTER',
+      uid: 'profile-info-space-after',
     },
-    {
-      type: 'PROFILE_NAME_ROW',
-      uid: 'profile-name',
-    },
-    {
-      type: 'PROFILE_NAME_ROW_SPACE_AFTER',
-      uid: 'profile-name-space-after',
-    },
-    ...(!hasTokens && !isLoadingAssets
-      ? []
-      : [
-          {
-            type: 'PROFILE_BALANCE_ROW',
-            uid: 'profile-balance',
-            value: totalValue,
-          },
-          {
-            type: 'PROFILE_BALANCE_ROW_SPACE_AFTER',
-            uid: 'profile-balance-space-after',
-          },
-        ]),
     {
       type: 'PROFILE_ACTION_BUTTONS_ROW',
       uid: 'profile-action-buttons',

@@ -27,7 +27,7 @@ import { usePersistentDominantColorFromImage } from '@/hooks/usePersistentDomina
 
 export const ProfileAvatarRowHeight = 80;
 export const ProfileAvatarRowTopInset = 24;
-export const ProfileAvatarSize = 80;
+export const ProfileAvatarSize = 100;
 
 export function ProfileAvatarRow({
   size = ProfileAvatarSize,
@@ -162,40 +162,9 @@ export function ProfileAvatarRow({
               <Box
                 alignItems="center"
                 background="accent"
-                borderRadius={size / 2}
+                borderRadius={size / 2.5}
                 height={{ custom: size }}
                 justifyContent="center"
-                shadow={
-                  hasLoaded
-                    ? {
-                        custom: {
-                          ios: [
-                            {
-                              x: 0,
-                              y: 2,
-                              blur: 8,
-                              opacity: 0.08,
-                              color: 'shadowFar',
-                            },
-                            {
-                              x: 0,
-                              y: 8,
-                              blur: 24,
-                              opacity: 0.3,
-                              color:
-                                colorMode === 'dark' ? 'shadowFar' : 'accent',
-                            },
-                          ],
-                          android: {
-                            elevation: 30,
-                            opacity: 0.8,
-                            color:
-                              colorMode === 'dark' ? 'shadowFar' : 'accent',
-                          },
-                        },
-                      }
-                    : undefined
-                }
                 style={{
                   backgroundColor: accountImage ? colors.skeleton : accentColor,
                 }}
@@ -208,7 +177,7 @@ export function ProfileAvatarRow({
                         <Skeleton animated>
                           <Box
                             background="body (Deprecated)"
-                            borderRadius={size / 2}
+                            borderRadius={size / 2.5}
                             height={{ custom: size }}
                             width={{ custom: size }}
                           />
@@ -220,7 +189,7 @@ export function ProfileAvatarRow({
                     {accountImage ? (
                       <Box
                         as={ImgixImage}
-                        borderRadius={size / 2}
+                        borderRadius={size / 2.5}
                         height={{ custom: size }}
                         source={{ uri: accountImage }}
                         width={{ custom: size }}
@@ -253,7 +222,7 @@ export function EmojiAvatar({ size }: { size: number }) {
     <AccentColorProvider color={accentColor}>
       <Box
         background="accent"
-        borderRadius={size / 2}
+        borderRadius={size / 2.5}
         height={{ custom: size }}
         width={{ custom: size }}
       >

@@ -123,8 +123,8 @@ const MemoizedBalanceCoinRow = React.memo(
       percentChange && percentageChangeDisplay.charAt(0) !== '-';
 
     const changeColor = isPositive
-      ? theme.colors.green
-      : theme.colors.blueGreyDark50;
+      ? theme.colors.mintGreen
+      : theme.colors.mintRed;
 
     const nativeDisplay = item?.balance?.display;
 
@@ -153,20 +153,15 @@ const MemoizedBalanceCoinRow = React.memo(
                 <View style={sx.textWrapper}>
                   <Text
                     numberOfLines={1}
-                    color="primary (Deprecated)"
+                    color="black80"
                     size="16px / 22px (Deprecated)"
-                    weight="semibold"
+                    weight="medium"
                   >
-                    {item.name}
+                    {nativeDisplay ?? ''}
                   </Text>
                 </View>
 
-                <Text
-                  align="right"
-                  color={{ custom: valueColor }}
-                  size="16px / 22px (Deprecated)"
-                  weight="medium"
-                >
+                <Text align="right" color="black80" size="12pt" weight="medium">
                   {item?.native?.balance?.display ??
                     `${nativeCurrencySymbol}0.00`}
                 </Text>
@@ -175,19 +170,19 @@ const MemoizedBalanceCoinRow = React.memo(
               <View style={[sx.row, sx.bottom]}>
                 <View style={sx.textWrapper}>
                   <Text
-                    color={{ custom: theme.colors.blueGreyDark50 }}
+                    color="black60"
                     numberOfLines={1}
-                    size="14px / 19px (Deprecated)"
-                    weight="medium"
+                    size="12pt"
+                    weight="regular"
                   >
-                    {nativeDisplay ?? ''}
+                    {item.name}
                   </Text>
                 </View>
 
                 <Text
                   align="right"
                   color={{ custom: changeColor }}
-                  size="14px / 19px (Deprecated)"
+                  size="12pt"
                   weight="medium"
                 >
                   {percentageChangeDisplay}

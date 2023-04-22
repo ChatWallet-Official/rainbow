@@ -77,7 +77,7 @@ const DEFAULT_CONFIG = {
   optimism_mainnet_rpc: OPTIMISM_MAINNET_RPC,
   polygon_mainnet_rpc: POLYGON_MAINNET_RPC,
   bsc_mainnet_rpc: BSC_MAINNET_RPC,
-  swagg_enabled: true,
+  swagg_enabled: false,
   trace_call_block_number_offset: 20,
   profiles_enabled: true,
 };

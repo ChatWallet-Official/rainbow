@@ -47,6 +47,10 @@ import InfoIcon from './svg/InfoIcon';
 import InstagramIcon from './svg/InstagramIcon';
 import LTCIcon from './svg/LTCIcon';
 import LockIcon from './svg/LockIcon';
+import MintCaretDownIcon from './svg/MintCaretDownIcon';
+import MintBuyIcon from './svg/MintBuyIcon';
+import MintSendIcon from './svg/MintSendIcon';
+import MintMoreIcon from './svg/MintMoreIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
 import OfflineIcon from './svg/OfflineIcon';
 import PasscodeIcon from './svg/PasscodeIcon';
@@ -126,6 +130,10 @@ const IconTypes = {
   instagram: InstagramIcon,
   lock: LockIcon,
   ltcCoin: LTCIcon,
+  mintCaretDownIcon: MintCaretDownIcon,
+  mintBuyIcon: MintBuyIcon,
+  mintSendIcon: MintSendIcon,
+  mintMoreIcon: MintMoreIcon,
   minusCircled: MinusCircledIcon,
   offline: OfflineIcon,
   passcode: PasscodeIcon,

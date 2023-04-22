@@ -38,6 +38,7 @@ import config from '@/model/config';
 import { useAccountAccentColor } from '@/hooks/useAccountAccentColor';
 import { getAllActiveSessionsSync } from '@/utils/walletConnect';
 import { addressCopiedToastAtom } from '@/recoil/addressCopiedToastAtom';
+import { Icon } from '@/components/icons';
 
 export const ProfileActionButtonsRowHeight = 80;
 
@@ -67,7 +68,7 @@ export function ProfileActionButtonsRow() {
     <Box width="full">
       <Inset horizontal={{ custom: 17 }}>
         <AccentColorProvider color={accentColor}>
-          <Columns>
+          <Columns space="16px">
             {addCashEnabled && (
               <Column>
                 <Animated.View style={[expandStyle]}>
@@ -113,52 +114,20 @@ function ActionButton({
   const { colorMode } = useColorMode();
   return (
     <ButtonPressAnimation onPress={onPress} scale={0.8} testID={testID}>
-      <Stack alignHorizontal="center" space="10px">
-        <Box
-          alignItems="center"
-          background="accent"
-          borderRadius={60}
-          height={{ custom: 60 }}
-          justifyContent="center"
-          shadow={{
-            custom: {
-              ios: [
-                {
-                  x: 0,
-                  y: 8,
-                  blur: 24,
-                  opacity: 0.3,
-                  color: colorMode === 'dark' ? 'shadowFar' : 'accent',
-                },
-                {
-                  x: 0,
-                  y: 2,
-                  blur: 6,
-                  opacity: 0.04,
-                  color: 'shadowFar',
-                },
-              ],
-              android: {
-                elevation: 21,
-                opacity: 1,
-                color: colorMode === 'dark' ? 'shadowFar' : 'accent',
-              },
-            },
-          }}
-          width={{ custom: 60 }}
-        >
-          <Text align="center" color="label" size="icon 23px" weight="bold">
-            {icon}
+      <Box
+        alignItems="center"
+        background="card"
+        borderRadius={20}
+        height={{ custom: 72 }}
+        justifyContent="center"
+      >
+        <Stack alignHorizontal="center" space="10px">
+          <Icon height={30} name={icon} />
+          <Text color="black80" size="12px / 14px (Deprecated)" weight="medium">
+            {children}
           </Text>
-        </Box>
-        <Text
-          color="secondary80 (Deprecated)"
-          size="14px / 19px (Deprecated)"
-          weight="medium"
-        >
-          {children}
-        </Text>
-      </Stack>
+        </Stack>
+      </Box>
     </ButtonPressAnimation>
   );
 }
@@ -188,7 +157,11 @@ function BuyButton() {
 
   return (
     <Box>
-      <ActionButton icon="􀁌" onPress={handlePress} testID="buy-button">
+      <ActionButton
+        icon="mintBuyIcon"
+        onPress={handlePress}
+        testID="buy-button"
+      >
         {lang.t('wallet.buy')}
       </ActionButton>
     </Box>
@@ -252,7 +225,11 @@ function SendButton() {
   }, [navigate, isReadOnlyWallet]);
 
   return (
-    <ActionButton icon="􀈟" onPress={handlePress} testID="send-button">
+    <ActionButton
+      icon="mintSendIcon"
+      onPress={handlePress}
+      testID="send-button"
+    >
       {lang.t('button.send')}
     </ActionButton>
   );
@@ -347,7 +324,7 @@ function MoreButton() {
       menuConfig={menuConfig}
       onPressMenuItem={handlePressMenuItem}
     >
-      <ActionButton icon="􀍡" testID="more-button">
+      <ActionButton icon="mintMoreIcon" testID="more-button">
         {lang.t('button.more')}
       </ActionButton>
     </ContextMenuButton>

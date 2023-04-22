@@ -107,25 +107,11 @@ export default React.memo(function FastCoinIcon({
   return (
     <View style={sx.container}>
       {eth ? (
-        <View
-          style={[
-            sx.coinIconFallback,
-            sx.reactCoinIconContainer,
-            sx.withShadow,
-            { shadowColor },
-          ]}
-        >
+        <View style={[sx.coinIconFallback, sx.reactCoinIconContainer]}>
           <Image source={EthIcon} style={sx.coinIconFallback} />
         </View>
       ) : shouldRenderLocalCoinIconImage ? (
-        <View
-          style={[
-            sx.coinIconFallback,
-            sx.reactCoinIconContainer,
-            sx.withShadow,
-            { shadowColor },
-          ]}
-        >
+        <View style={[sx.coinIconFallback, sx.reactCoinIconContainer]}>
           <Image
             resizeMode="contain"
             source={CoinIconsImages[formattedSymbol]}
@@ -163,9 +149,9 @@ export default React.memo(function FastCoinIcon({
 const sx = StyleSheet.create({
   coinIconFallback: {
     borderRadius: 20,
-    height: 40,
+    height: 35,
     overflow: 'visible',
-    width: 40,
+    width: 35,
   },
   container: {
     elevation: 6,
