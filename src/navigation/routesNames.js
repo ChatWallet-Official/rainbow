@@ -10,6 +10,8 @@ const Routes = {
   AVATAR_BUILDER_WALLET: 'AvatarBuilderWallet',
   BACKUP_SCREEN: 'BackupScreen',
   BACKUP_SHEET: 'BackupSheet',
+  BUY_FLOW: 'BuyFlow',
+  BUY_SCREEN: 'BuyScreen',
   CHANGE_WALLET_SHEET: 'ChangeWalletSheet',
   CHANGE_WALLET_SHEET_NAVIGATOR: 'ChangeWalletSheetNavigator',
   HARDWARE_WALLET_TX_NAVIGATOR: 'HardwareWalletTxNavigator',

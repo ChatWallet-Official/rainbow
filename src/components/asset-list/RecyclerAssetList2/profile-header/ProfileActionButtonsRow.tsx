@@ -143,6 +143,9 @@ function BuyButton() {
       return;
     }
 
+    navigate(Routes.BUY_FLOW);
+    return;
+
     if (!config.wyre_enabled) {
       navigate(Routes.EXPLAIN_SHEET, { type: 'wyre_degradation' });
       return;

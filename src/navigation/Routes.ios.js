@@ -89,6 +89,7 @@ import { AddWalletNavigator } from './AddWalletNavigator';
 import { HardwareWalletTxNavigator } from './HardwareWalletTxNavigator';
 import { RewardsSheet } from '@/screens/rewards/RewardsSheet';
 import { Portal } from '@/screens/Portal';
+import BuyScreen from '@/screens/BuyScreen';
 
 const Stack = createStackNavigator();
 const NativeStack = createNativeStackNavigator();
@@ -107,6 +108,26 @@ function SendFlowNavigator() {
       <Stack.Screen
         component={SendSheet}
         name={Routes.SEND_SHEET}
+        options={sheetPreset}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function BuyFlowNavigator() {
+  return (
+    <Stack.Navigator
+      {...stackNavigationConfig}
+      initialRouteName={Routes.BUY_SCREEN}
+    >
+      <Stack.Screen
+        component={ModalScreen}
+        name={Routes.MODAL_SCREEN}
+        options={overlayExpandedPreset}
+      />
+      <Stack.Screen
+        component={BuyScreen}
+        name={Routes.BUY_SCREEN}
         options={sheetPreset}
       />
     </Stack.Navigator>
@@ -415,6 +436,7 @@ function NativeStackNavigator() {
           />
         </>
       )}
+      <NativeStack.Screen component={BuyFlowNavigator} name={Routes.BUY_FLOW} />
       <NativeStack.Screen
         component={SendFlowNavigator}
         name={Routes.SEND_SHEET_NAVIGATOR}

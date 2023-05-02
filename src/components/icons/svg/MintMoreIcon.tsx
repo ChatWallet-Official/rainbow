@@ -2,7 +2,7 @@ import React from 'react';
 import { Circle, ClipPath, Defs, G, Path, SvgProps } from 'react-native-svg';
 import Svg from '../Svg';
 
-const MintCaretDownIcon = ({ color, ...props }: SvgProps) => (
+const MintMoreIcon = ({ color, ...props }: SvgProps) => (
   <Svg
     width={60}
     height={60}
@@ -25,4 +25,4 @@ const MintCaretDownIcon = ({ color, ...props }: SvgProps) => (
   </Svg>
 );
 
-export default MintCaretDownIcon;
+export default MintMoreIcon;

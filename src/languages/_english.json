@@ -361,6 +361,7 @@
       "backup_success": "Your wallet has been backed up successfully!"
     },
     "contacts": {
+      "buy_header": "Buy",
       "contact_row": {
         "balance_eth": "%{balanceEth} ETH"
       },

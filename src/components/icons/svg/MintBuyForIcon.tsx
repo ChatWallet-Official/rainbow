@@ -2,7 +2,7 @@ import React from 'react';
 import { Circle, Path, Rect, SvgProps } from 'react-native-svg';
 import Svg from '../Svg';
 
-const MintBuyIcon = ({ color, ...props }: SvgProps) => (
+const MintBuyForIcon = ({ color, ...props }: SvgProps) => (
   <Svg
     width={60}
     height={60}
@@ -12,17 +12,14 @@ const MintBuyIcon = ({ color, ...props }: SvgProps) => (
     {...props}
   >
     <Circle cx={30} cy={30} r={30} fill="#20EA7D" />
-    <Rect
-      x={14}
-      y={18}
-      width={32}
-      height={24}
-      rx={4}
+    <Path
+      d="M42.8 25.998L30 40.398l-12.8-14.4"
       stroke="#FAFAFA"
       strokeWidth={4}
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
-    <Path d="M14 26h32" stroke="#fff" strokeWidth={4} />
   </Svg>
 );
 
-export default MintBuyIcon;
+export default MintBuyForIcon;

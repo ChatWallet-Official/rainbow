@@ -49,6 +49,7 @@ import LTCIcon from './svg/LTCIcon';
 import LockIcon from './svg/LockIcon';
 import MintCaretDownIcon from './svg/MintCaretDownIcon';
 import MintBuyIcon from './svg/MintBuyIcon';
+import MintBuyForIcon from './svg/MintBuyForIcon';
 import MintSendIcon from './svg/MintSendIcon';
 import MintMoreIcon from './svg/MintMoreIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
@@ -132,6 +133,7 @@ const IconTypes = {
   ltcCoin: LTCIcon,
   mintCaretDownIcon: MintCaretDownIcon,
   mintBuyIcon: MintBuyIcon,
+  mintBuyForIcon: MintBuyForIcon,
   mintSendIcon: MintSendIcon,
   mintMoreIcon: MintMoreIcon,
   minusCircled: MinusCircledIcon,
