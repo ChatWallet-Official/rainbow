@@ -27,6 +27,8 @@ import {
   convertAmountFromNativeValue,
   formatInputDecimals,
 } from '@/helpers/utilities';
+import { useNavigation } from '@/navigation/Navigation';
+import Routes from '@/navigation/routesNames';
 
 const sheetHeight = deviceUtils.dimensions.height - (IS_ANDROID ? 30 : 10);
 const statusBarHeight = IS_IOS
@@ -71,12 +73,13 @@ export default function BuyScreen() {
   const { isSmallPhone, isTinyPhone } = useDimensions();
   const keyboardHeight = useKeyboardHeight();
   const { nativeCurrency } = useAccountSettings();
+  const { goBack, navigate } = useNavigation();
 
   const [selected, setSelected] = useState({
     price: {
       value: 1827.97,
     },
-    decimals: 2,
+    decimals: 6,
   });
 
   const [showNativeValue, setShowNativeValue] = useState(true);
@@ -152,8 +155,8 @@ export default function BuyScreen() {
   );
 
   const showPayOptionsSheet = useCallback(async () => {
-    console.log('Review Clicked');
-  }, []);
+    navigate(Routes.PAY_OPTIONS_SHEET);
+  }, [navigate]);
 
   const onFocusAssetInput = useCallback(() => {
     setLastFocusedInputHandle(assetInputRef);

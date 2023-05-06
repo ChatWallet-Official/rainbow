@@ -1946,6 +1946,7 @@
           "please_go_back_and_reconnect": "Please go back to the dapp and reconnect it to your wallet",
           "transaction_status": "Failed to send transaction status"
         },
+        "pay_title": "Pay",
         "checkboxes": {
           "clear_profile_information": "Clear profile information",
           "point_name_to_recipient": "Point this name to the recipient’s wallet address",

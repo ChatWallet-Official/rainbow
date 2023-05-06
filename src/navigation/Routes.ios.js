@@ -14,6 +14,7 @@ import ExpandedAssetSheet from '../screens/ExpandedAssetSheet';
 import ExplainSheet from '../screens/ExplainSheet';
 import ExternalLinkWarningSheet from '../screens/ExternalLinkWarningSheet';
 import ModalScreen from '../screens/ModalScreen';
+import PayOptionsSheet from '@/screens/PayOptionsSheet';
 import ProfileSheet from '../screens/ProfileSheet';
 import ReceiveModal from '../screens/ReceiveModal';
 import { RestoreSheet } from '../screens/RestoreSheet';
@@ -256,6 +257,11 @@ function NativeStackNavigator() {
       <Stack.Screen
         component={SendConfirmationSheet}
         name={Routes.SEND_CONFIRMATION_SHEET}
+        {...sendConfirmationSheetConfig}
+      />
+      <Stack.Screen
+        component={PayOptionsSheet}
+        name={Routes.PAY_OPTIONS_SHEET}
         {...sendConfirmationSheetConfig}
       />
       <NativeStack.Screen
