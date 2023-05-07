@@ -50,9 +50,12 @@ import LockIcon from './svg/LockIcon';
 import MintCaretDownIcon from './svg/MintCaretDownIcon';
 import MintBuyIcon from './svg/MintBuyIcon';
 import MintBuyForIcon from './svg/MintBuyForIcon';
+import MintEthIcon from './svg/MintEthIcon';
 import MintPlusIcon from './svg/MintPlusIcon';
+import MintRightIcon from './svg/MintRightIcon';
 import MintSendIcon from './svg/MintSendIcon';
 import MintMoreIcon from './svg/MintMoreIcon';
+import MintXIcon from './svg/MintXIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
 import OfflineIcon from './svg/OfflineIcon';
 import PasscodeIcon from './svg/PasscodeIcon';
@@ -135,9 +138,12 @@ const IconTypes = {
   mintCaretDownIcon: MintCaretDownIcon,
   mintBuyIcon: MintBuyIcon,
   mintBuyForIcon: MintBuyForIcon,
+  mintEthIcon: MintEthIcon,
   mintPlusIcon: MintPlusIcon,
+  mintRightIcon: MintRightIcon,
   mintSendIcon: MintSendIcon,
   mintMoreIcon: MintMoreIcon,
+  mintXIcon: MintXIcon,
   minusCircled: MinusCircledIcon,
   offline: OfflineIcon,
   passcode: PasscodeIcon,

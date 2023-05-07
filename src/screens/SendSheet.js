@@ -751,7 +751,7 @@ export default function SendSheet(props) {
       label = lang.t('button.confirm_exchange.insufficient_funds');
     } else if (!isZeroAssetAmount) {
       disabled = false;
-      label = `􀕹 ${lang.t('button.confirm_exchange.review')}`;
+      label = `${lang.t('button.confirm_exchange.review')}`;
     }
 
     return { buttonDisabled: disabled, buttonLabel: label };
@@ -1039,7 +1039,7 @@ export default function SendSheet(props) {
             assetInputRef={assetInputRef}
             buttonRenderer={
               <SheetActionButton
-                color={colorForAsset}
+                color={colors.mintGreen}
                 disabled={buttonDisabled}
                 forceShadows
                 label={buttonLabel}

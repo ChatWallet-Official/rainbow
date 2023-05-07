@@ -155,7 +155,7 @@ const SheetActionButton: React.FC<Props> = ({
         backgroundColor={color}
         borderRadius={borderRadius}
         height={size === 'big' ? 56 : 46}
-        shadows={shadowsForButtonColor}
+        shadows={[]}
       >
         {isWhite && <WhiteButtonGradient colors={colors} />}
         {!isWhite && !isTransparent && !nftShadows && (

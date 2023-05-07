@@ -11,7 +11,7 @@ import {
   SheetTitle,
 } from '@/components/sheet';
 import lang from 'i18n-js';
-import BuyAssetFormField from './BuyAssetFormField';
+import MintAssetFormField from './MintAssetFormField';
 import {
   useAccountSettings,
   useDimensions,
@@ -175,7 +175,7 @@ export default function BuyScreen() {
           <SheetHandleFixedToTop showBlur={false} />
           <BuySheetTitle>{lang.t('contacts.buy_header')}</BuySheetTitle>
           <FormContainer isSmallPhone={isSmallPhone} isTinyPhone={isTinyPhone}>
-            <BuyAssetFormField
+            <MintAssetFormField
               autoFocus
               label="USD"
               placeholder="0"
@@ -189,7 +189,7 @@ export default function BuyScreen() {
               <Icon name="mintBuyForIcon" height={30} />
             </View>
 
-            <BuyAssetFormField
+            <MintAssetFormField
               autoFocus
               label="ETH"
               placeholder="0"

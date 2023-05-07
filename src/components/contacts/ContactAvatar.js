@@ -137,7 +137,7 @@ const ContactAvatar = ({ color, size = 'medium', value, ...props }) => {
       {...props}
       {...borders.buildCircleAsObject(dimensions)}
       backgroundColor={backgroundColor}
-      shadows={shadows}
+      shadows={[]}
     >
       <Centered flex={1}>
         <Text

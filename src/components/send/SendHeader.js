@@ -32,17 +32,20 @@ const AddressInputContainer = styled(Row).attrs({ align: 'center' })(
       : isSmallPhone
       ? padding.object(11, 19, 15)
       : padding.object(18, 19, 19)),
-    backgroundColor: colors.white,
+    backgroundColor: colors.mintBlack06,
     overflow: 'hidden',
-    width: '100%',
+    marginHorizontal: 20,
+    marginTop: 30,
+    borderRadius: 20,
+    height: 70,
   })
 );
 
 const AddressFieldLabel = styled(Label).attrs({
   size: 'large',
-  weight: 'bold',
+  weight: 'medium',
 })({
-  color: ({ theme: { colors } }) => colors.alpha(colors.blueGreyDark, 0.6),
+  color: ({ theme: { colors } }) => colors.mintBlack80,
   marginRight: 4,
   opacity: 1,
 });
@@ -238,30 +241,6 @@ export default function SendHeader({
           ref={recipientFieldRef}
           testID="send-asset-form-field"
         />
-        {isValidAddress && Boolean(hexAddress) && (
-          <ButtonPressAnimation
-            onPress={
-              isPreExistingContact
-                ? handleOpenContactActionSheet
-                : handleNavigateToContact
-            }
-          >
-            <Text
-              align="right"
-              color="appleBlue"
-              size="large"
-              style={{ paddingLeft: 4 }}
-              testID={
-                isPreExistingContact
-                  ? 'edit-contact-button'
-                  : 'add-contact-button'
-              }
-              weight="heavy"
-            >
-              {isPreExistingContact ? '􀍡' : ` 􀉯 ${lang.t('button.save')}`}
-            </Text>
-          </ButtonPressAnimation>
-        )}
         {isValidAddress && !hexAddress && isEmpty(contact?.address) && (
           <LoadingSpinner />
         )}

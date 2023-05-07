@@ -9,6 +9,8 @@ import { Text } from '@/components/text';
 import { analytics } from '@/analytics';
 import { useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
+import { TouchableOpacity } from 'react-native';
+import { Icon } from '@/components/icons';
 
 const GradientBackground = styled(RadialGradient).attrs(
   ({ theme: { colors }, width }) => {
@@ -47,7 +49,7 @@ const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
   width: ({ width }) => (android ? width - 38 : '100%'),
 });
 
-const BuyAssetFormField = (
+const MintAssetFormField = (
   {
     autoFocus,
     format,
@@ -58,6 +60,7 @@ const BuyAssetFormField = (
     onChange,
     onFocus,
     onPressButton,
+    onPressSelect,
     placeholder,
     value,
     testID,
@@ -109,29 +112,36 @@ const BuyAssetFormField = (
           testID={testID}
           value={value}
         />
-        <Text
-          align="right"
-          color={colors.mintLabel}
-          letterSpacing="roundedTight"
-          lineHeight={
-            android
-              ? isTinyPhone
-                ? 27
-                : android || isSmallPhone
-                ? 31
-                : 38
-              : null
-          }
-          size={isTinyPhone ? 'big' : android || isSmallPhone ? 'bigger' : 'h3'}
-          weight="medium"
-        >
-          {label.length > labelMaxLength
-            ? label.substring(0, labelMaxLength)
-            : label}
-        </Text>
+        <TouchableOpacity onPress={onPressSelect}>
+          <RowWithMargins margin={8} align={'center'}>
+            <Text
+              align="right"
+              color={colors.mintLabel}
+              letterSpacing="roundedTight"
+              lineHeight={
+                android
+                  ? isTinyPhone
+                    ? 27
+                    : android || isSmallPhone
+                    ? 31
+                    : 38
+                  : null
+              }
+              size={
+                isTinyPhone ? 'big' : android || isSmallPhone ? 'bigger' : 'h3'
+              }
+              weight="medium"
+            >
+              {label.length > labelMaxLength
+                ? label.substring(0, labelMaxLength)
+                : label}
+            </Text>
+            <Icon name="mintRightIcon" />
+          </RowWithMargins>
+        </TouchableOpacity>
       </RowWithMargins>
     </Wrapper>
   );
 };
 
-export default React.forwardRef(BuyAssetFormField);
+export default React.forwardRef(MintAssetFormField);

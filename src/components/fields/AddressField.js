@@ -8,6 +8,8 @@ import { Label } from '../text';
 import { useClipboard, useDimensions } from '@/hooks';
 import styled from '@/styled-thing';
 import { abbreviations, addressUtils } from '@/utils';
+import { TouchableOpacity } from 'react-native';
+import { Icon } from '../icons';
 
 const AddressInput = styled(Input).attrs({
   autoCapitalize: 'none',
@@ -17,7 +19,7 @@ const AddressInput = styled(Input).attrs({
   selectTextOnFocus: true,
   size: 'large',
   spellCheck: false,
-  weight: 'bold',
+  weight: 'medium',
 })({
   ...(android ? { height: 56 } : {}),
   flexGrow: 1,
@@ -35,9 +37,9 @@ const Placeholder = styled(Row)({
 
 const PlaceholderText = styled(Label).attrs({
   size: 'large',
-  weight: 'bold',
+  weight: 'regular',
 })({
-  color: ({ theme: { colors } }) => colors.alpha(colors.blueGreyDark, 0.3),
+  color: ({ theme: { colors } }) => colors.mintBlack30,
   opacity: 1,
 });
 
@@ -87,12 +89,16 @@ const AddressField = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, editable, name]);
 
+  const clean = () => {
+    handleChangeText('');
+  };
+
   return (
     <Row flex={1}>
       <AddressInput
         {...props}
         autoFocus={autoFocus}
-        color={isValid ? colors.appleBlue : colors.dark}
+        color={colors.mintBlack80}
         editable={editable}
         onBlur={expandAbbreviatedClipboard}
         onChangeText={handleChangeText}
@@ -105,12 +111,15 @@ const AddressField = (
         <Placeholder>
           <TouchableWithoutFeedback onPress={ref?.current?.focus}>
             <PlaceholderText>
-              {android || isTinyPhone
-                ? lang.t('fields.address.short_placeholder')
-                : lang.t('fields.address.long_placeholder')}
+              {lang.t('fields.address.short_placeholder')}
             </PlaceholderText>
           </TouchableWithoutFeedback>
         </Placeholder>
+      )}
+      {inputValue.length > 0 && (
+        <TouchableOpacity onPress={clean}>
+          <Icon name="mintXIcon" />
+        </TouchableOpacity>
       )}
     </Row>
   );

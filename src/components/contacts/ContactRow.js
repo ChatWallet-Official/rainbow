@@ -21,6 +21,7 @@ import {
   addressHashedColorIndex,
   addressHashedEmoji,
 } from '@/utils/profileUtils';
+import { Icon } from '../icons';
 
 const ContactAddress = styled(TruncatedAddress).attrs(
   ({ theme: { colors }, lite }) => ({
@@ -206,13 +207,16 @@ const ContactRow = (
                     : abbreviations.address(address, 4, 6)}
                 </ContactName>
               )}
-              <BottomRowText
-                color={colors.alpha(colors.blueGreyDark, 0.5)}
-                letterSpacing="roundedMedium"
-                weight="medium"
-              >
-                {cleanedUpBalance || 0} ETH
-              </BottomRowText>
+              <RowWithMargins margin={4}>
+                <Icon name="mintEthIcon" />
+                <BottomRowText
+                  color={colors.alpha(colors.blueGreyDark, 0.5)}
+                  letterSpacing="roundedMedium"
+                  weight="medium"
+                >
+                  {cleanedUpBalance || 0}
+                </BottomRowText>
+              </RowWithMargins>
             </Fragment>
           ) : (
             <Fragment>

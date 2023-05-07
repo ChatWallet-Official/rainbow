@@ -98,7 +98,7 @@ const ImageAvatar = ({
       {...props}
       {...borders.buildCircleAsObject(dimensions)}
       backgroundColor={colors.white}
-      shadows={shadows}
+      shadows={[]}
     >
       <Centered flex={1}>
         <Avatar

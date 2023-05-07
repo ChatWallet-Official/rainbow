@@ -36,7 +36,7 @@ const SectionTitle = styled(Text).attrs({
   size: 'lmedium',
   weight: 'heavy',
 })({
-  color: ({ theme: { colors } }) => colors.alpha(colors.blueGreyDark, 0.6),
+  color: ({ theme: { colors } }) => colors.mintBlack80,
   marginLeft: 19,
   marginTop: android ? 6 : 12,
 });
@@ -183,26 +183,26 @@ export default function SendContactList({
       tmp.push({
         data: filteredContacts,
         id: 'contacts',
-        title: `􀉮 ${lang.t('contacts.contacts_title')}`,
+        title: `${lang.t('contacts.recent_title')}`,
       });
     filteredAddresses.length &&
       tmp.push({
         data: filteredAddresses,
         id: 'accounts',
-        title: `􀢲 ${lang.t('contacts.my_wallets')}`,
+        title: `${lang.t('contacts.my_wallets')}`,
       });
     filteredWatchedAddresses.length &&
       tmp.push({
         data: filteredWatchedAddresses,
         id: 'watching',
-        title: `${isDarkMode ? '􀨭' : '􀦧'} ${lang.t('contacts.watching')}`,
+        title: `${lang.t('contacts.watching')}`,
       });
     currentInput?.length >= 3 &&
       filteredEnsSuggestions.length &&
       tmp.push({
         data: filteredEnsSuggestions,
         id: 'suggestions',
-        title: `􀊫 ${lang.t('contacts.suggestions')}`,
+        title: `${lang.t('contacts.suggestions')}`,
       });
     return tmp;
     // eslint-disable-next-line react-hooks/exhaustive-deps

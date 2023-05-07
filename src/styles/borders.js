@@ -21,7 +21,7 @@ border.buildCircle = size => `
 
 border.buildCircleAsObject = size => ({
   ...position.sizeAsObject(size),
-  borderRadius: size / 2,
+  borderRadius: size / 2.5,
 });
 
 border.buildRadius = (direction, value = border.radius) => {

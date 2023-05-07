@@ -6,6 +6,9 @@ import { useDimensions } from '@/hooks';
 import { supportedNativeCurrencies } from '@/references';
 import styled from '@/styled-thing';
 import { removeLeadingZeros } from '@/utils';
+import MintAssetFormField from '@/screens/BuyScreen/MintAssetFormField';
+import { Text, StyleSheet } from 'react-native';
+import { colors, fonts } from '@/styles';
 
 const footerMargin = getSoftMenuBarHeight() / 2;
 const FooterContainer = styled(Column).attrs({
@@ -18,7 +21,7 @@ const FooterContainer = styled(Column).attrs({
 
 const FormContainer = styled(Column).attrs({
   align: 'center',
-  justify: 'center',
+  justify: 'start',
 })({
   flex: 1,
   minHeight: ({ isSmallPhone, isTinyPhone }) =>
@@ -47,6 +50,7 @@ export default function SendAssetFormToken({
   selected,
   sendMaxBalance,
   txSpeedRenderer,
+  onPressSelectAsset,
   ...props
 }) {
   const { isSmallPhone, isTinyPhone } = useDimensions();
@@ -64,38 +68,34 @@ export default function SendAssetFormToken({
         isTinyPhone={isTinyPhone}
         {...props}
       >
-        <SendAssetFormField
+        <MintAssetFormField
           colorForAsset={colorForAsset}
           format={removeLeadingZeros}
           label={selected.symbol}
           onChange={onChangeAssetAmount}
           onFocus={onFocusAssetInput}
           onPressButton={sendMaxBalance}
+          onPressSelect={onPressSelectAsset}
           placeholder="0"
           ref={assetInputRef}
           testID="selected-asset-field"
           value={assetAmount}
         />
-        <Spacer isSmallPhone={isSmallPhone} isTinyPhone={isTinyPhone} />
-        <SendAssetFormField
-          autoFocus
-          colorForAsset={colors.alpha(colors.blueGreyDark, 0.8)}
-          label={nativeCurrency}
-          mask={nativeMask}
-          maxLabelColor={colors.alpha(colors.blueGreyDark, 0.6)}
-          onChange={onChangeNativeAmount}
-          onFocus={onFocusNativeInput}
-          onPressButton={sendMaxBalance}
-          placeholder={nativePlaceholder}
-          ref={nativeCurrencyInputRef}
-          testID="selected-asset-quantity-field"
-          value={nativeAmount}
-        />
+        <Text style={styles.balance}>
+          {'Balance:' + selected.balance.display}
+        </Text>
       </FormContainer>
-      <FooterContainer>
-        {buttonRenderer}
-        {txSpeedRenderer}
-      </FooterContainer>
+      <FooterContainer>{buttonRenderer}</FooterContainer>
     </Fragment>
   );
 }
+
+const styles = StyleSheet.create({
+  balance: {
+    textAlign: 'left',
+    width: '100%',
+    marginTop: 10,
+    color: colors.mintBlack30,
+    fontSize: fonts.size.smaller,
+  },
+});
