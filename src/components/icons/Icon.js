@@ -54,6 +54,7 @@ import MintEthIcon from './svg/MintEthIcon';
 import MintPlusIcon from './svg/MintPlusIcon';
 import MintRightIcon from './svg/MintRightIcon';
 import MintSendIcon from './svg/MintSendIcon';
+import MintToIcon from './svg/MintToIcon';
 import MintMoreIcon from './svg/MintMoreIcon';
 import MintXIcon from './svg/MintXIcon';
 import MinusCircledIcon from './svg/MinusCircledIcon';
@@ -142,6 +143,7 @@ const IconTypes = {
   mintPlusIcon: MintPlusIcon,
   mintRightIcon: MintRightIcon,
   mintSendIcon: MintSendIcon,
+  mintToIcon: MintToIcon,
   mintMoreIcon: MintMoreIcon,
   mintXIcon: MintXIcon,
   minusCircled: MinusCircledIcon,

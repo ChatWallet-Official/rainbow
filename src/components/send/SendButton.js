@@ -46,7 +46,7 @@ export default function SendButton({
       }
       onLongPress={onLongPress}
       parentHorizontalPadding={19}
-      shadows={disabled ? shadows.disabled : shadows.colored}
+      shadows={[]}
       showBiometryIcon={!disabled}
       testID={testID}
       isHardwareWallet={isHardwareWallet}

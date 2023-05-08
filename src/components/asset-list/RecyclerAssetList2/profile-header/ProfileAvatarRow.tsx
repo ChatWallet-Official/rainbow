@@ -209,7 +209,13 @@ export function ProfileAvatarRow({
   );
 }
 
-export function EmojiAvatar({ size }: { size: number }) {
+export function EmojiAvatar({
+  size,
+  fontSize,
+}: {
+  size: number;
+  fontSize: number;
+}) {
   const { colors } = useTheme();
   const { accountColor, accountSymbol } = useAccountProfile();
 
@@ -217,6 +223,8 @@ export function EmojiAvatar({ size }: { size: number }) {
     accountColor !== undefined
       ? colors.avatarBackgrounds[accountColor]
       : colors.skeleton;
+
+  const symbolSize = fontSize !== undefined ? fontSize : 48;
 
   return (
     <AccentColorProvider color={accentColor}>
@@ -228,7 +236,9 @@ export function EmojiAvatar({ size }: { size: number }) {
       >
         <Cover alignHorizontal="center" alignVertical="center">
           <Box>
-            <NativeText style={{ fontSize: ios ? 48 : 36, color: 'white' }}>
+            <NativeText
+              style={{ fontSize: ios ? symbolSize : 36, color: 'white' }}
+            >
               {typeof accountSymbol === 'string' &&
                 getFirstGrapheme(accountSymbol.toUpperCase())}
             </NativeText>

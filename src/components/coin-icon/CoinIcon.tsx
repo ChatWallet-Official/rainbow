@@ -80,10 +80,6 @@ const CoinIcon: React.FC<Props> = ({
           forceFallback={forceFallback}
           // force update on change symbol due to ImageCache strategy
           key={symbol}
-          shadowColor={
-            forcedShadowColor ||
-            (isDarkMode ? colors.shadow : tokenMetadata?.shadowColor || color)
-          }
           size={size}
           symbol={symbol}
           type={mainnet_address ? AssetTypes.token : type}

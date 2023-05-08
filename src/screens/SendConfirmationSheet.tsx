@@ -10,17 +10,12 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, Text as RNText, View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ContactRowInfoButton from '../components/ContactRowInfoButton';
-import Divider from '../components/Divider';
 import L2Disclaimer from '../components/L2Disclaimer';
-import Pill from '../components/Pill';
 import TouchableBackdrop from '../components/TouchableBackdrop';
 import ButtonPressAnimation from '../components/animations/ButtonPressAnimation';
 import Callout from '../components/callout/Callout';
-import { CoinIcon } from '../components/coin-icon';
-import RequestVendorLogoIcon from '../components/coin-icon/RequestVendorLogoIcon';
 import { ContactAvatar } from '../components/contacts';
 import ImageAvatar from '../components/contacts/ImageAvatar';
 import CheckboxField from '../components/fields/CheckboxField';
@@ -31,13 +26,13 @@ import { SendButton } from '../components/send';
 import { SheetTitle, SlackSheet } from '../components/sheet';
 import { Text as OldText } from '../components/text';
 import { ENSProfile } from '../entities/ens';
-import { address } from '../utils/abbreviations';
+import { abbreviateEnsForDisplay, address } from '../utils/abbreviations';
 import {
   addressHashedColorIndex,
   addressHashedEmoji,
 } from '../utils/profileUtils';
 import useExperimentalFlag, { PROFILES } from '@/config/experimentalHooks';
-import { Box, Heading, Inset, Stack, Text } from '@/design-system';
+import { Box, Inset, Stack, Text } from '@/design-system';
 import {
   estimateENSReclaimGasLimit,
   estimateENSSetAddressGasLimit,
@@ -53,6 +48,7 @@ import {
 import { add, convertAmountToNativeDisplay } from '@/helpers/utilities';
 import { isENSAddressFormat, isValidDomainFormat } from '@/helpers/validators';
 import {
+  useAccountProfile,
   useAccountSettings,
   useAccountTransactions,
   useColorForAsset,
@@ -66,10 +62,12 @@ import {
 import { useNavigation } from '@/navigation';
 import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
-import { position } from '@/styles';
+import { colors, fonts, position } from '@/styles';
 import { useTheme } from '@/theme';
 import { getUniqueTokenType, promiseUtils } from '@/utils';
 import logger from '@/utils/logger';
+import { Icon } from '@/components/icons';
+import { EmojiAvatar } from '@/components/asset-list/RecyclerAssetList2/profile-header/ProfileAvatarRow';
 
 const Container = styled(Centered).attrs({
   direction: 'column',
@@ -82,6 +80,7 @@ const SendButtonWrapper = styled(Column).attrs({
   align: 'center',
 })({
   height: 56,
+  marginTop: 20,
 });
 
 export type Checkbox = {
@@ -237,6 +236,10 @@ export default function SendConfirmationSheet() {
   const insets = useSafeAreaInsets();
   const { contacts } = useContacts();
   const profilesEnabled = useExperimentalFlag(PROFILES);
+  const { accountENS, accountName } = useAccountProfile();
+  const name = accountENS
+    ? abbreviateEnsForDisplay(accountENS, 20)
+    : accountName;
 
   useEffect(() => {
     android && Keyboard.dismiss();
@@ -519,12 +522,7 @@ export default function SendConfirmationSheet() {
     true
   );
 
-  const contentHeight = getSheetHeight({
-    checkboxes,
-    isENS,
-    isL2,
-    shouldShowChecks,
-  });
+  const contentHeight = 500;
 
   return (
     <Container
@@ -539,146 +537,47 @@ export default function SendConfirmationSheet() {
         additionalTopPadding={android}
         contentHeight={contentHeight}
         scrollEnabled={false}
+        backgroundColor={colors.mintBackground}
       >
-        <SheetTitle>{lang.t('wallet.transaction.sending_title')}</SheetTitle>
-        <Column height={contentHeight}>
-          <Column padding={24}>
-            <Row>
-              <Column justify="center" width={deviceWidth - 117}>
-                <Heading
-                  numberOfLines={1}
-                  color="primary (Deprecated)"
-                  size="26px / 30px (Deprecated)"
-                  weight="heavy"
-                >
-                  {isNft ? asset?.name : nativeDisplayAmount}
-                </Heading>
-                <Row marginTop={12}>
-                  <Text
-                    color={{
-                      custom: isNft
-                        ? colors.alpha(colors.blueGreyDark, 0.6)
-                        : color,
-                    }}
-                    size="16px / 22px (Deprecated)"
-                    weight={isNft ? 'bold' : 'heavy'}
-                  >
-                    {isNft
-                      ? asset.familyName
-                      : `${amountDetails.assetAmount} ${asset.symbol}`}
-                  </Text>
-                </Row>
-              </Column>
-              <Column align="end" flex={1} justify="center">
-                <Row>
-                  {isNft ? (
-                    // @ts-expect-error JavaScript component
-                    <RequestVendorLogoIcon
-                      backgroundColor={asset.background || colors.lightestGrey}
-                      badgeXPosition={-7}
-                      badgeYPosition={0}
-                      borderRadius={10}
-                      imageUrl={imageUrl}
-                      network={asset.network}
-                      showLargeShadow
-                      size={50}
-                    />
-                  ) : (
-                    <CoinIcon size={50} {...asset} />
-                  )}
-                </Row>
-              </Column>
-            </Row>
+        <SheetTitle>{lang.t('contacts.send_header')}</SheetTitle>
+        <Column height={contentHeight} align={'center'}>
+          <RNText style={styles.asset}>
+            {isNft
+              ? asset.familyName
+              : `${amountDetails.assetAmount} ${asset.symbol}`}
+          </RNText>
 
-            <Row marginVertical={19}>
-              {/* @ts-expect-error – JS component */}
-              <Pill
-                borderRadius={15}
-                height={30}
-                minWidth={39}
-                paddingHorizontal={10}
-                paddingVertical={5.5}
-              >
-                <OldText
-                  align="center"
-                  color={colors.blueGreyDark60}
-                  letterSpacing="roundedMedium"
-                  lineHeight={20}
-                  size="large"
-                  weight="heavy"
-                >
-                  {lang.t('account.tx_to_lowercase')}
-                </OldText>
-              </Pill>
+          <RNText style={styles.native}>
+            {isNft ? asset?.name : nativeDisplayAmount}
+          </RNText>
 
-              <Column align="end" flex={1}>
-                <ChevronDown />
-              </Column>
-            </Row>
-            <Row marginBottom={android ? 15 : 30}>
-              <Column flex={1} justify="center">
-                <Row width={android ? '80%' : '90%'}>
-                  <Heading
-                    numberOfLines={1}
-                    color="primary (Deprecated)"
-                    size="26px / 30px (Deprecated)"
-                    weight="heavy"
-                  >
-                    {avatarName}
-                  </Heading>
-                  <Centered marginLeft={4}>
-                    <ContactRowInfoButton
-                      item={{
-                        address: toAddress,
-                        name: avatarName || address(to, 4, 8),
-                      }}
-                      network={network}
-                      scaleTo={0.75}
-                    >
-                      <Text
-                        color={{
-                          custom: colors.alpha(
-                            colors.blueGreyDark,
-                            isDarkMode ? 0.5 : 0.6
-                          ),
-                        }}
-                        size="20px / 24px (Deprecated)"
-                        weight="heavy"
-                      >
-                        􀍡
-                      </Text>
-                    </ContactRowInfoButton>
-                  </Centered>
-                </Row>
-                <Row marginTop={12}>
-                  <Text
-                    color={{ custom: colors.alpha(colors.blueGreyDark, 0.6) }}
-                    size="16px / 22px (Deprecated)"
-                    weight="bold"
-                  >
-                    {isSendingToUserAccount
-                      ? `You own this wallet`
-                      : alreadySentTransactionsTotal === 0
-                      ? `First time send`
-                      : `${alreadySentTransactionsTotal} previous sends`}
-                  </Text>
-                </Row>
-              </Column>
-              <Column align="end" justify="center">
-                {accountImage ? (
-                  <ImageAvatar image={accountImage} size="lmedium" />
-                ) : (
-                  <ContactAvatar
-                    color={avatarColor}
-                    size="lmedium"
-                    value={avatarValue}
-                  />
-                )}
-              </Column>
-            </Row>
-            {/* @ts-expect-error JavaScript component */}
-            <Divider color={colors.rowDividerExtraLight} inset={[0]} />
-          </Column>
+          <Row align={'center'} marginVertical={20}>
+            <View style={[styles.accountContainer, { right: -8 }]}>
+              <EmojiAvatar size={35} fontSize={18} />
+              <RNText style={styles.accountName}>{name}</RNText>
+            </View>
+
+            <Icon name="mintToIcon" zIndex={1} />
+
+            <View style={[styles.accountContainer, { left: -8 }]}>
+              {accountImage ? (
+                <ImageAvatar image={accountImage} size="lmedium" />
+              ) : (
+                <ContactAvatar
+                  color={avatarColor}
+                  size="small"
+                  value={avatarValue}
+                />
+              )}
+              <RNText style={styles.accountName}>{avatarName}</RNText>
+            </View>
+          </Row>
+
+          <View style={styles.infoContainer}>
+            <RNText>Asset type</RNText>
+            <RNText>ETH</RNText>
+          </View>
+
           {(isL2 || isENS || shouldShowChecks) && (
             <Inset bottom="30px (Deprecated)" horizontal="19px (Deprecated)">
               <Stack space="19px (Deprecated)">
@@ -757,7 +656,7 @@ export default function SendConfirmationSheet() {
             {/* @ts-expect-error JavaScript component */}
             <SendButton
               androidWidth={deviceWidth - 60}
-              backgroundColor={color}
+              backgroundColor={colors.mintGreen}
               disabled={!canSubmit}
               insufficientEth={insufficientEth}
               isAuthorizing={isAuthorizing}
@@ -779,3 +678,40 @@ export default function SendConfirmationSheet() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  asset: {
+    fontSize: fonts.size.biggest,
+    fontWeight: fonts.weight.medium,
+    textColor: colors.mintBlack80,
+    marginTop: 30,
+  },
+  native: {
+    fontSize: fonts.size.smedium,
+    fontWeight: fonts.weight.regular,
+    textColor: colors.mintBlack60,
+    marginTop: 2,
+  },
+  accountContainer: {
+    width: 160,
+    height: 120,
+    borderRadius: 20,
+    backgroundColor: colors.white,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    marginVertical: 5,
+  },
+  accountName: {
+    fontSize: fonts.size.large,
+    fontWeight: fonts.weight.medium,
+    textColor: colors.mintBlack80,
+    marginVertical: 4,
+  },
+});
