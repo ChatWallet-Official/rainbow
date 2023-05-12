@@ -39,6 +39,7 @@ import { analytics } from '@/analytics';
 import { AppState } from '@/redux/store';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { addressCopiedToastAtom } from '@/recoil/addressCopiedToastAtom';
+import MintNavBackIcon from '@/components/icons/svg/MintNavBackIcon';
 
 type RouteParams = {
   WalletScreen: {
@@ -208,7 +209,7 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
   const { navigate } = useNavigation();
 
   const handlePressActivity = useCallback(() => {
-    navigate(Routes.PROFILE_SCREEN);
+    navigate(Routes.WALLET_TAB);
   }, [navigate]);
 
   const handlePressQRScanner = useCallback(() => {
@@ -237,21 +238,8 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
           hasStatusBarInset
           leftComponent={
             <Navbar.Item onPress={handlePressActivity} testID="activity-button">
-              <Navbar.TextIcon icon="􀐫" />
+              <Navbar.SvgIcon icon={MintNavBackIcon} />
             </Navbar.Item>
-          }
-          rightComponent={
-            <Inline space={{ custom: 17 }}>
-              <Navbar.Item onPress={handlePressQRScanner}>
-                <Navbar.TextIcon icon="􀎹" />
-              </Navbar.Item>
-              <Navbar.Item
-                onPress={handlePressDiscover}
-                testID="discover-button"
-              >
-                <Navbar.TextIcon icon="􀎬" />
-              </Navbar.Item>
-            </Inline>
           }
         />
       </OpacityToggler>

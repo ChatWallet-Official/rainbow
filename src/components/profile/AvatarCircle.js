@@ -13,8 +13,9 @@ import {
 import styled from '@/styled-thing';
 import { position } from '@/styles';
 import ShadowStack from '@/react-native-shadow-stack';
+import { EmojiAvatar } from '../asset-list/RecyclerAssetList2/profile-header/ProfileAvatarRow';
 
-const AvatarCircleSize = 60;
+const AvatarCircleSize = 100;
 
 const AvatarCircleView = styled(Flex)({
   ...position.sizeAsObject(AvatarCircleSize),
@@ -113,7 +114,7 @@ export default function AvatarCircle({
         <ShadowStack
           {...position.sizeAsObject(AvatarCircleSize)}
           backgroundColor={overlayStyles ? 'rgb(51, 54, 59)' : colors.white}
-          borderRadius={AvatarCircleSize}
+          borderRadius={AvatarCircleSize / 2.5}
           marginBottom={12}
           shadows={shadows[overlayStyles ? 'overlay' : 'default']}
           {...(android && {
@@ -121,14 +122,7 @@ export default function AvatarCircle({
             width: 60,
           })}
         >
-          {image ? (
-            <ImageAvatar image={image} size="large" />
-          ) : (
-            <AvatarCircleView backgroundColor={resolvedColor}>
-              <FirstLetter>{accountSymbol}</FirstLetter>
-              {!overlayStyles && <InnerBorder opacity={0.02} radius={60} />}
-            </AvatarCircleView>
-          )}
+          <EmojiAvatar size={AvatarCircleSize} />
         </ShadowStack>
       </ButtonPressAnimation>
     </Wrapper>

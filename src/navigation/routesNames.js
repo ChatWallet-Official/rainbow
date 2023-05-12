@@ -86,6 +86,7 @@ const Routes = {
   WALLET_DIAGNOSTICS_SHEET: 'WalletDiagnosticsSheet',
   WALLET_NOTIFICATIONS_SETTINGS: 'WalletNotificationsSettings',
   WALLET_SCREEN: 'WalletScreen',
+  WALLET_TAB: 'WalletTab',
   WELCOME_SCREEN: 'WelcomeScreen',
 };
 

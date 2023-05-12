@@ -11,6 +11,7 @@ import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
 import { abbreviations } from '@/utils';
 import { useForegroundColor } from '@/design-system';
+import { ProfileAvatarRow } from '../asset-list/RecyclerAssetList2/profile-header/ProfileAvatarRow';
 
 // NOTE:
 // If you’re trying to edit this file for iOS and you’re not seeing any changes,
@@ -94,9 +95,13 @@ export default function ProfileMasthead({
         menuOptions={avatarActionSheetOptions}
         onPress={handlePressAvatar}
         onSelectionCallback={onSelectionCallback}
-        style={android && { marginTop: 10 }}
+        style={{ position: 'relative', bottom: 50, width: 100, height: 100 }}
       />
-      <ButtonPressAnimation onPress={handlePressChangeWallet}>
+      <ButtonPressAnimation
+        onPress={handlePressChangeWallet}
+        position="relative"
+        bottom={30}
+      >
         <Row>
           <AccountName
             testID={`profileAddress-${accountName}`}
@@ -105,11 +110,15 @@ export default function ProfileMasthead({
             {accountName}
           </AccountName>
           <DropdownArrow>
-            <Icon color={iconColor} name="caretDownIcon" />
+            <Icon
+              color={iconColor}
+              height={15}
+              name="mintCaretDownIcon"
+              width={15}
+            />
           </DropdownArrow>
         </Row>
       </ButtonPressAnimation>
-      {showBottomDivider && <ProfileMastheadDivider />}
     </Column>
   );
 }

@@ -4,7 +4,7 @@ import { FlexItem } from '../components/layout';
 import { TestnetToast } from '../components/toasts';
 import { web3Provider } from '@/handlers/web3';
 import DiscoverScreen from '../screens/discover/DiscoverScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import WalletTab from '../screens/WalletTab';
 import { WalletScreen } from '@/screens/WalletScreen';
 import { deviceUtils } from '../utils';
 import ScrollPagerWrapper from './ScrollPagerWrapper';
@@ -34,13 +34,8 @@ export function SwipeNavigator() {
         swipeEnabled={swipeEnabled && !isCoinListEdited}
         tabBar={renderTabBar}
       >
-        <Swipe.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} />
+        <Swipe.Screen component={WalletTab} name={Routes.WALLET_TAB} />
         <Swipe.Screen component={WalletScreen} name={Routes.WALLET_SCREEN} />
-        <Swipe.Screen
-          component={DiscoverScreen}
-          name={Routes.DISCOVER_SCREEN}
-          initialParams={params}
-        />
       </Swipe.Navigator>
       <TestnetToast network={network} web3Provider={web3Provider} />
     </FlexItem>

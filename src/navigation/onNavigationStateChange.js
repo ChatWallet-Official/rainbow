@@ -15,11 +15,7 @@ let memPrevRouteName;
 let action = null;
 
 const isOnSwipeScreen = name =>
-  [
-    Routes.WALLET_SCREEN,
-    Routes.DISCOVER_SCREEN,
-    Routes.PROFILE_SCREEN,
-  ].includes(name);
+  [Routes.WALLET_SCREEN, Routes.WALLET_TAB].includes(name);
 
 export function triggerOnSwipeLayout(newAction) {
   if (isOnSwipeScreen(Navigation.getActiveRoute()?.name)) {

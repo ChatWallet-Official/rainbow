@@ -51,6 +51,7 @@ import MintCaretDownIcon from './svg/MintCaretDownIcon';
 import MintBuyIcon from './svg/MintBuyIcon';
 import MintBuyForIcon from './svg/MintBuyForIcon';
 import MintEthIcon from './svg/MintEthIcon';
+import MintNavBackIcon from './svg/MintNavBackIcon';
 import MintPlusIcon from './svg/MintPlusIcon';
 import MintRightIcon from './svg/MintRightIcon';
 import MintSendIcon from './svg/MintSendIcon';
@@ -86,6 +87,8 @@ import WalletSwitcherCaret from './svg/WalletSwitcherCaret';
 import WarningCircledIcon from './svg/WarningCircledIcon';
 import WarningIcon from './svg/WarningIcon';
 import BridgeIcon from './svg/BridgeIcon';
+import MintWalletIcon from './svg/MintWalletIcon';
+import MintSettingsIcon from './svg/MintSettingsIcon';
 
 const IconTypes = {
   applePay: ApplePayIcon,
@@ -140,11 +143,14 @@ const IconTypes = {
   mintBuyIcon: MintBuyIcon,
   mintBuyForIcon: MintBuyForIcon,
   mintEthIcon: MintEthIcon,
+  mintNavBackIcon: MintNavBackIcon,
   mintPlusIcon: MintPlusIcon,
   mintRightIcon: MintRightIcon,
   mintSendIcon: MintSendIcon,
+  mintSettingsIcon: MintSettingsIcon,
   mintToIcon: MintToIcon,
   mintMoreIcon: MintMoreIcon,
+  mintWalletIcon: MintWalletIcon,
   mintXIcon: MintXIcon,
   minusCircled: MinusCircledIcon,
   offline: OfflineIcon,
