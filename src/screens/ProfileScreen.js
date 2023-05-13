@@ -16,7 +16,7 @@ import Routes from '@/navigation/routesNames';
 import styled from '@/styled-thing';
 import { position } from '@/styles';
 import { Navbar } from '@/components/navbar/Navbar';
-import CaretRightIcon from '@/components/icons/svg/CaretRightIcon';
+import MintNavBackIcon from '@/components/icons/svg/MintNavBackIcon';
 
 const ACTIVITY_LIST_INITIALIZATION_DELAY = 5000;
 
@@ -73,15 +73,11 @@ export default function ProfileScreen({ navigation }) {
       <Navbar
         hasStatusBarInset
         leftComponent={
-          <Navbar.Item onPress={onPressSettings} testID="settings-button">
-            <Navbar.TextIcon icon="􀣋" />
+          <Navbar.Item onPress={onPressBackButton} testID="settings-button">
+            <Navbar.SvgIcon icon={MintNavBackIcon} />
           </Navbar.Item>
         }
-        rightComponent={
-          <Navbar.Item onPress={onPressBackButton}>
-            <Navbar.SvgIcon icon={CaretRightIcon} />
-          </Navbar.Item>
-        }
+        title="Activity"
       />
 
       <ActivityList

@@ -45,7 +45,7 @@ const ShareCollectiblesButton = ({ onPress }) => (
 
 const Content = styled(Row).attrs(({ theme: { colors } }) => ({
   align: 'center',
-  backgroundColor: colors.white,
+  backgroundColor: colors.mintBackground,
   justify: 'space-between',
 }))({
   ...padding.object(5, 19),
@@ -129,15 +129,6 @@ export default function ListHeader({
           )}
           {children}
         </Content>
-        {
-          /*
-           The divider shows up as a white line in dark mode (android)
-           so we won't render it till we figure it out why
-          */
-          showDivider && !(android && isDarkMode) && (
-            <Divider color={colors.rowDividerLight} />
-          )
-        }
         <StickyBackgroundBlocker
           deviceDimensions={deviceDimensions}
           isEditMode={isCoinListEdited}

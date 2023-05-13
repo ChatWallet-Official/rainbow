@@ -2,7 +2,7 @@ import React from 'react';
 import { Circle, Path, Rect, SvgProps } from 'react-native-svg';
 import Svg from '../Svg';
 
-const MintNavBackIcon = ({ color, ...props }: SvgProps) => (
+const MintNavBackWhiteIcon = ({ color, ...props }: SvgProps) => (
   <Svg
     width={30}
     height={30}
@@ -13,7 +13,7 @@ const MintNavBackIcon = ({ color, ...props }: SvgProps) => (
   >
     <Path
       d="M38 14L20 30l18 16"
-      stroke={color || '#000'}
+      stroke="#FFFFFF"
       strokeOpacity={0.6}
       strokeWidth={4}
       strokeLinecap="round"
@@ -22,4 +22,4 @@ const MintNavBackIcon = ({ color, ...props }: SvgProps) => (
   </Svg>
 );
 
-export default MintNavBackIcon;
+export default MintNavBackWhiteIcon;

@@ -269,6 +269,10 @@ function MoreButton() {
     navigate(Routes.RECEIVE_MODAL);
   }, [navigate]);
 
+  const handlePressActivity = React.useCallback(() => {
+    navigate(Routes.PROFILE_SCREEN);
+  }, [navigate]);
+
   const handlePressConnectedApps = React.useCallback(() => {
     navigate(Routes.CONNECTED_DAPPS);
   }, [navigate]);
@@ -315,7 +319,7 @@ function MoreButton() {
         handlePressQRCode();
       }
       if (e.nativeEvent.actionKey === 'activity') {
-        handlePressQRCode();
+        handlePressActivity();
       }
       if (e.nativeEvent.actionKey === 'connectedApps') {
         handlePressConnectedApps();

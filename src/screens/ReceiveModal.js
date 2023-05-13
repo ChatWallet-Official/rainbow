@@ -5,7 +5,12 @@ import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import TouchableBackdrop from '../components/TouchableBackdrop';
 import { CopyFloatingEmojis } from '../components/floating-emojis';
-import { Centered, Column, ColumnWithMargins } from '../components/layout';
+import {
+  Centered,
+  Column,
+  ColumnWithMargins,
+  Page,
+} from '../components/layout';
 import QRCode from '../components/qr-code/QRCode';
 import ShareButton from '../components/qr-code/ShareButton';
 import { SheetHandle } from '../components/sheet';
@@ -15,9 +20,11 @@ import { useNavigation } from '../navigation/Navigation';
 import { abbreviations, deviceUtils } from '../utils';
 import { useAccountProfile } from '@/hooks';
 import styled from '@/styled-thing';
-import { padding, shadow, colors } from '@/styles';
+import { padding, shadow, colors, position } from '@/styles';
 import { View, StyleSheet } from 'react-native';
 import { EmojiAvatar } from '@/components/asset-list/RecyclerAssetList2/profile-header/ProfileAvatarRow';
+import { Navbar } from '@/components/navbar/Navbar';
+import MintNavBackWhiteIcon from '@/components/icons/svg/MintNavBackWhiteIcon';
 
 const QRCodeSize = ios ? 250 : Math.min(230, deviceUtils.dimensions.width - 20);
 
@@ -36,7 +43,7 @@ const Container = styled(Centered).attrs({
   direction: 'column',
 })({
   bottom: 16,
-  flex: 1,
+  height: '80%',
 });
 
 const Handle = styled(SheetHandle).attrs(({ theme: { colors } }) => ({
@@ -85,31 +92,43 @@ export default function ReceiveModal() {
   ]);
 
   return (
-    <Container testID="receive-modal">
-      <TouchableBackdrop onPress={goBack} />
-      <ColumnWithMargins align="center" margin={24}>
-        <View style={styles.avatarContainer}>
-          <EmojiAvatar size={80} />
-        </View>
-        <QRWrapper>
-          <View style={styles.qrContainer}>
-            <QRCode size={QRCodeSize} value={checksummedAddress} />
+    <Page style={styles.page}>
+      <Navbar
+        leftComponent={
+          <Navbar.Item>
+            <Navbar.SvgIcon icon={MintNavBackWhiteIcon} />
+          </Navbar.Item>
+        }
+        title={'QR Code'}
+        titleColor={'white'}
+      />
+
+      <Container testID="receive-modal">
+        <TouchableBackdrop onPress={goBack} />
+        <ColumnWithMargins align="center" margin={24}>
+          <View style={styles.avatarContainer}>
+            <EmojiAvatar size={80} />
           </View>
-          <CopyFloatingEmojis
-            onPress={handleCopiedText}
-            textToCopy={checksummedAddress}
-          >
-            <ColumnWithMargins margin={2}>
-              <NameText>{accountName}</NameText>
-              <AddressText address={checksummedAddress} />
-            </ColumnWithMargins>
-          </CopyFloatingEmojis>
-        </QRWrapper>
-      </ColumnWithMargins>
-      <ToastPositionContainer>
-        <CopyToast copiedText={copiedText} copyCount={copyCount} />
-      </ToastPositionContainer>
-    </Container>
+          <QRWrapper>
+            <View style={styles.qrContainer}>
+              <QRCode size={QRCodeSize} value={checksummedAddress} />
+            </View>
+            <CopyFloatingEmojis
+              onPress={handleCopiedText}
+              textToCopy={checksummedAddress}
+            >
+              <ColumnWithMargins margin={2}>
+                <NameText>{accountName}</NameText>
+                <AddressText address={checksummedAddress} />
+              </ColumnWithMargins>
+            </CopyFloatingEmojis>
+          </QRWrapper>
+        </ColumnWithMargins>
+        <ToastPositionContainer>
+          <CopyToast copiedText={copiedText} copyCount={copyCount} />
+        </ToastPositionContainer>
+      </Container>
+    </Page>
   );
 }
 
@@ -128,5 +147,10 @@ const styles = StyleSheet.create({
   },
   qrContainer: {
     marginVertical: 20,
+  },
+  page: {
+    ...position.sizeAsObject('100%'),
+    flex: 1,
+    backgroundColor: 'transparent',
   },
 });

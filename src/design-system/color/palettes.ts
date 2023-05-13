@@ -451,7 +451,8 @@ export type ForegroundColor =
   | 'secondary60 (Deprecated)'
   | 'secondary70 (Deprecated)'
   | 'secondary80 (Deprecated)'
-  | 'swap (Deprecated)';
+  | 'swap (Deprecated)'
+  | 'white';
 
 function selectBackgroundAsForeground(
   backgroundName: BackgroundColor
@@ -656,6 +657,10 @@ export const foregroundColors: Record<
     light: '#25292E',
   },
   'swap (Deprecated)': deprecatedColors.swapPurple,
+  'white': {
+    dark: globalColors.grey100,
+    light: '#FAFAFA',
+  },
 };
 
 /**
@@ -757,7 +762,8 @@ export const textColors = selectForegroundColors(
   'secondary50 (Deprecated)',
   'secondary60 (Deprecated)',
   'secondary70 (Deprecated)',
-  'secondary80 (Deprecated)'
+  'secondary80 (Deprecated)',
+  'white'
 );
 export type TextColor = typeof textColors[number];
 

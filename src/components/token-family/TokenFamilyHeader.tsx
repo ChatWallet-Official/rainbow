@@ -139,28 +139,11 @@ const TokenFamilyHeader = ({
         style={[
           sx.content,
           {
-            backgroundColor: colors.white,
+            backgroundColor: colors.mintBackground,
           },
         ]}
       >
-        <View style={[sx.center, { marginRight: emoji ? 5 : 0 }]}>
-          {emoji ? (
-            <Text
-              containsEmoji
-              color="primary (Deprecated)"
-              size="16px / 22px (Deprecated)"
-            >
-              {emoji}
-            </Text>
-          ) : (
-            <TokenFamilyHeaderIcon
-              familyImage={familyImage}
-              familyName={title}
-              theme={theme}
-            />
-          )}
-        </View>
-        <View style={[sx.title, { paddingLeft: 10 }]}>
+        <View style={[sx.title]}>
           <Text
             color={
               title === lang.t('button.hidden')

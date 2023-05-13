@@ -4,6 +4,7 @@ import { FlexItem } from '../components/layout';
 import { TestnetToast } from '../components/toasts';
 import { web3Provider } from '@/handlers/web3';
 import DiscoverScreen from '../screens/discover/DiscoverScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 import WalletTab from '../screens/WalletTab';
 import { WalletScreen } from '@/screens/WalletScreen';
 import { deviceUtils } from '../utils';
@@ -36,6 +37,7 @@ export function SwipeNavigator() {
       >
         <Swipe.Screen component={WalletTab} name={Routes.WALLET_TAB} />
         <Swipe.Screen component={WalletScreen} name={Routes.WALLET_SCREEN} />
+        <Swipe.Screen component={ProfileScreen} name={Routes.PROFILE_SCREEN} />
       </Swipe.Navigator>
       <TestnetToast network={network} web3Provider={web3Provider} />
     </FlexItem>
