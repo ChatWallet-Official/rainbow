@@ -1,7 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import lang from 'i18n-js';
 import React, { useCallback, useMemo } from 'react';
-import { Linking, NativeModules, Share } from 'react-native';
+import {
+  Linking,
+  NativeModules,
+  Share,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import {
   ContextMenuButton,
   MenuActionConfig,
@@ -21,6 +29,13 @@ import DarkModeIcon from '@/assets/settingsDarkMode.png';
 import DarkModeIconDark from '@/assets/settingsDarkModeDark.png';
 import LanguageIcon from '@/assets/settingsLanguage.png';
 import LanguageIconDark from '@/assets/settingsLanguageDark.png';
+import MintSettingsBackup from '@/assets/mintSettingsBackup.png';
+import MintSettingsCurrency from '@/assets/mintSettingsCurrency.png';
+import MintSettingsCard from '@/assets/mintSettingsCard.png';
+import MintSettingsAirdrop from '@/assets/mintSettingsAirdrop.png';
+import MintSettingsAbout from '@/assets/mintSettingsAbout.png';
+import MintSettingsSecurity from '@/assets/mintSettingsSecurity.png';
+import MintSettingsFeedback from '@/assets/mintSettingsFeedback.png';
 import NetworkIcon from '@/assets/settingsNetwork.png';
 import NetworkIconDark from '@/assets/settingsNetworkDark.png';
 import NotificationsIcon from '@/assets/settingsNotifications.png';
@@ -38,6 +53,9 @@ import { useAccountSettings, useSendFeedback, useWallets } from '@/hooks';
 import { Themes, useTheme } from '@/theme';
 import { showActionSheetWithOptions } from '@/utils';
 import { AppleReviewAddress, REVIEW_DONE_KEY } from '@/utils/reviewAlert';
+import { RowWithMargins } from '@/components/layout';
+import { colors, fonts } from '@/styles';
+import { Icon } from '@/components/icons';
 
 const { RainbowRequestReview, RNReview } = NativeModules;
 
@@ -239,9 +257,7 @@ const SettingsSection = ({
           <MenuItem
             hasRightArrow
             leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? BackupIconDark : BackupIcon}
-              />
+              <MenuItem.ImageIcon size={30} source={MintSettingsBackup} />
             }
             onPress={onPressBackup}
             rightComponent={
@@ -260,27 +276,10 @@ const SettingsSection = ({
             titleComponent={<MenuItem.Title text={lang.t('settings.backup')} />}
           />
         )}
-        {isNotificationsEnabled && (
-          <MenuItem
-            hasRightArrow
-            leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? NotificationsIconDark : NotificationsIcon}
-              />
-            }
-            onPress={onPressNotifications}
-            size={60}
-            titleComponent={
-              <MenuItem.Title text={lang.t('settings.notifications')} />
-            }
-          />
-        )}
         <MenuItem
           hasRightArrow
           leftComponent={
-            <MenuItem.ImageIcon
-              source={isDarkMode ? CurrencyIconDark : CurrencyIcon}
-            />
+            <MenuItem.ImageIcon size={30} source={MintSettingsCurrency} />
           }
           onPress={onPressCurrency}
           rightComponent={
@@ -290,131 +289,44 @@ const SettingsSection = ({
           testID="currency-section"
           titleComponent={<MenuItem.Title text={lang.t('settings.currency')} />}
         />
-        {(testnetsEnabled || IS_DEV) && (
-          <MenuItem
-            hasRightArrow
-            leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? NetworkIconDark : NetworkIcon}
-              />
-            }
-            onPress={onPressNetwork}
-            rightComponent={
-              <MenuItem.Selection>
-                {networkInfo?.[network]?.name}
-              </MenuItem.Selection>
-            }
-            size={60}
-            testID="network-section"
-            titleComponent={
-              <MenuItem.Title text={lang.t('settings.network')} />
-            }
-          />
-        )}
-        <ContextMenuButton
-          menuConfig={themeMenuConfig}
-          {...(android ? { onPress: onPressThemeAndroidActions } : {})}
-          isMenuPrimaryAction
-          // @ts-ignore
-          menuAlignmentOverride="right"
-          onPressMenuItem={handleSelectTheme}
-          useActionSheetFallback={false}
-        >
-          <MenuItem
-            hasChevron
-            leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? DarkModeIconDark : DarkModeIcon}
-              />
-            }
-            rightComponent={
-              <MenuItem.Selection>
-                {colorScheme ? capitalizeFirstLetter(colorScheme) : ''}
-              </MenuItem.Selection>
-            }
-            size={60}
-            testID={`theme-section-${isDarkMode ? 'dark' : 'light'}`}
-            titleComponent={<MenuItem.Title text={lang.t('settings.theme')} />}
-          />
-        </ContextMenuButton>
-
-        {!isReadOnlyWallet && (
-          <MenuItem
-            hasRightArrow
-            leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? PrivacyIconDark : PrivacyIcon}
-              />
-            }
-            onPress={onPressPrivacy}
-            size={60}
-            testID="privacy"
-            titleComponent={
-              <MenuItem.Title text={lang.t('settings.privacy')} />
-            }
-          />
-        )}
-        {isLanguageSelectionEnabled && (
-          <MenuItem
-            hasRightArrow
-            leftComponent={
-              <MenuItem.ImageIcon
-                source={isDarkMode ? LanguageIconDark : LanguageIcon}
-              />
-            }
-            onPress={onPressLanguage}
-            rightComponent={
-              <MenuItem.Selection>
-                {(supportedLanguages as any)[language] || ''}
-              </MenuItem.Selection>
-            }
-            size={60}
-            titleComponent={
-              <MenuItem.Title text={lang.t('settings.language')} />
-            }
-          />
-        )}
         <MenuItem
           hasRightArrow
           leftComponent={
-            <MenuItem.ImageIcon
-              source={isDarkMode ? AppIconIconDark : AppIconIcon}
-            />
+            <MenuItem.ImageIcon size={30} source={MintSettingsCard} />
           }
-          onPress={onPressAppIcon}
+          onPress={onPressPrivacy}
           size={60}
-          testID="app-icon-section"
-          titleComponent={<MenuItem.Title text={lang.t('settings.app_icon')} />}
+          titleComponent={<MenuItem.Title text={'My Card'} />}
         />
-      </Menu>
-      <Menu>
         <MenuItem
-          leftComponent={<MenuItem.TextIcon icon="🌈" isEmoji />}
-          onPress={onPressShare}
-          size={52}
-          testID="share-section"
-          titleComponent={
-            <MenuItem.Title text={lang.t('settings.share_rainbow')} />
+          leftComponent={
+            <MenuItem.ImageIcon size={30} source={MintSettingsAirdrop} />
           }
+          onPress={onPressPrivacy}
+          size={60}
+          titleComponent={<MenuItem.Title text={'Claim Airdrop'} />}
         />
         <MenuItem
-          leftComponent={<MenuItem.TextIcon icon="🧠" isEmoji />}
-          onPress={onPressLearn}
-          size={52}
-          testID="learn-section"
-          titleComponent={<MenuItem.Title text={lang.t('settings.learn')} />}
-        />
-        <MenuItem
-          leftComponent={<MenuItem.TextIcon icon="🐦" isEmoji />}
-          onPress={onPressTwitter}
-          size={52}
-          testID="twitter-section"
-          titleComponent={
-            <MenuItem.Title text={lang.t('settings.follow_us_on_twitter')} />
+          hasRightArrow
+          leftComponent={
+            <MenuItem.ImageIcon size={30} source={MintSettingsAbout} />
           }
+          onPress={onPressPrivacy}
+          size={60}
+          titleComponent={<MenuItem.Title text={'About'} />}
         />
         <MenuItem
-          leftComponent={<MenuItem.TextIcon icon="💬" isEmoji />}
+          leftComponent={
+            <MenuItem.ImageIcon size={30} source={MintSettingsSecurity} />
+          }
+          onPress={onPressPrivacy}
+          size={60}
+          titleComponent={<MenuItem.Title text={'Security'} />}
+        />
+        <MenuItem
+          leftComponent={
+            <MenuItem.ImageIcon size={30} source={MintSettingsFeedback} />
+          }
           onPress={onSendFeedback}
           size={52}
           testID="feedback-section"
@@ -438,7 +350,9 @@ const SettingsSection = ({
           />
         )}
         <MenuItem
-          leftComponent={<MenuItem.TextIcon icon={ios ? '🚧' : '🐞'} isEmoji />}
+          leftComponent={
+            <MenuItem.ImageIcon size={30} source={MintSettingsAirdrop} />
+          }
           onPress={onPressDev}
           size={52}
           testID="developer-section"
@@ -448,10 +362,42 @@ const SettingsSection = ({
         />
       </Menu>
       <Box alignItems="center" width="full">
-        <AppVersionStamp />
+        <RowWithMargins margin={15} style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={onPressTwitter}>
+            <Icon name="mintTwitterIcon" />
+            <Text style={styles.buttonText}>Twitter</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={onPressShare}>
+            <Icon name="mintShareIcon" />
+            <Text style={styles.buttonText}>Share MintWallet</Text>
+          </TouchableOpacity>
+        </RowWithMargins>
       </Box>
     </MenuContainer>
   );
 };
 
 export default SettingsSection;
+
+const styles = StyleSheet.create({
+  buttonsContainer: {
+    position: 'relative',
+  },
+  button: {
+    backgroundColor: colors.white,
+    borderRadius: 20,
+    flexDirection: 'column',
+    flex: 1,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+  },
+  buttonText: {
+    marginTop: 12,
+    fontSize: fonts.size.lmedium,
+    fontWeight: fonts.weight.medium,
+    color: colors.mintBlack80,
+  },
+});

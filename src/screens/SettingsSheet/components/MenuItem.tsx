@@ -17,11 +17,7 @@ interface ImageIconProps {
 const ImageIcon = ({ size = 60, source }: ImageIconProps) => (
   <Box
     as={ImgixImage}
-    borderRadius={size / 2}
     height={{ custom: size }}
-    marginLeft={{ custom: -12 }}
-    marginRight={{ custom: -12 }}
-    marginTop={{ custom: 8 }}
     source={source as Source}
     width={{ custom: size }}
     size={size}
