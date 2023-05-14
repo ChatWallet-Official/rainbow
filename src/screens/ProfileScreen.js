@@ -1,9 +1,8 @@
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { IS_TESTING } from 'react-native-dotenv';
 import { ActivityList } from '../components/activity-list';
 import { Page } from '../components/layout';
-import { ProfileMasthead } from '../components/profile';
 import NetworkTypes from '../helpers/networkTypes';
 import { useNavigation } from '../navigation/Navigation';
 import {
@@ -17,6 +16,8 @@ import styled from '@/styled-thing';
 import { position } from '@/styles';
 import { Navbar } from '@/components/navbar/Navbar';
 import MintNavBackIcon from '@/components/icons/svg/MintNavBackIcon';
+import { ProfileInfoRow } from '@/components/asset-list/RecyclerAssetList2/profile-header/ProfileInfoRow';
+import { View } from 'react-native';
 
 const ACTIVITY_LIST_INITIALIZATION_DELAY = 5000;
 
@@ -29,6 +30,8 @@ export default function ProfileScreen({ navigation }) {
   const [activityListInitialized, setActivityListInitialized] = useState(false);
   const isFocused = useIsFocused();
   const { navigate } = useNavigation();
+  const { params } = useRoute();
+  const totalValue = params?.totalValue;
 
   const accountTransactions = useAccountTransactions(
     activityListInitialized,
@@ -84,10 +87,9 @@ export default function ProfileScreen({ navigation }) {
         addCashAvailable={addCashAvailable}
         contacts={contacts}
         header={
-          <ProfileMasthead
-            addCashAvailable={addCashAvailable}
-            onChangeWallet={onChangeWallet}
-          />
+          <View style={{ marginTop: 20 }}>
+            <ProfileInfoRow totalValue={totalValue} />
+          </View>
         }
         isEmpty={isEmpty}
         isLoading={isLoading}

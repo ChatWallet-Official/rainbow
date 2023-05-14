@@ -77,40 +77,6 @@ export function ProfileAvatarRow({
   // Animations
 
   const insets = useSafeAreaInsets();
-  const position = useRecyclerAssetListPosition();
-  const animatedStyle = React.useMemo(
-    () => ({
-      opacity: position!.interpolate({
-        inputRange: [
-          -insets.top,
-          IS_ANDROID ? 0 : -insets.top + 1,
-          navbarHeight + insets.top,
-        ],
-        outputRange: [1, 1, 0],
-      }),
-      transform: [
-        {
-          translateY: position!.interpolate({
-            inputRange: [
-              -insets.top,
-              IS_ANDROID ? 0 : -insets.top + 1,
-              navbarHeight + insets.top,
-            ],
-            outputRange: [0, 0, 12],
-          }),
-          scale: position!.interpolate({
-            inputRange: [
-              -insets.top,
-              IS_ANDROID ? 0 : -insets.top + 1,
-              navbarHeight + insets.top,
-            ],
-            outputRange: [1, 1, 0.8],
-          }),
-        },
-      ],
-    }),
-    [position]
-  );
 
   const hasLoaded = accountSymbol || accountImage;
 
@@ -146,7 +112,7 @@ export function ProfileAvatarRow({
 
   return (
     <AccentColorProvider color={accentColor}>
-      <RNAnimated.View style={animatedStyle}>
+      <RNAnimated.View>
         <Animated.View style={[expandStyle]}>
           <ContextMenuButton
             // @ts-expect-error - JS component

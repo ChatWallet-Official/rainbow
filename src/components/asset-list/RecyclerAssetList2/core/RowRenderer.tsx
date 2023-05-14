@@ -119,7 +119,9 @@ function rowRenderer(
     case CellType.PROFILE_ACTION_BUTTONS_ROW:
       return (
         <ProfileRowWrapper>
-          <ProfileActionButtonsRow />
+          <ProfileActionButtonsRow
+            totalValue={(data as AssetsHeaderExtraData).value}
+          />
         </ProfileRowWrapper>
       );
     case CellType.PROFILE_AVATAR_ROW:

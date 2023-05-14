@@ -86,7 +86,7 @@ platform :ios do
       },
       team_id: "4RP36V48P3",
     )
-    match(type: "development", force_for_new_devices: true)
+    match(type: "adhoc", force_for_new_devices: true)
   end
 
   desc "Distribute a build to firebase"

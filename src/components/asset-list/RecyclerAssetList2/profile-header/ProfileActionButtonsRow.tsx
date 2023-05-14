@@ -42,7 +42,11 @@ import { Icon } from '@/components/icons';
 
 export const ProfileActionButtonsRowHeight = 80;
 
-export function ProfileActionButtonsRow() {
+export function ProfileActionButtonsRow({
+  totalValue,
+}: {
+  totalValue: string;
+}) {
   const { accentColor, loaded: accentColorLoaded } = useAccountAccentColor();
 
   const scale = useDerivedValue(() => (accentColorLoaded ? 1 : 0.9));
@@ -90,7 +94,7 @@ export function ProfileActionButtonsRow() {
             </Column>
             <Column>
               <Animated.View style={[expandStyle]}>
-                <MoreButton />
+                <MoreButton totalValue={totalValue} />
               </Animated.View>
             </Column>
           </Columns>
@@ -238,7 +242,7 @@ function SendButton() {
   );
 }
 
-function MoreButton() {
+function MoreButton({ totalValue }: { totalValue: string }) {
   // ////////////////////////////////////////////////////
   // Handlers
 
@@ -270,7 +274,7 @@ function MoreButton() {
   }, [navigate]);
 
   const handlePressActivity = React.useCallback(() => {
-    navigate(Routes.PROFILE_SCREEN);
+    navigate(Routes.PROFILE_SCREEN, { totalValue: totalValue });
   }, [navigate]);
 
   const handlePressConnectedApps = React.useCallback(() => {
