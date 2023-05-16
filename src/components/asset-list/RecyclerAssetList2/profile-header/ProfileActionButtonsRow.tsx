@@ -275,6 +275,10 @@ function MoreButton({ totalValue }: { totalValue: string }) {
 
   const handlePressActivity = React.useCallback(() => {
     navigate(Routes.PROFILE_SCREEN, { totalValue: totalValue });
+  }, [navigate, totalValue]);
+
+  const handlePressScan = React.useCallback(() => {
+    navigate(Routes.QR_SCANNER_SCREEN);
   }, [navigate]);
 
   const handlePressConnectedApps = React.useCallback(() => {
@@ -303,6 +307,11 @@ function MoreButton({ totalValue }: { totalValue: string }) {
         actionTitle: lang.t('button.activity'),
         icon: { iconType: 'SYSTEM', iconValue: 'doc.text.below.ecg' },
       },
+      {
+        actionKey: 'scan',
+        actionTitle: lang.t('button.scan'),
+        icon: { iconType: 'SYSTEM', iconValue: 'qrcode.viewfinder' },
+      },
       mostRecentWalletConnectors.length > 0 || activeWCV2Sessions.length > 0
         ? {
             actionKey: 'connectedApps',
@@ -325,11 +334,20 @@ function MoreButton({ totalValue }: { totalValue: string }) {
       if (e.nativeEvent.actionKey === 'activity') {
         handlePressActivity();
       }
+      if (e.nativeEvent.actionKey === 'scan') {
+        handlePressScan();
+      }
       if (e.nativeEvent.actionKey === 'connectedApps') {
         handlePressConnectedApps();
       }
     },
-    [handlePressConnectedApps, handlePressCopy, handlePressQRCode]
+    [
+      handlePressActivity,
+      handlePressConnectedApps,
+      handlePressCopy,
+      handlePressQRCode,
+      handlePressScan,
+    ]
   );
 
   const onMenuWillShow = React.useCallback(() => {

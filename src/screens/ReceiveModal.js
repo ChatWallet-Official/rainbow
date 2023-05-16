@@ -26,7 +26,7 @@ import { EmojiAvatar } from '@/components/asset-list/RecyclerAssetList2/profile-
 import { Navbar } from '@/components/navbar/Navbar';
 import MintNavBackWhiteIcon from '@/components/icons/svg/MintNavBackWhiteIcon';
 
-const QRCodeSize = ios ? 250 : Math.min(230, deviceUtils.dimensions.width - 20);
+const QRCodeSize = ios ? 200 : Math.min(230, deviceUtils.dimensions.width - 20);
 
 const AddressText = styled(TruncatedAddress).attrs(({ theme: { colors } }) => ({
   align: 'center',
@@ -142,11 +142,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    bottom: -60,
+    bottom: -70,
     zIndex: 1,
   },
   qrContainer: {
-    marginVertical: 20,
+    marginTop: 40,
+    marginBottom: 20,
+    marginHorizontal: 20,
   },
   page: {
     ...position.sizeAsObject('100%'),
