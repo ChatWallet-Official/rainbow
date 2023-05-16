@@ -182,10 +182,5 @@ export default function NotificationsPromoSheet() {
     checkPermissions();
   }, [justBecameActive, checkPermissions]);
 
-  return permissionsCheckResult !== undefined ? (
-    <NotificationsPromoSheetInner
-      permissions={permissionsCheckResult}
-      requestNotificationPermissions={requestNotificationPermissions}
-    />
-  ) : null;
+  return null;
 }

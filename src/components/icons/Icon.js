@@ -92,6 +92,7 @@ import MintSettingsIcon from './svg/MintSettingsIcon';
 import MintNavBackWhiteIcon from './svg/MintNavBackWhiteIcon';
 import MintShareIcon from './svg/MintShareIcon';
 import MintTwitterIcon from './svg/MintTwitterIcon';
+import MintAddWalletIcon from './svg/MintAddWalletIcon';
 
 const IconTypes = {
   applePay: ApplePayIcon,
@@ -142,6 +143,7 @@ const IconTypes = {
   instagram: InstagramIcon,
   lock: LockIcon,
   ltcCoin: LTCIcon,
+  mintAddWalletIcon: MintAddWalletIcon,
   mintCaretDownIcon: MintCaretDownIcon,
   mintBuyIcon: MintBuyIcon,
   mintBuyForIcon: MintBuyForIcon,

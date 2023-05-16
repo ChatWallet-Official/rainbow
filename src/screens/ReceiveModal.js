@@ -49,7 +49,7 @@ const Container = styled(Centered).attrs({
 const Handle = styled(SheetHandle).attrs(({ theme: { colors } }) => ({
   color: colors.whiteLabel,
 }))({
-  marginBottom: 19,
+  marginTop: 4,
 });
 
 const QRWrapper = styled(Column).attrs({ align: 'center' })(
@@ -93,15 +93,11 @@ export default function ReceiveModal() {
 
   return (
     <Page style={styles.page}>
-      <Navbar
-        leftComponent={
-          <Navbar.Item>
-            <Navbar.SvgIcon icon={MintNavBackWhiteIcon} />
-          </Navbar.Item>
-        }
-        title={'QR Code'}
-        titleColor={'white'}
-      />
+      <View style={styles.handleContainer}>
+        <Handle />
+      </View>
+
+      <Navbar title={'QR Code'} titleColor={'white'} />
 
       <Container testID="receive-modal">
         <TouchableBackdrop onPress={goBack} />
@@ -133,6 +129,9 @@ export default function ReceiveModal() {
 }
 
 const styles = StyleSheet.create({
+  handleContainer: {
+    alignItems: 'center',
+  },
   avatarContainer: {
     borderColor: colors.white,
     borderWidth: 10,

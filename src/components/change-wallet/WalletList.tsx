@@ -32,7 +32,7 @@ import { HARDWARE_WALLETS, useExperimentalFlag } from '@/config';
 import { Inset, Stack } from '@/design-system';
 
 const listTopPadding = 7.5;
-const rowHeight = 59;
+const rowHeight = 80 + 15;
 const transitionDuration = 75;
 
 const RowTypes = {
@@ -267,22 +267,14 @@ export default function WalletList({
         />
         {showDividers && <WalletListDivider />}
 
-        <Inset space="20px">
+        <Inset horizontal="20px">
           <Stack space="24px">
             {!watchOnly && (
               <WalletOption
                 editMode={editMode}
-                label={`􀁍 ${lang.t('wallet.action.add_another')}`}
+                label={'Create a new wallet'}
                 onPress={onPressAddAnotherWallet}
                 testID="add-another-wallet-button"
-              />
-            )}
-            {hardwareWalletsEnabled && (
-              <WalletOption
-                editMode={editMode}
-                label={`􀱝 ${lang.t('wallet.action.pair_hardware_wallet')}`}
-                onPress={onPressPairHardwareWallet}
-                testID="pair-hardware-wallet-button"
               />
             )}
           </Stack>

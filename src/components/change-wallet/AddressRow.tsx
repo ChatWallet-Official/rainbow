@@ -10,7 +10,13 @@ import CoinCheckButton from '../coin-row/CoinCheckButton';
 import { ContactAvatar } from '../contacts';
 import ImageAvatar from '../contacts/ImageAvatar';
 import { Icon } from '../icons';
-import { Centered, Column, ColumnWithMargins, Row } from '../layout';
+import {
+  Centered,
+  Column,
+  ColumnWithMargins,
+  Row,
+  RowWithMargins,
+} from '../layout';
 import { Text, TruncatedText } from '../text';
 import ContextMenuButton from '@/components/native-context-menu/contextMenu';
 import ContextMenuAndroid from '@/components/native-context-menu/contextMenu.android';
@@ -20,7 +26,7 @@ import {
   returnStringFirstEmoji,
 } from '@/helpers/emojiHandler';
 import styled from '@/styled-thing';
-import { fonts, fontWithWidth, getFontSize } from '@/styles';
+import { colors, fonts, fontWithWidth, getFontSize } from '@/styles';
 import { abbreviations, deviceUtils, profileUtils } from '@/utils';
 import { EditWalletContextMenuActions } from '@/screens/ChangeWalletSheet';
 import { toChecksumAddress } from '@/handlers/web3';
@@ -68,6 +74,12 @@ const sx = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     marginLeft: 48,
+  },
+  container: {
+    borderRadius: 20,
+    backgroundColor: colors.mintLabel,
+    marginRight: 20,
+    paddingLeft: 10,
   },
 });
 
@@ -248,8 +260,8 @@ export default function AddressRow({
           </ButtonPressAnimation>
         )}
       >
-        <Row align="center">
-          <Row align="center" flex={1} height={59}>
+        <Row align="center" style={sx.container}>
+          <Row align="center" flex={1} height={80}>
             {accountImage ? (
               <ImageAvatar
                 image={accountImage}
@@ -260,22 +272,25 @@ export default function AddressRow({
               <ContactAvatar
                 color={accountColor}
                 marginRight={10}
-                size="medium"
+                size="mint60"
                 value={emoji}
               />
             )}
-            <ColumnWithMargins margin={IS_ANDROID ? -6 : 3}>
+            <ColumnWithMargins margin={IS_ANDROID ? -6 : 6}>
               <StyledTruncatedText
-                color={colors.dark}
+                color={colors.mintBlack80}
                 testID={`change-wallet-address-row-label-${walletName}`}
               >
                 {walletName}
               </StyledTruncatedText>
-              <StyledBottomRowText
-                color={colors.alpha(colors.blueGreyDark, 0.5)}
-              >
-                {cleanedUpBalance || 0} ETH
-              </StyledBottomRowText>
+              <RowWithMargins margin={4}>
+                <Icon name="mintEthIcon" />
+                <StyledBottomRowText
+                  color={colors.alpha(colors.blueGreyDark, 0.5)}
+                >
+                  {cleanedUpBalance || 0}
+                </StyledBottomRowText>
+              </RowWithMargins>
             </ColumnWithMargins>
           </Row>
           <Column style={sx.rightContent}>

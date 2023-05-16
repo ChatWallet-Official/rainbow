@@ -44,7 +44,7 @@ import { getNotificationSettingsForWalletWithAddress } from '@/notifications/set
 const deviceHeight = deviceUtils.dimensions.height;
 const footerHeight = getExperimetalFlag(HARDWARE_WALLETS) ? 100 : 60;
 const listPaddingBottom = 6;
-const walletRowHeight = 59;
+const walletRowHeight = 80 + 15;
 const maxListHeight = deviceHeight - 220;
 
 const EditButton = styled(ButtonPressAnimation).attrs(
@@ -72,10 +72,9 @@ const EditButton = styled(ButtonPressAnimation).attrs(
 const EditButtonLabel = styled(Text).attrs(
   ({ theme: { colors }, editMode }: { theme: any; editMode: boolean }) => ({
     align: 'right',
-    color: colors.appleBlue,
+    color: colors.mintBlack80,
     letterSpacing: 'roundedMedium',
-    size: 'large',
-    weight: editMode ? 'bold' : 'semibold',
+    size: 'medium',
   })
 )({
   height: 40,

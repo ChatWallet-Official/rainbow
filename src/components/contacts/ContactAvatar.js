@@ -108,6 +108,10 @@ const sizeConfigs = colors => ({
         ],
     textSize: 'large',
   },
+  mint60: {
+    dimensions: 65,
+    textSize: 'biggest',
+  },
 });
 
 const ContactAvatar = ({ color, size = 'medium', value, ...props }) => {

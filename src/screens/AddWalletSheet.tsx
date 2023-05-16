@@ -368,26 +368,19 @@ export const AddWalletSheet = () => {
       background="surfaceSecondary"
       testID="add-wallet-sheet"
     >
-      <Inset horizontal="20px" top="36px" bottom="104px">
+      <Inset horizontal="20px" top="16px" bottom="104px">
         <Stack space="32px">
           <Stack space="20px">
-            <Text align="center" size="26pt" weight="bold" color="label">
-              {i18n.t(
-                TRANSLATIONS[
-                  isFirstWallet ? 'first_wallet' : 'additional_wallet'
-                ].title
-              )}
-            </Text>
             <Text
               align="center"
-              size="15pt / 135%"
-              weight="semibold"
-              color="labelTertiary"
+              size="18px / 27px (Deprecated)"
+              weight="bold"
+              color="black80"
             >
               {i18n.t(
                 TRANSLATIONS[
                   isFirstWallet ? 'first_wallet' : 'additional_wallet'
-                ].description
+                ].title
               )}
             </Text>
           </Stack>
@@ -399,13 +392,7 @@ export const AddWalletSheet = () => {
             <Inset vertical="24px" horizontal="20px">
               <AddWalletList
                 totalHorizontalInset={40}
-                items={[
-                  ...(!isFirstWallet ? [create] : []),
-                  ...(cloudRestoreEnabled ? [restoreFromCloud] : []),
-                  restoreFromSeed,
-                  ...(hardwareWalletsEnabled ? [connectHardwareWallet] : []),
-                  watch,
-                ]}
+                items={[...(!isFirstWallet ? [create] : []), restoreFromSeed]}
               />
             </Inset>
           </Box>

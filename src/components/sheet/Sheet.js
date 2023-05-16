@@ -27,7 +27,7 @@ const Sheet = ({
     <Column height="100%" justify="end" width={width}>
       <TouchableBackdrop onPress={goBack} />
       <Column
-        backgroundColor={colors.white}
+        backgroundColor={colors.mintBackground}
         paddingBottom={noInsets ? 0 : insets.bottom}
         style={borders.buildRadiusAsObject('top', borderRadius)}
         width="100%"

@@ -1861,7 +1861,7 @@
           },
           "additional_wallet": {
             "description": "Create a new wallet or add an existing one",
-            "title": "Add another wallet"
+            "title": "Add Wallet"
           }
         },
         "import_or_watch_wallet_sheet": {
