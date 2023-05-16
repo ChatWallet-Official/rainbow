@@ -4,7 +4,7 @@ import { ButtonPressAnimation } from '../../../components/animations';
 import CheckmarkCircledIcon from '../../../components/icons/svg/CheckmarkCircledIcon';
 import WarningIcon from '../../../components/icons/svg/WarningIcon';
 import Chevron from '@/assets/chevronUpDown.png';
-import Caret from '@/assets/family-dropdown-arrow.png';
+import MintRight from '@/assets/mintRight.png';
 import { Box, Inline, Stack, Text } from '@/design-system';
 import { ImgixImage } from '@/components/images';
 import { useTheme } from '@/theme';
@@ -64,11 +64,7 @@ interface SelectionProps {
 }
 
 const Selection = ({ children }: SelectionProps) => (
-  <Text
-    color="secondary60 (Deprecated)"
-    size="18px / 27px (Deprecated)"
-    weight="semibold"
-  >
+  <Text color="black60" size="12px / 14px (Deprecated)" weight="medium">
     {children}
   </Text>
 );
@@ -114,17 +110,17 @@ interface TitleProps {
   isLink?: boolean;
 }
 
-const Title = ({ text, weight = 'semibold', disabled, isLink }: TitleProps) => (
+const Title = ({ text, weight = 'medium', disabled, isLink }: TitleProps) => (
   <Text
     color={
       disabled
         ? 'secondary60 (Deprecated)'
         : isLink
         ? 'action (Deprecated)'
-        : 'primary (Deprecated)'
+        : 'black80'
     }
     containsEmoji
-    size="18px / 27px (Deprecated)"
+    size="16px / 22px (Deprecated)"
     weight={weight}
     numberOfLines={1}
   >
@@ -183,7 +179,7 @@ const MenuItem = ({
     <Box
       height={{ custom: size }}
       justifyContent="center"
-      paddingHorizontal={{ custom: 16 }}
+      paddingHorizontal={{ custom: 4 }}
       testID={disabled ? testID : undefined}
       width="full"
     >
@@ -216,10 +212,9 @@ const MenuItem = ({
             {hasRightArrow && (
               <Box
                 as={ImgixImage}
-                height={{ custom: 16 }}
-                source={Caret as Source}
-                tintColor={colors.blueGreyDark60}
-                width={{ custom: 7 }}
+                height={{ custom: 15 }}
+                source={MintRight as Source}
+                width={{ custom: 15 }}
                 size={30}
               />
             )}

@@ -62,7 +62,6 @@ export function SettingsSheet() {
         // @ts-ignore
         screenOptions={{
           ...memoSettingsOptions,
-          headerRight: renderHeaderRight,
           headerStyle: memoSettingsOptions.headerStyle,
         }}
       >

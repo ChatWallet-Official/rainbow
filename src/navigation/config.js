@@ -1,8 +1,8 @@
 import React from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import BackButton from '../components/header/BackButton';
 import { Icon } from '../components/icons';
-import { SheetHandleFixedToTopHeight } from '../components/sheet';
+import { SheetHandleFixedToTopHeight, SheetHandle } from '../components/sheet';
 import { Text } from '../components/text';
 import { getENSAdditionalRecordsSheetHeight } from '../screens/ENSAdditionalRecordsSheet';
 import { ENSConfirmRegisterSheetHeight } from '../screens/ENSConfirmRegisterSheet';
@@ -433,9 +433,8 @@ export const exchangeTabNavigatorConfig = {
 };
 
 const BackArrow = styled(Icon).attrs({
-  color: colors.themedColors.appleBlue,
-  direction: 'left',
-  name: 'caret',
+  color: colors.themedColors.mintBlack60,
+  name: 'mintNavBackIcon',
 })({
   marginLeft: 15,
   marginRight: 5,
@@ -492,6 +491,15 @@ const SettingsTitle = ({ children }) => {
   );
 };
 
+function SettingsHeader({ children }) {
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <SheetHandle marginBottom={10} />
+      <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{children}</Text>
+    </View>
+  );
+}
+
 export const settingsOptions = colors => ({
   ...headerConfigOptions,
   cardShadowEnabled: false,
@@ -514,6 +522,7 @@ export const settingsOptions = colors => ({
     ...headerConfigOptions.headerTitleStyle,
     color: colors.dark,
   },
+  headerTitle: props => <SettingsHeader {...props} />,
   ...(android && {
     headerLeft: props => <BackButton {...props} textChevron />,
     headerRight: () => <EmptyButtonPlaceholder />,

@@ -1405,7 +1405,7 @@
       "no_thanks": "No thanks"
     },
     "settings": {
-      "backup": "Backup",
+      "backup": "Backup Wallet",
       "google_account_used": "Google account used for backups",
       "backup_switch_google_account": "Switch Google Account",
       "backup_sign_out": "Sign out",
@@ -1420,7 +1420,7 @@
       "feedback_and_reports": "Feedback & Bug Reports",
       "feedback_and_support": "Feedback and Support",
       "follow_us_on_twitter": "Follow us on Twitter",
-      "hey_friend_message": "👋️ Hey friend! You should download Rainbow, it's my favorite Ethereum wallet 🌈️🌈️🌈️🌈️🌈️🌈️🌈️🌈️🌈️🌈️",
+      "hey_friend_message": "👋️ Hey friend! You should download Chatwallet, it's my favorite Ethereum wallet",
       "label": "Settings",
       "language": "Language",
       "learn": "Learn about Ethereum",

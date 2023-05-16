@@ -21,15 +21,8 @@ const Menu = ({ children, description, header }: MenuProps) => {
           </Text>
         </Box>
       )}
-      <Box
-        background="card (Deprecated)"
-        borderRadius={18}
-        shadow="12px"
-        width="full"
-      >
-        <Stack separator={<Separator color="divider60 (Deprecated)" />}>
-          {children}
-        </Stack>
+      <Box width="full">
+        <Stack>{children}</Stack>
       </Box>
       {!!description && (
         <Box paddingHorizontal={{ custom: 16 }} paddingTop={{ custom: 17 }}>

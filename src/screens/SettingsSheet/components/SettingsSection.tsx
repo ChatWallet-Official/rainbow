@@ -64,8 +64,8 @@ const SettingsExternalURLs = {
   rainbowLearn: 'https://learn.rainbow.me',
   review:
     'itms-apps://itunes.apple.com/us/app/appName/id1457119021?mt=8&action=write-review',
-  twitterDeepLink: 'twitter://user?screen_name=rainbowdotme',
-  twitterWebUrl: 'https://twitter.com/rainbowdotme',
+  twitterDeepLink: 'twitter://user?screen_name=ChatWalletWeb3',
+  twitterWebUrl: 'https://twitter.com/ChatWalletWeb3',
 };
 
 const capitalizeFirstLetter = (str: string) => {
@@ -159,9 +159,7 @@ const SettingsSection = ({
 
   const onPressShare = useCallback(() => {
     Share.share({
-      message: `${lang.t('settings.hey_friend_message')} ${
-        SettingsExternalURLs.rainbowHomepage
-      }`,
+      message: `${lang.t('settings.hey_friend_message')}`,
     });
   }, []);
 
@@ -369,7 +367,7 @@ const SettingsSection = ({
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={onPressShare}>
             <Icon name="mintShareIcon" />
-            <Text style={styles.buttonText}>Share MintWallet</Text>
+            <Text style={styles.buttonText}>Share Chatwallet</Text>
           </TouchableOpacity>
         </RowWithMargins>
       </Box>
@@ -384,7 +382,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   button: {
-    backgroundColor: colors.white,
+    borderWidth: 0.5,
+    borderColor: colors.mintBlack10,
     borderRadius: 20,
     flexDirection: 'column',
     flex: 1,
