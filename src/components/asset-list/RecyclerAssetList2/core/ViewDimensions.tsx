@@ -38,6 +38,7 @@ const ViewDimensions: Record<CellType, Dim> = {
   [CellType.BIG_EMPTY_WALLET_SPACER]: { height: 32 },
   [CellType.PROFILE_STICKY_HEADER]: { height: ProfileStickyHeaderHeight },
   [CellType.ASSETS_HEADER_SPACE_AFTER]: { height: 16 },
+  [CellType.COIN_HEADER]: { height: AssetListHeaderHeight },
   [CellType.COIN]: { height: CoinRowHeight },
   [CellType.COIN_DIVIDER]: { height: CoinDividerContainerHeight },
   [CellType.SAVINGS_HEADER_SPACE_BEFORE]: { height: 7 },
@@ -47,7 +48,7 @@ const ViewDimensions: Record<CellType, Dim> = {
   [CellType.PROFILE_ACTION_BUTTONS_ROW]: {
     height: ProfileActionButtonsRowHeight - ProfileStickyHeaderHeight,
   },
-  [CellType.PROFILE_ACTION_BUTTONS_ROW_SPACE_AFTER]: { height: 24 },
+  [CellType.PROFILE_ACTION_BUTTONS_ROW_SPACE_AFTER]: { height: 10 },
   [CellType.PROFILE_AVATAR_ROW]: { height: ProfileAvatarRowHeight },
   [CellType.PROFILE_AVATAR_ROW_SPACE_BEFORE]: {
     height: ios ? ProfileAvatarRowTopInset : 0,

@@ -4,6 +4,7 @@ import { UniqueAsset } from '@/entities';
 
 export enum CellType {
   ASSETS_HEADER_SPACE_AFTER = 'ASSETS_HEADER_SPACE_AFTER',
+  COIN_HEADER = 'COIN_HEADER',
   COIN = 'COIN',
   COIN_DIVIDER = 'COIN_DIVIDER',
   SAVINGS_HEADER = 'SAVINGS_HEADER',

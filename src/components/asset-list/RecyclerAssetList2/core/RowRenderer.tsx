@@ -34,6 +34,8 @@ import { CardRowWrapper } from '../cards/CardRowWrapper';
 import { DiscoverMoreButton } from './DiscoverMoreButton';
 import { RotatingLearnCard } from '@/components/cards/RotatingLearnCard';
 import { ProfileInfoRow } from '../profile-header/ProfileInfoRow';
+import { StyleSheet, Text } from 'react-native';
+import { colors, fonts } from '@/styles';
 
 function rowRenderer(
   type: CellType,
@@ -96,6 +98,8 @@ function rowRenderer(
       );
     case CellType.PROFILE_STICKY_HEADER:
       return <ProfileStickyHeader />;
+    case CellType.COIN_HEADER:
+      return <Text style={styles.listHeader}>My crypto</Text>;
     case CellType.COIN:
       return (
         <FastBalanceCoinRow
@@ -158,10 +162,7 @@ function rowRenderer(
         <WrappedPoolRow address={(data as UniswapPoolExtraData).address} />
       );
     case CellType.NFTS_HEADER:
-      return (
-        // @ts-expect-error JavaScript component
-        <AssetListHeader title="Collectibles" />
-      );
+      return <Text style={styles.listHeader}>Collectibles</Text>;
     case CellType.FAMILY_HEADER: {
       const { name, image, total } = data as NFTFamilyExtraData;
       return (
@@ -197,3 +198,12 @@ export default rowRenderer as (
   type: string | number,
   data: any
 ) => React.ReactElement;
+
+const styles = StyleSheet.create({
+  listHeader: {
+    paddingHorizontal: 20,
+    fontSize: fonts.size.lmedium,
+    fontWeight: fonts.weight.bold,
+    color: colors.mintBlack80,
+  },
+});

@@ -61,6 +61,7 @@ const getLayoutProvider = (
       val.type === CellType.PROFILE_AVATAR_ROW ||
       val.type === CellType.PROFILE_NAME_ROW ||
       val.type === CellType.PROFILE_STICKY_HEADER ||
+      val.type === CellType.COIN_HEADER ||
       val.type === CellType.NFTS_HEADER ||
       (val.type === CellType.COIN_DIVIDER && isCoinListEdited)
     ) {

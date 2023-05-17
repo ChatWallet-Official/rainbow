@@ -236,11 +236,11 @@ export const WalletScreen: React.FC<Props> = ({ navigation, route }) => {
       >
         <Navbar
           hasStatusBarInset
-          leftComponent={
-            <Navbar.Item onPress={handlePressActivity} testID="activity-button">
-              <Navbar.SvgIcon icon={MintNavBackIcon} />
-            </Navbar.Item>
-          }
+          // leftComponent={
+          //   <Navbar.Item onPress={handlePressActivity} testID="activity-button">
+          //     <Navbar.SvgIcon icon={MintNavBackIcon} />
+          //   </Navbar.Item>
+          // }
         />
       </OpacityToggler>
       <Box

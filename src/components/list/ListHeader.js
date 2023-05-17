@@ -19,7 +19,7 @@ import { RAINBOW_PROFILES_BASE_URL } from '@/references';
 import styled from '@/styled-thing';
 import { padding } from '@/styles';
 
-export const ListHeaderHeight = 50;
+export const ListHeaderHeight = 20;
 
 const ShareCollectiblesBPA = styled(ButtonPressAnimation)({
   backgroundColor: ({ theme: { colors } }) =>

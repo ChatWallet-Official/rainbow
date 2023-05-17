@@ -147,13 +147,17 @@ export const buildBriefCoinsList = (
   if (assets) {
     for (let asset of assets) {
       if (asset.coinDivider) {
-        briefAssets.push({
-          defaultToEditButton: asset.defaultToEditButton,
-          type: 'COIN_DIVIDER',
-          uid: 'coin-divider',
-          value: smallBalancesValue,
-        });
+        // briefAssets.push({
+        //   defaultToEditButton: asset.defaultToEditButton,
+        //   type: 'COIN_DIVIDER',
+        //   uid: 'coin-divider',
+        //   value: smallBalancesValue,
+        // });
       } else if (asset.smallBalancesContainer) {
+        briefAssets.push({
+          type: 'COIN_HEADER',
+          uid: 'coin-header',
+        });
         for (let smallAsset of asset.assets) {
           briefAssets.push({
             type: 'COIN',
@@ -162,6 +166,10 @@ export const buildBriefCoinsList = (
           });
         }
       } else {
+        briefAssets.push({
+          type: 'COIN_HEADER',
+          uid: 'coin-header',
+        });
         briefAssets.push({
           type: 'COIN',
           uid: 'coin-' + asset.uniqueId,
@@ -268,6 +276,7 @@ export const buildBriefUniqueTokenList = (
   listType: AssetListType = 'wallet',
   isReadOnlyWallet = false
 ) => {
+  return [];
   const hiddenUniqueTokensIds = uniqueTokens
     .filter(({ fullUniqueId }: any) => hiddenTokens.includes(fullUniqueId))
     .map(({ uniqueId }: any) => uniqueId);

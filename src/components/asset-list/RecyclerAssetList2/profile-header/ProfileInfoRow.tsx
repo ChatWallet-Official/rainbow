@@ -5,7 +5,7 @@ import { ProfileNameRow } from './ProfileNameRow';
 import { ProfileBalanceRow } from './ProfileBalanceRow';
 
 export const ProfileInfoRowHeight = 100;
-export const ProfileInfoRowTopInset = 60;
+export const ProfileInfoRowTopInset = 30;
 
 export function ProfileInfoRow({
   disableOnPress,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   columnContainer: {
-    paddingVertical: 10,
+    paddingVertical: 18,
     paddingLeft: 20,
     height: ProfileInfoRowHeight,
     justifyContent: 'space-around',

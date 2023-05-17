@@ -19,6 +19,8 @@ import { FloatingEmojis } from '@/components/floating-emojis';
 import { haptics } from '@/utils';
 import { Space } from '@/design-system/docs/system/tokens.css';
 import { addressCopiedToastAtom } from '@/recoil/addressCopiedToastAtom';
+import { Text as RNText, StyleSheet } from 'react-native';
+import { colors, fonts } from '@/styles';
 
 export const ProfileNameRowHeight = 16;
 
@@ -97,14 +99,7 @@ export function ProfileNameRow({
             <Inset space={hitSlop}>
               <Inline alignVertical="center" space="4px" wrap={false}>
                 <Box style={{ maxWidth }}>
-                  <Text
-                    color="black80"
-                    numberOfLines={1}
-                    size="16px / 22px (Deprecated)"
-                    weight="bold"
-                  >
-                    {name}
-                  </Text>
+                  <RNText style={styles.name}>{name}</RNText>
                 </Box>
                 <Icon
                   color={iconColor}
@@ -131,3 +126,12 @@ export function ProfileNameRow({
     </Box>
   );
 }
+
+const styles = StyleSheet.create({
+  name: {
+    color: colors.mintBlack80,
+    fontSize: fonts.size.smedium,
+    fontWeight: fonts.weight.bold,
+    numberOfLines: 1,
+  },
+});
