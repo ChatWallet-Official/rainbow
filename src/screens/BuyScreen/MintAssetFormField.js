@@ -12,32 +12,11 @@ import styled from '@/styled-thing';
 import { TouchableOpacity } from 'react-native';
 import { Icon } from '@/components/icons';
 
-const GradientBackground = styled(RadialGradient).attrs(
-  ({ theme: { colors }, width }) => {
-    const FieldWidth = width - 38;
-
-    return {
-      center: [0, (FieldWidth - 38) / 2],
-      colors: [colors.mintTab, colors.mintTab],
-      stops: [0, 1],
-    };
-  }
-)({
-  height: ({ width }) => width - 38,
-  left: 0,
-  position: 'absolute',
-  top: ({ isSmallPhone, isTinyPhone, width }) =>
-    -((width - 38 - (isTinyPhone ? 40 : isSmallPhone ? 46 : 59)) / 2),
-  transform: [{ scaleY: 0.175074184 }],
-  width: ({ width }) => width - 38,
-});
-
 const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
   scaleTo: 1.05,
 })({
-  borderRadius: 29.5,
-  height: ({ isSmallPhone, isTinyPhone }) =>
-    isTinyPhone ? 40 : isSmallPhone ? 46 : 59,
+  borderRadius: 20,
+  height: 80,
   overflow: 'hidden',
   paddingBottom: ({ isSmallPhone, isTinyPhone }) =>
     isTinyPhone ? 7 : isSmallPhone ? 8 : 11,
@@ -47,12 +26,14 @@ const Wrapper = styled(android ? Row : ButtonPressAnimation).attrs({
     isTinyPhone ? 6 : isSmallPhone ? 7 : 10,
   position: 'relative',
   width: ({ width }) => (android ? width - 38 : '100%'),
+  backgroundColor: '#1D1D1D',
 });
 
 const MintAssetFormField = (
   {
     autoFocus,
     format,
+    symbol,
     label,
     labelMaxLength = 6,
     mask,
@@ -85,11 +66,6 @@ const MintAssetFormField = (
       onPress={() => !android && ref?.current.focus()}
       width={width}
     >
-      <GradientBackground
-        isSmallPhone={android || isSmallPhone}
-        isTinyPhone={isTinyPhone}
-        width={width}
-      />
       <RowWithMargins
         align="center"
         flex={1}
@@ -114,6 +90,7 @@ const MintAssetFormField = (
         />
         <TouchableOpacity onPress={onPressSelect}>
           <RowWithMargins margin={8} align={'center'}>
+            <Icon name={symbol} />
             <Text
               align="right"
               color={colors.mintLabel}
@@ -127,9 +104,7 @@ const MintAssetFormField = (
                     : 38
                   : null
               }
-              size={
-                isTinyPhone ? 'big' : android || isSmallPhone ? 'bigger' : 'h3'
-              }
+              size={14}
               weight="medium"
             >
               {label.length > labelMaxLength

@@ -71,6 +71,7 @@ export default function SendAssetFormToken({
         <MintAssetFormField
           colorForAsset={colorForAsset}
           format={removeLeadingZeros}
+          symbol="mintCoinETHIcon"
           label={selected.symbol}
           onChange={onChangeAssetAmount}
           onFocus={onFocusAssetInput}

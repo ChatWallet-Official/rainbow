@@ -130,7 +130,7 @@ export default function ChangeWalletSheet() {
 
   const walletRowCount = useMemo(() => getWalletRowCount(wallets), [wallets]);
 
-  let headerHeight = 30;
+  let headerHeight = 44;
   let listHeight =
     walletRowHeight * walletRowCount +
     (!watchOnly ? footerHeight + listPaddingBottom : android ? 20 : 0);
@@ -433,11 +433,9 @@ export default function ChangeWalletSheet() {
     // @ts-ignore
     <Sheet borderRadius={30}>
       {android && <Whitespace />}
-      <Column height={headerHeight} justify="space-between">
+      <Column height={headerHeight} justify="center">
         <Centered>
-          <SheetTitle testID="change-wallet-sheet-title">
-            {lang.t('wallet.label')}
-          </SheetTitle>
+          <SheetTitle testID="change-wallet-sheet-title">Account</SheetTitle>
 
           {!watchOnly && (
             <Row style={{ position: 'absolute', right: 0 }}>

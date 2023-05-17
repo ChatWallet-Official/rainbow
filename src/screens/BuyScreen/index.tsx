@@ -177,6 +177,7 @@ export default function BuyScreen() {
           <FormContainer isSmallPhone={isSmallPhone} isTinyPhone={isTinyPhone}>
             <MintAssetFormField
               autoFocus
+              symbol="mintCoinUSDIcon"
               label="USD"
               placeholder="0"
               onChange={onChangeNativeAmount}
@@ -189,15 +190,18 @@ export default function BuyScreen() {
               <Icon name="mintBuyForIcon" height={30} />
             </View>
 
-            <MintAssetFormField
-              autoFocus
-              label="ETH"
-              placeholder="0"
-              onChange={onChangeAssetAmount}
-              onFocus={onFocusAssetInput}
-              value={amountDetails.assetAmount}
-              ref={assetInputRef}
-            />
+            <View style={styles.assetContainer}>
+              <MintAssetFormField
+                autoFocus
+                symbol="mintCoinETHIcon"
+                label="ETH"
+                placeholder="0"
+                onChange={onChangeAssetAmount}
+                onFocus={onFocusAssetInput}
+                value={amountDetails.assetAmount}
+                ref={assetInputRef}
+              />
+            </View>
 
             <Text style={styles.rate}>
               1 ETH for USD {selected.price.value}
@@ -225,7 +229,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   iconContainer: {
-    marginVertical: 10,
+    position: 'relative',
+    bottom: 12,
+    zIndex: 1,
   },
   rate: {
     color: colors.mintBlack30,
@@ -233,5 +239,12 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 110,
     width: '100%',
+    position: 'relative',
+    bottom: 24,
+  },
+  assetContainer: {
+    width: '100%',
+    position: 'relative',
+    bottom: 24,
   },
 });
