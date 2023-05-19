@@ -319,7 +319,7 @@ export const AddWalletSheet = () => {
   const create: AddWalletItem = {
     title: i18n.t(TRANSLATIONS.options.create_new.title),
     description: i18n.t(TRANSLATIONS.options.create_new.description),
-    icon: '􀁌',
+    icon: 'mintGreenAddIcon',
     iconColor: globalColors.pink60,
     testID: 'create-new-button',
     onPress: onPressCreate,
@@ -337,7 +337,7 @@ export const AddWalletSheet = () => {
   const restoreFromSeed: AddWalletItem = {
     title: i18n.t(TRANSLATIONS.options.seed.title),
     description: i18n.t(TRANSLATIONS.options.seed.description),
-    icon: '􀑚',
+    icon: 'mintGreenKeyIcon',
     iconColor: globalColors.purple60,
     testID: 'restore-with-key-button',
     onPress: onPressRestoreFromSeed,
@@ -363,13 +363,13 @@ export const AddWalletSheet = () => {
 
   return (
     <Box
-      height="full"
+      height="1/2"
       width="full"
-      background="surfaceSecondary"
+      background="mintBackground"
       testID="add-wallet-sheet"
     >
-      <Inset horizontal="20px" top="16px" bottom="104px">
-        <Stack space="32px">
+      <Inset horizontal="20px" top="16px" bottom="44px">
+        <Stack space="28px">
           <Stack space="20px">
             <Text
               align="center"
@@ -384,12 +384,8 @@ export const AddWalletSheet = () => {
               )}
             </Text>
           </Stack>
-          <Box
-            background="surfaceSecondaryElevated"
-            borderRadius={18}
-            shadow="12px"
-          >
-            <Inset vertical="24px" horizontal="20px">
+          <Box>
+            <Inset vertical="24px">
               <AddWalletList
                 totalHorizontalInset={40}
                 items={[...(!isFirstWallet ? [create] : []), restoreFromSeed]}

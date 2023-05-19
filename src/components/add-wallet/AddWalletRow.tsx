@@ -8,7 +8,8 @@ import { Icon } from '../icons';
 import ConditionalWrap from 'conditional-wrap';
 import { deviceUtils } from '@/utils';
 import { ButtonPressAnimation } from '../animations';
-
+import { Text as ReactNativeText, StyleSheet, View } from 'react-native';
+import { colors, fonts } from '@/styles';
 const RainbowText = styled(GradientText).attrs(
   ({ theme: { colors } }: any) => ({
     angle: false,
@@ -68,40 +69,31 @@ export const AddWalletRow = ({
       scaleTo={0.9}
       flexDirection="row"
       alignItems="center"
-      justifyContent="space-between"
       onPress={onPress}
       testID={testID}
     >
-      <Box width={{ custom: contentWidth }}>
-        <Stack space="12px" alignHorizontal="left">
-          <ConditionalWrap
-            condition={shouldUseRainbowText}
-            wrap={(children: React.ReactNode) => (
-              <RainbowText colors={colors}>{children}</RainbowText>
-            )}
-          >
-            <TextIcon color={iconColor}>{icon}</TextIcon>
-          </ConditionalWrap>
-          <ConditionalWrap
-            condition={shouldUseRainbowText}
-            wrap={(children: React.ReactNode) => (
-              <Box marginBottom={{ custom: -4 }}>
-                <RainbowText colors={colors}>
-                  <Box marginBottom={{ custom: 4 }}>{children}</Box>
-                </RainbowText>
-              </Box>
-            )}
-          >
-            <Text size="20pt" weight="bold" color="label">
-              {title}
-            </Text>
-          </ConditionalWrap>
-          <Text size="13pt" weight="semibold" color="labelTertiary">
-            {description}
-          </Text>
-        </Stack>
-      </Box>
-      <CaretIcon color={labelQuaternary} />
+      <View style={styles.container}>
+        <Icon name={icon} />
+        <ReactNativeText style={styles.title}>{title}</ReactNativeText>
+      </View>
     </Box>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 25,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 20,
+    backgroundColor: colors.mintLabel,
+    width: '100%',
+  },
+  title: {
+    color: colors.mintBlack80,
+    fontSize: fonts.size.lmedium,
+    fontWeight: fonts.weight.medium,
+    marginLeft: 10,
+  },
+});

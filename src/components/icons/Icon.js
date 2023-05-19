@@ -95,6 +95,8 @@ import MintTwitterIcon from './svg/MintTwitterIcon';
 import MintAddWalletIcon from './svg/MintAddWalletIcon';
 import MintCoinETHIcon from './svg/MintCoinETHIcon';
 import MintCoinUSDIcon from './svg/MintCoinUSDIcon';
+import MintGreenAddIcon from './svg/MintGreenAddIcon';
+import MintGreenKeyIcon from './svg/MintGreenKeyIcon';
 
 const IconTypes = {
   applePay: ApplePayIcon,
@@ -152,6 +154,8 @@ const IconTypes = {
   mintBuyIcon: MintBuyIcon,
   mintBuyForIcon: MintBuyForIcon,
   mintEthIcon: MintEthIcon,
+  mintGreenAddIcon: MintGreenAddIcon,
+  mintGreenKeyIcon: MintGreenKeyIcon,
   mintNavBackIcon: MintNavBackIcon,
   mintNacBackWhiteIcon: MintNavBackWhiteIcon,
   mintPlusIcon: MintPlusIcon,

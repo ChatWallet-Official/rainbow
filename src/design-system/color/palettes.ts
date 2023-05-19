@@ -193,6 +193,7 @@ export type BackgroundColor =
   | 'pink'
   | 'orange'
   | 'yellow'
+  | 'mintBackground'
   | 'body (Deprecated)'
   | 'action (Deprecated)'
   | 'swap (Deprecated)'
@@ -347,6 +348,10 @@ export const backgroundColors: Record<
       color: globalColors.yellow50,
       mode: 'light',
     },
+  },
+  'mintBackground': {
+    color: '#F2F2F2',
+    mode: 'light',
   },
   'action (Deprecated)': {
     dark: {
