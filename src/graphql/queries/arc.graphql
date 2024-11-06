@@ -1,0 +1,486 @@
+fragment asset on Asset {
+  address
+  symbol
+  decimals
+  name
+}
+
+fragment amount on AssetAmount {
+  raw
+  decimal
+  usd
+}
+
+query getNFTOffers($walletAddress: String!, $sortBy: SortCriterion!) {
+  nftOffers(walletAddress: $walletAddress, sortBy: $sortBy) {
+    createdAt
+    url
+    nft {
+      aspectRatio
+      name
+      contractAddress
+      tokenId
+      collectionName
+      imageUrl
+      uniqueId
+      predominantColor
+    }
+    floorDifferencePercentage
+    validUntil
+    marketplace {
+      name
+      imageUrl
+    }
+    grossAmount {
+      ...amount
+    }
+    netAmount {
+      ...amount
+    }
+    paymentToken {
+      ...asset
+    }
+    royaltiesPercentage
+    feesPercentage
+    floorPrice {
+      amount {
+        ...amount
+      }
+      paymentToken {
+        ...asset
+      }
+    }
+    network
+  }
+}
+
+query getPoapEventByQrHash($qrHash: String!) {
+  getPoapEventByQrHash(qrHash: $qrHash) {
+    id
+    name
+    imageUrl
+    createdAt
+    qrHash
+    secret
+  }
+}
+
+query claimPoapByQrHash(
+  $walletAddress: String!
+  $qrHash: String!
+  $secret: String!
+) {
+  claimPoapByQrHash(
+    walletAddress: $walletAddress
+    qrHash: $qrHash
+    secret: $secret
+  ) {
+    success
+    error
+  }
+}
+
+query getPoapEventBySecretWord($secretWord: String!) {
+  getPoapEventBySecretWord(secretWord: $secretWord) {
+    id
+    name
+    imageUrl
+    createdAt
+    qrHash
+    secretWord
+  }
+}
+
+query claimPoapBySecretWord($walletAddress: String!, $secretWord: String!) {
+  claimPoapBySecretWord(
+    walletAddress: $walletAddress
+    secretWord: $secretWord
+  ) {
+    success
+    error
+  }
+}
+
+query getReservoirCollection($contractAddress: String!, $chainId: Int!) {
+  getReservoirCollection(contractAddress: $contractAddress, chainId: $chainId) {
+    collection {
+      id
+      chainId
+      createdAt
+      name
+      image
+      description
+      sampleImages
+      tokenCount
+      creator
+      ownerCount
+      isMintingPublicSale
+      publicMintInfo {
+        stage
+        kind
+        price {
+          currency {
+            contract
+            name
+            symbol
+            decimals
+          }
+          amount {
+            raw
+            decimal
+            usd
+            native
+          }
+          netAmount {
+            raw
+            decimal
+            usd
+            native
+          }
+        }
+        startTime
+        endTime
+        maxMintsPerWallet
+      }
+    }
+  }
+}
+
+fragment mintStatus on MintStatus {
+  isMintable
+  price
+}
+
+fragment mintedNFT on MintedNFT {
+  tokenID
+  imageURI
+  mimeType
+  title
+  value
+  mintTime
+}
+
+fragment mintableCollection on MintableCollection {
+  externalURL
+  contract
+  contractAddress
+  chainId
+  deployer
+  name
+  imageURL
+  imageMimeType
+  mintsLastHour
+  addressesLastHour
+  lastEvent
+  firstEvent
+  totalMints
+  maxSupply
+  recentMints {
+    ...mintedNFT
+  }
+  mintStatus {
+    ...mintStatus
+  }
+}
+
+fragment mintableCollectionsResult on MintableCollectionsResult {
+  collections {
+    ...mintableCollection
+  }
+}
+
+fragment mintableCollectionResult on MintableCollectionResult {
+  collection {
+    ...mintableCollection
+  }
+}
+
+query getMintableCollections($walletAddress: String!) {
+  getMintableCollections(walletAddress: $walletAddress) {
+    collections {
+      ...mintableCollection
+    }
+  }
+}
+
+query getPromoSheetCollection($order: [PromoSheetOrder]) {
+  promoSheetCollection(order: $order) {
+    items {
+      sys {
+        id
+      }
+      campaignKey
+      launchDate
+      actions
+      priority
+    }
+  }
+}
+
+query getPromoSheet($id: String!) {
+  promoSheet(id: $id) {
+    accentColor
+    actions
+    backgroundColor
+    backgroundImage {
+      url
+    }
+    header
+    headerImage {
+      url
+    }
+    headerImageAspectRatio
+    items
+    primaryButtonProps
+    secondaryButtonProps
+    sheetHandleColor
+    subHeader
+  }
+}
+
+fragment card on Card {
+  sys {
+    id
+  }
+  cardKey
+  dismissable
+  placement
+  index
+  backgroundColor
+  accentColor
+  padding
+  borderRadius
+  imageIcon
+  imageCollection {
+    items {
+      url
+    }
+  }
+  imageRadius
+  title
+  titleColor
+  subtitle
+  subtitleColor
+  primaryButton
+}
+
+query getCard($id: String!) {
+  card(id: $id) {
+    ...card
+  }
+}
+
+query getCardCollection($order: [CardOrder], $where: CardFilter) {
+  cardCollection(order: $order, where: $where) {
+    items {
+      ...card
+    }
+  }
+}
+
+query getPointsTweetIntentCollection($order: [PointsTweetIntentOrder]) {
+  pointsTweetIntentCollection(order: $order) {
+    items {
+      sys {
+        id
+      }
+      key
+      text
+      via
+      url
+    }
+  }
+}
+
+query getPointsTweetIntent($id: String!) {
+  pointsTweetIntent(id: $id) {
+    key
+    text
+    via
+    url
+  }
+}
+
+fragment simpleHashPaymentToken on SimpleHashPaymentToken {
+  payment_token_id
+  name
+  symbol
+  address
+  decimals
+}
+
+query getNFTs($walletAddress: String!) {
+  nfts(walletAddress: $walletAddress) {
+    nft_id
+    chain
+    contract_address
+    token_id
+    name
+    description
+    previews {
+      image_small_url
+      image_medium_url
+      image_large_url
+      image_opengraph_url
+      blurhash
+      predominant_color
+    }
+    image_url
+    image_properties {
+      width
+      height
+      size
+      mime_type
+    }
+    video_url
+    video_properties {
+      width
+      height
+      duration
+      video_coding
+      audio_coding
+      size
+      mime_type
+    }
+    audio_url
+    audio_properties {
+      duration
+      audio_coding
+      size
+      mime_type
+    }
+    model_url
+    model_properties {
+      size
+      mime_type
+    }
+    background_color
+    external_url
+    created_date
+    status
+    token_count
+    owner_count
+    owners {
+      owner_address
+      quantity
+      first_acquired_date
+      last_acquired_date
+    }
+    last_sale {
+      from_address
+      to_address
+      quantity
+      quantity_string
+      timestamp
+      transaction
+      marketplace_id
+      marketplace_name
+      is_bundle_sale
+      payment_token {
+        ...simpleHashPaymentToken
+      }
+      unit_price
+      total_price
+      unit_price_usd_cents
+    }
+    first_created {
+      minted_to
+      quantity
+      quantity_string
+      timestamp
+      block_number
+      transaction
+      transaction_initiator
+    }
+    contract {
+      type
+      name
+      symbol
+      deployed_by
+      deployed_via_contract
+      owned_by
+      has_multiple_collections
+    }
+    collection {
+      collection_id
+      name
+      description
+      image_url
+      banner_image_url
+      category
+      is_nsfw
+      external_url
+      twitter_username
+      discord_url
+      instagram_url
+      medium_username
+      telegram_url
+      marketplace_pages {
+        marketplace_id
+        marketplace_name
+        marketplace_collection_id
+        nft_url
+        collection_url
+        verified
+      }
+      metaplex_mint
+      metaplex_candy_machine
+      metaplex_first_verified_creator
+      spam_score
+      floor_prices {
+        marketplace_id
+        value
+        payment_token {
+          ...simpleHashPaymentToken
+        }
+        value_usd_cents
+      }
+      top_bids {
+        marketplace_id
+        value
+        payment_token {
+          ...simpleHashPaymentToken
+        }
+        value_usd_cents
+      }
+      distinct_owner_count
+      distinct_nft_count
+      total_quantity
+      chains
+      top_contracts
+      collection_royalties {
+        source
+        total_creator_fee_basis_points
+        recipients {
+          address
+          percentage
+          basis_points
+        }
+      }
+    }
+    rarity {
+      rank
+      score
+      unique_attributes
+    }
+    royalty {
+      source
+      total_creator_fee_basis_points
+      recipients {
+        address
+        percentage
+        basis_points
+      }
+    }
+    extra_metadata {
+      image_original_url
+      animation_original_url
+      metadata_original_url
+      attributes {
+        trait_type
+        value
+        display_type
+      }
+    }
+  }
+}

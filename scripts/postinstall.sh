@@ -32,7 +32,8 @@ if [ -e .env ]; then
   source .env
 
   function rewrite_xcode_configs {
-    VALUE=$( cat .env | { grep "$1" || true; } )
+    # VALUE=$( cat .env | { grep "$1" || true; } )
+    VALUE=$( cat .env )
     if [ -n "$VALUE" ]; then
       echo "$VALUE" | sed 's/=/ = /g' >> ./ios/debug.xcconfig
       echo "$VALUE" | sed 's/=/ = /g' >> ./ios/release.xcconfig
